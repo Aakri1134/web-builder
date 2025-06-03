@@ -1,0 +1,19 @@
+{
+  "name": "cloudflare",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify --outdir dist --upload-source-maps --var SENTRY_RELEASE:$(sentry-cli releases propose-version)",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
+    "sentry:sourcemaps": "_SENTRY_RELEASE=$(sentry-cli releases propose-version) && sentry-cli releases new $_SENTRY_RELEASE --org=none-xxz --project=node-cloudflare-workers && sentry-cli sourcemaps upload --org=none-xxz --project=node-cloudflare-workers --release=$_SENTRY_RELEASE --strip-prefix 'dist/..' dist",
+    "postdeploy": "npm run sentry:sourcemaps"
+  },
+  "dependencies": {
+    "@sentry/cloudflare": "^9.24.0",
+    "hono": "^4.7.11"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250601.0",
+    "@sentry/cli": "^2.46.0",
+    "wrangler": "^4.4.0"
+  }
+}
