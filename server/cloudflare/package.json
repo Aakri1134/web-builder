@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "@sentry/cloudflare": "^9.24.0",
-    "hono": "^4.7.11"
+    "hono": "^4.7.11",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.16.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250601.0",
     "@sentry/cli": "^2.46.0",
+    "@types/jsonwebtoken": "^9.0.9",
     "wrangler": "^4.4.0"
   }
 }

@@ -1,6 +1,20 @@
 import { Hono } from "hono"
-import { auth } from "../routes/auth"
+import { auth } from "./routes/auth"
 import * as Sentry from "@sentry/cloudflare"
+import { User } from "./database/db"
+
+export interface Env {
+  Bindings: {
+    SENTRY_URL: string
+    MONGO_URL : string
+    MONGO_DB_NAME : string
+    JWT_USER_KEY : string
+  },
+  Variables: {
+    user: User,
+    _id : string
+  }
+}
 
 const app = new Hono<Env>()
 
