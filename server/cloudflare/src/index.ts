@@ -10,9 +10,9 @@ export type Env = {
     MONGO_DB_NAME: string
     JWT_USER_KEY: string
     EMAIL_PASSWORD_JWT: string
-    REDIS_URL: string
-    REDIS_API: string
     BREVO_API: string
+    UPSTASH_REDIS_REST_URL: string
+    UPSTASH_REDIS_REST_TOKEN: string
   }
   Variables: {
     user: User
