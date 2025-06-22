@@ -3,9 +3,15 @@ import { Hono } from "hono"
 import { MongoClient, ObjectId } from "mongodb"
 import { getMongoClient } from "../database/db"
 import { captureException } from "@sentry/cloudflare"
-import { emailCheckupLogin, emailCheckupSignUp, userInputValidation } from "../middlewares/auth"
+import {
+  emailCheckupLogin,
+  emailCheckupSignUp,
+  userInputValidation,
+} from "../middlewares/auth"
 import { Env } from ".."
 import jwt from "jsonwebtoken"
+import { sendMail } from "../utils/mail"
+import bcrypt from "bcryptjs"
 
 export type jwtUser = {
   id?: ObjectId
@@ -30,7 +36,63 @@ export const auth = new Hono<Env>()
 //     })
 // })
 
-auth.post("/login",userInputValidation ,emailCheckupLogin, async (c) => {
+// auth.get("/CHECK" , (c) => {
+//   console.log("Checking.....")
+//   console.log("Checking.....")
+//   console.log("Checking.....")
+//   return c.json({
+//     message: "Log Check complete"
+//   })
+// })
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+auth.get("/confirmation/:token", async (c) => {
+  
+  return c.json({
+    message: "done",
+  })
+})
+
+auth.post("/resend", userInputValidation, async (c) => {
+  try {
+    const { email } = await c.req.json()
+    const token = jwt.sign(
+      {
+        email,
+      },
+      c.env.EMAIL_PASSWORD_JWT,
+      {
+        expiresIn: "24h",
+      }
+    )
+    await sendMail(c, email, token)
+    return c.json(
+      {
+        message: "Mail sent successfully, also check spam",
+      },
+      200
+    )
+  } catch (e) {
+    captureException(e)
+    return c.json(
+      {
+        error: "Internal Server Error",
+      },
+      500
+    )
+  }
+})
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+auth.post("/login", userInputValidation, emailCheckupLogin, async (c) => {
   const user = c.get("user")
   const id = c.get("_id")
 
@@ -61,22 +123,32 @@ auth.post("/login",userInputValidation ,emailCheckupLogin, async (c) => {
     email: user.email,
     uses: 0,
   }
-  const token = jwt.sign(jwtData, c.env.JWT_USER_KEY, {
-    expiresIn: "7d",
-  })
+  const token = jwt.sign(jwtData, c.env.JWT_USER_KEY)
 
   return c.json({
     token,
   })
 })
 
-auth.post("/signup",userInputValidation , emailCheckupSignUp, async (c) => {
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+auth.post("/signup", userInputValidation, emailCheckupSignUp, async (c) => {
+  /*
+    /auth/signup input schema
+    username : String
+    email: String<email>
+    password: String
+  */
+
   let client: MongoClient | null = null
   try {
     const body = await c.req.json()
 
     // input check
-    const { username, email, password } : User= body
+    const { username, email, password }: User = body
     if (!username || !email || !password) {
       return c.json(
         {
@@ -86,10 +158,14 @@ auth.post("/signup",userInputValidation , emailCheckupSignUp, async (c) => {
       )
     }
 
+    // password encryption 
+    const salt = await bcrypt.genSalt(5)
+    const password_crypt = await bcrypt.hash(password, salt)
+
     const user: User = {
       username,
       email,
-      password,
+      password: password_crypt,
       emailVerified: false,
       prompts: [], // initialize as empty array or appropriate default
       createdAt: new Date(),
@@ -97,9 +173,22 @@ auth.post("/signup",userInputValidation , emailCheckupSignUp, async (c) => {
     client = await getMongoClient(c.env.MONGO_URL)
     const db = client.db(c.env.MONGO_DB_NAME)
     const res = await db.collection<User>("users").insertOne(user)
+
+    const token = jwt.sign(
+      {
+        email,
+      },
+      c.env.EMAIL_PASSWORD_JWT,
+      {
+        expiresIn: "24h",
+      }
+    )
+
+    sendMail(c, email, token)
+
     return c.json(
       {
-        message: "User created successfully!",
+        message: "User created successfully!\n Verification Link sent",
         userID: res.insertedId,
       },
       200

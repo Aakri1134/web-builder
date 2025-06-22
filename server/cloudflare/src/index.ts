@@ -3,16 +3,20 @@ import { auth } from "./routes/auth"
 import * as Sentry from "@sentry/cloudflare"
 import { User } from "./database/db"
 
-export interface Env {
+export type Env = {
   Bindings: {
     SENTRY_URL: string
-    MONGO_URL : string
-    MONGO_DB_NAME : string
-    JWT_USER_KEY : string
-  },
+    MONGO_URL: string
+    MONGO_DB_NAME: string
+    JWT_USER_KEY: string
+    EMAIL_PASSWORD_JWT: string
+    REDIS_URL: string
+    REDIS_API: string
+    BREVO_API: string
+  }
   Variables: {
-    user: User,
-    _id : string
+    user: User
+    _id: string
   }
 }
 
