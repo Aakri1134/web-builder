@@ -16,7 +16,6 @@ export type Env = {
   }
   Variables: {
     user: User
-    _id: string
   }
 }
 

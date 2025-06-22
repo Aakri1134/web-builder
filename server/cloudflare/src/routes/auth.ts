@@ -12,6 +12,7 @@ import { Env } from ".."
 import jwt from "jsonwebtoken"
 import { sendMail } from "../utils/mail"
 import bcrypt from "bcryptjs"
+import { Context } from "hono/jsx"
 
 export type jwtUser = {
   id?: ObjectId
@@ -46,11 +47,12 @@ export const auth = new Hono<Env>()
 // })
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
 
 
-auth.get("/confirmation/:token", async (c) => {
+
+auth.get("/confirmation/:token", async (c) => { // TODO Complete the email verification functionality
   
   return c.json({
     message: "done",
@@ -88,15 +90,15 @@ auth.post("/resend", userInputValidation, async (c) => {
 })
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+
 
 
 auth.post("/login", userInputValidation, emailCheckupLogin, async (c) => {
   const user = c.get("user")
-  const id = c.get("_id")
 
-  const { password } = await c.req.json()
+  const { password } : User = await c.req.json()
 
   // email Verification is gone via mail
   if (!user.emailVerified) {
@@ -106,7 +108,7 @@ auth.post("/login", userInputValidation, emailCheckupLogin, async (c) => {
   }
 
   // password encryption to be added
-  if (user.password !== password) {
+  if (!(await bcrypt.compare(user.password, password))) {
     return c.json({
       error: "Incorrect email or password",
     })
@@ -115,8 +117,8 @@ auth.post("/login", userInputValidation, emailCheckupLogin, async (c) => {
   // Signing JWT for JWT based authentication, best and only one I like (know)
   const jwtData: jwtUser = {
     id: user._id,
-    iat: Date.now(),
-    exp: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    iat: Math.floor(Date.now()/ 1000),
+    exp: Math.floor(Date.now()/ 1000) + 7 * 24 * 60 * 60,
     iss: "web-builder",
 
     username: user.username,
@@ -131,8 +133,9 @@ auth.post("/login", userInputValidation, emailCheckupLogin, async (c) => {
 })
 
 
-// ---------------------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+
 
 
 auth.post("/signup", userInputValidation, emailCheckupSignUp, async (c) => {
@@ -205,3 +208,48 @@ auth.post("/signup", userInputValidation, emailCheckupSignUp, async (c) => {
     if (client) client.close()
   }
 })
+
+// -----------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------
+// TODO complete forgot password without password
+
+auth.post("/forgot", userInputValidation, emailCheckupLogin, async (c) => {
+  c
+})
+
+
+// TODO complete forgot password with password feature
+auth.post("/forgotWithPassword", userInputValidation, emailCheckupLogin, async (c) => { 
+
+  const user = c.get("user")
+  const {email} = user
+  const password_correct_old = user.password
+
+  const body = await c.req.json()
+  const password_submitted = body.password
+
+  if(! (await bcrypt.compare(password_correct_old, password_submitted))){
+    return c.json({
+      error : "Incorrect password"
+    })
+  }
+
+  const salt = await bcrypt.genSalt(5)
+  const password = await bcrypt.hash(password_submitted, salt)
+
+  const client = await getMongoClient(c.env.MONGO_URL)
+  const db = client.db(c.env.MONGO_DB_NAME)  
+
+  const new_user = await db.collection<User>("users").updateOne({email}, { $set : { password }})
+  client.close()
+
+  return c.json({
+    message : "Password reset",
+  })
+
+  // TODO send mail to inform about password update
+  // TODO store old password in stash, to undo change within the duration of a date
+
+})
+
+

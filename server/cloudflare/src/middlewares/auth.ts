@@ -19,6 +19,7 @@ export const emailCheckupLogin = createMiddleware(async (c, next) => {
     const res = await db.collection<User>("users").findOne({
       email,
     })
+
     if (!res) {
       return c.json(
         {
@@ -27,6 +28,7 @@ export const emailCheckupLogin = createMiddleware(async (c, next) => {
         400
       )
     }
+    
     const { _id, ...user } = res
     c.set("user", user)
     c.set("_id", _id)
