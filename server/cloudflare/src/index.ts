@@ -1,5 +1,5 @@
 import { Hono } from "hono"
-import { auth } from "./routes/auth"
+import { auth } from "./routes/auth/index"
 import * as Sentry from "@sentry/cloudflare"
 import { User } from "./database/db"
 

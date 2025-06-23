@@ -3,7 +3,7 @@ import { Env } from ".."
 import { captureException } from "@sentry/cloudflare"
 
 // TODO instead of directly sending mails, I need to implement queuing using BullMQ or RabbitMQ
-export async function sendMail(c: Context<Env>, email: string, token: string) {
+export async function sendEmailVerificationMail(c: Context<Env>, email: string, token: string) {
   const verificationLink = `http://${c.req.header("Host")}/auth/confirmation/${token}`
 
   const htmlTemplate = `<!DOCTYPE html>
@@ -315,3 +315,5 @@ export async function sendMail(c: Context<Env>, email: string, token: string) {
   }
   return
 }
+
+// export async function 

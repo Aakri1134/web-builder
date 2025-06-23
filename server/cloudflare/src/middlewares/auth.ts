@@ -13,12 +13,17 @@ export const emailCheckupLogin = createMiddleware(async (c, next) => {
         error: "Incomplete Credentials",
       })
     }
+    const startTime = Date.now()
 
     client = await getMongoClient(c.env.MONGO_URL)
     const db = client.db(c.env.MONGO_DB_NAME)
     const res = await db.collection<User>("users").findOne({
       email,
     })
+    const endTime = Date.now()
+    console.log("Time Elapsed in MongoDB")
+    console.log(Number(endTime - startTime) / 1000)
+
 
     if (!res) {
       return c.json(
