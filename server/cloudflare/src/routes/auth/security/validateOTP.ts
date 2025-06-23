@@ -8,6 +8,8 @@ import { Redis } from "@upstash/redis/cloudflare"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { jwtOTPSession } from ".."
+import { OTPRedis } from "./genOTP"
+import { captureEvent } from "@sentry/cloudflare"
 
 export const validateOTP = new Hono<Env>()
 
@@ -22,18 +24,9 @@ validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
 
   const key = `otp:${email}`
 
-  const res: string | null = await redis.getdel(key)
+  const res : OTPRedis | null = await redis.getdel(key)
 
   if (!res) {
-    return c.json(
-      {
-        error: "OTP invalid or expired",
-      },
-      403
-    )
-  }
-
-  if (!(await bcrypt.compare(OTP, res))) {
     return c.json(
       {
         error: "OTP invalid or expired",
@@ -41,15 +34,49 @@ validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
       404
     )
   }
-  const sessionID = crypto.randomUUID()
+
+  const revoked = await redis.get(`revoked:${res.sessionID}`)
+
+  if(revoked){
+    return c.json(
+      {
+        error: "OTP invalid or expired",
+      },
+      404
+    )
+  }
+
+  if (!(await bcrypt.compare(OTP, res.OTP))) {
+    return c.json(
+      {
+        error: "OTP invalid or expired",
+      },
+      404
+    )
+  }
   const jwtData : jwtOTPSession = {
     iat: Math.floor(Date.now()/ 1000),
     exp: Math.floor(Date.now()/ 1000) + 60 * 60,
-    jti : sessionID,
-    iss : "web-builder"
-
+    jti : res.sessionID,
+    iss : c.env.JWT_ISSUER
   }
   const token = jwt.sign(jwtData, c.env.JWT_USER_KEY)
+
+  const keySession = `OTPSession:${res.sessionID}`
+  const resSession = await redis.set(keySession, 1, {
+    ex : 30 * 60
+  })
+
+  if(!resSession){
+    captureEvent({
+      message : "Failed to set OTP session in Redis",
+      user,
+      exception : { values: [{ type: "OTPValidationError", value: "Failed to set OTP session in Redis" }] },
+    })
+    return c.json({
+      error : "Internal error ocurred, try again later"
+    })
+  }
 
   return c.json(
     {

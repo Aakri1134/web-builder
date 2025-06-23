@@ -13,6 +13,8 @@ export type Env = {
     BREVO_API: string
     UPSTASH_REDIS_REST_URL: string
     UPSTASH_REDIS_REST_TOKEN: string
+    JWT_ISSUER: string
+    FRONTEND_DOMAIN: string
   }
   Variables: {
     user: User

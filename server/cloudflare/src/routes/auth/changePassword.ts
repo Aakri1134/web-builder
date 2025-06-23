@@ -20,6 +20,12 @@ changePassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
     })
   }
 
+  if(await bcrypt.compare(password_submitted, password_correct_old)){
+    return c.json({
+      error : "New Password cannot be same as previous"
+    })
+  }
+
   const salt = await bcrypt.genSalt(5)
   const password = await bcrypt.hash(password_submitted, salt)
 
@@ -28,7 +34,7 @@ changePassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
 
   const new_user = await db
     .collection<User>("users")
-    .updateOne({ email }, { $set: { password } })
+    .updateOne({ email }, { $set: { password, previousPassword : password_correct_old } })
   client.close()
 
   return c.json({

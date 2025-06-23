@@ -34,7 +34,7 @@ login.post("/", userInputValidation, emailCheckupLogin, async (c) => {
     id: user._id,
     iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60,
-    iss: "web-builder",
+    iss: c.env.JWT_ISSUER,
     jti : sessionID,
 
     username: user.username,

@@ -15,7 +15,7 @@ export type jwtUser = {
   id?: ObjectId
   iat: number
   exp: number
-  iss: "web-builder"
+  iss: string
   jti : string
 
   username: string
@@ -25,7 +25,7 @@ export type jwtUser = {
 export type jwtOTPSession = {
   iat: number
   exp: number
-  iss: "web-builder"
+  iss: string
   jti : string
 }
 

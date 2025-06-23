@@ -8,7 +8,8 @@ export type User = {
   emailVerified: boolean
   prompts: string[]
   createdAt: Date
-  sessions : string[]
+  sessions : string[],
+  previousPassword? : string, 
 }
 
 export async function getMongoClient(uri: string): Promise<MongoClient> {

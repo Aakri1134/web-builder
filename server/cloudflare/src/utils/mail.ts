@@ -3,8 +3,14 @@ import { Env } from ".."
 import { captureException } from "@sentry/cloudflare"
 
 // TODO instead of directly sending mails, I need to implement queuing using BullMQ or RabbitMQ
-export async function sendEmailVerificationMail(c: Context<Env>, email: string, token: string) {
-  const verificationLink = `http://${c.req.header("Host")}/auth/confirmation/${token}`
+export async function sendEmailVerificationMail(
+  c: Context<Env>,
+  email: string,
+  token: string
+) {
+  const verificationLink = `http://${c.req.header(
+    "Host"
+  )}/auth/confirmation/${token}`
 
   const htmlTemplate = `<!DOCTYPE html>
 <html lang="en">
@@ -304,11 +310,11 @@ export async function sendEmailVerificationMail(c: Context<Env>, email: string, 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sender: {name: "Web Builder", email: "streamthread2206@gmail.com"},
-        to : [{email}],
-        subject : "Web Builder Signup Email verification",
-        htmlContent: htmlTemplate
-      })
+        sender: { name: "Web Builder", email: "streamthread2206@gmail.com" },
+        to: [{ email }],
+        subject: "Web Builder Signup Email verification",
+        htmlContent: htmlTemplate,
+      }),
     })
   } catch (err) {
     captureException(err)
@@ -316,4 +322,79 @@ export async function sendEmailVerificationMail(c: Context<Env>, email: string, 
   return
 }
 
-// export async function 
+export async function sendOTPMail(c: Context<Env>, email: string, OTP: string, jti: string) {
+    //TODO when making frontend make a page which handles the not you? functionality
+    // For not you? get jti with the function call, and send with main in form of query of something
+  const HTMLcontent = `<!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0;">
+  <head>
+    <meta charset="UTF-8">
+    <title>OTP Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @media (max-width: 600px) {
+        .container {
+          width: 100% !important;
+        }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background-color:#f6f6f6;font-family:Arial,sans-serif;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center" style="padding:20px 0;">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color:#ffffff;border-radius:8px;padding:40px;box-shadow:0 0 10px rgba(0,0,0,0.1);">
+            <tr>
+              <td align="center" style="padding-bottom:20px;">
+                <h2 style="margin:0;color:#333333;">Your One-Time Password (OTP)</h2>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:#555555;font-size:16px;padding-bottom:20px;">
+                Hello,<br><br>
+                Please use the following OTP to verify your identity. This OTP is valid for the next <strong>10 minutes</strong>.
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding:20px 0;">
+                <div style="display:inline-block;background-color:#f0f0f0;color:#111111;font-size:24px;font-weight:bold;letter-spacing:4px;padding:12px 24px;border-radius:6px;">
+                  ${OTP}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:#777777;font-size:14px;padding-top:20px;">
+                If you didn't request this, please ignore this email or contact support if you have concerns.
+                <a href="http://${c.env.FRONTEND_DOMAIN}/handleOTPissue/${jti}">Not you? Click here</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="color:#999999;font-size:12px;padding-top:30px;text-align:center;">
+                &copy; 2025 Web builder. All rights reserved.<br>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`   
+try {
+    const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": c.env.BREVO_API,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: { name: "Web Builder", email: "streamthread2206@gmail.com" },
+        to: [{ email }],
+        subject: "Web Builder OTP verification for password change",
+        htmlContent: HTMLcontent,
+      }),
+    })
+  } catch (err) {
+    throw err
+  }
+  return
+}
