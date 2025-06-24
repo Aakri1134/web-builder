@@ -8,6 +8,8 @@ import { resend } from "./resend"
 import { signup } from "./signup"
 import { genOTP } from "./security/genOTP"
 import { validateOTP } from "./security/validateOTP"
+import { revoke } from "./security/revoke"
+import { forgotPassword } from "./forgotPassword"
 
 export const auth = new Hono<Env>()
 
@@ -30,9 +32,13 @@ export type jwtOTPSession = {
 }
 
 auth.route("/changePassword", changePassword)
-auth.route("/login", login)
 auth.route("/confirmation", confirmation)
+auth.route("/forgotPassword", forgotPassword)
+auth.route("/login", login)
 auth.route("/resend", resend)
 auth.route("/signup", signup)
+
+// security
 auth.route("/genOTP", genOTP)
+auth.route("/revoke", revoke)
 auth.route("/validateOTP", validateOTP)

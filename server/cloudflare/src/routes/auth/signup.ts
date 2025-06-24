@@ -1,12 +1,13 @@
 import { Hono } from "hono"
 import { Env } from "../.."
-import { emailCheckupSignUp, userInputValidation } from "../../middlewares/auth"
 import { MongoClient } from "mongodb"
 import { getMongoClient, User } from "../../database/db"
 import bcrypt from "bcryptjs"
 import { sendEmailVerificationMail } from "../../utils/mail"
 import { captureException } from "@sentry/cloudflare"
 import jwt from "jsonwebtoken"
+import emailCheckupSignUp from "../../middlewares/auth/emailCheckupSignUp"
+import userInputValidation from "../../middlewares/auth/userInputValidation"
 
 export const signup = new Hono<Env>()
 

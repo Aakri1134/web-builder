@@ -1,6 +1,5 @@
 import { Context, Hono } from "hono"
 import { Env } from "../.."
-import { emailCheckupLogin, userInputValidation } from "../../middlewares/auth"
 import { Redis } from "@upstash/redis/cloudflare"
 import jwt from "jsonwebtoken"
 import { captureEvent } from "@sentry/cloudflare"
@@ -8,6 +7,8 @@ import { getUserIP } from "../../utils/info"
 import { jwtOTPSession } from "."
 import { getMongoClient, User } from "../../database/db"
 import bcrypt from "bcryptjs"
+import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
+import userInputValidation from "../../middlewares/auth/userInputValidation"
 
 export const forgotPassword = new Hono<Env>()
 

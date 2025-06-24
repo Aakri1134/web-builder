@@ -1,8 +1,10 @@
 import { Hono } from "hono"
 import { Env } from "../.."
-import { emailCheckupLogin, userInputValidation } from "../../middlewares/auth"
 import bcrypt from "bcryptjs"
 import { getMongoClient, User } from "../../database/db"
+import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
+import userInputValidation from "../../middlewares/auth/userInputValidation"
+
 
 export const changePassword = new Hono<Env>()
 

@@ -1,13 +1,11 @@
 import { Hono } from "hono"
 import { Env } from "../../.."
-import {
-  emailCheckupLogin,
-  userInputValidation,
-} from "../../../middlewares/auth"
+import userInputValidation from "../../../middlewares/auth/userInputValidation"
 import { Redis } from "@upstash/redis/cloudflare"
 import bcrypt from "bcryptjs"
 import { sendOTPMail } from "../../../utils/mail"
 import { captureException } from "@sentry/cloudflare"
+import emailCheckupLogin from "../../../middlewares/auth/emailCheckupLogin"
 
 export const genOTP = new Hono<Env>()
 

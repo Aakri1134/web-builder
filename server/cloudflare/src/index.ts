@@ -15,6 +15,7 @@ export type Env = {
     UPSTASH_REDIS_REST_TOKEN: string
     JWT_ISSUER: string
     FRONTEND_DOMAIN: string
+    NODE_ENVIRONMENT: string
   }
   Variables: {
     user: User

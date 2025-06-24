@@ -1,9 +1,10 @@
 import { Hono } from "hono"
 import { Env } from "../.."
-import { emailCheckupLogin, userInputValidation } from "../../middlewares/auth"
 import jwt from "jsonwebtoken"
 import { sendEmailVerificationMail } from "../../utils/mail"
 import { captureException } from "@sentry/cloudflare"
+import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
+import userInputValidation from "../../middlewares/auth/userInputValidation"
 
 export const resend = new Hono<Env>()
 
