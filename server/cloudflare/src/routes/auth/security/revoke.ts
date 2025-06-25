@@ -16,6 +16,8 @@ export type revokeInput = {
 }
 
 revoke.post("/", userInputValidation, async (c) => {
+
+  // TODO add things like admin check or something
   const body = await c.req.json()
 
   const { tokens, reason, type, email }: revokeInput = body

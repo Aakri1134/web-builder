@@ -8,10 +8,11 @@ import { jwtOTPSession } from ".."
 import { OTPRedis } from "./genOTP"
 import { captureEvent } from "@sentry/cloudflare"
 import emailCheckupLogin from "../../../middlewares/auth/emailCheckupLogin"
+import { sensitiveIPRateLimiting } from "../../../middlewares/auth/ipratelimiting"
 
 export const validateOTP = new Hono<Env>()
 
-validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
+validateOTP.post("/",sensitiveIPRateLimiting, userInputValidation, emailCheckupLogin, async (c) => {
   const user = c.get("user")
   const { email } = user
 
@@ -22,7 +23,7 @@ validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
 
   const key = `otp:${email}`
 
-  const res : OTPRedis | null = await redis.getdel(key)
+  const res : OTPRedis | null = await redis.get(key)
 
   if (!res) {
     return c.json(
@@ -32,6 +33,8 @@ validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
       404
     )
   }
+
+
 
   const revoked = await redis.get(`revoked:${res.sessionID}`)
 
@@ -75,6 +78,8 @@ validateOTP.post("/", userInputValidation, emailCheckupLogin, async (c) => {
       error : "Internal error ocurred, try again later"
     })
   }
+
+  await redis.del(key)
 
   return c.json(
     {

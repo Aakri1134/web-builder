@@ -12,19 +12,30 @@ import userInputValidation from "../../middlewares/auth/userInputValidation"
 
 export const forgotPassword = new Hono<Env>()
 
+/*
+  To be called when OTP has been validated and password is to be changed
+  Expected : 
+  Header: 
+    session-validation : <token from validation>
+  Body:
+    email : <email of user whose password is to be changes>
+*/ 
+
 forgotPassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
   const user = c.get("user")
   const body = await c.req.json()
 
   const { email } = user
-  const { token, password }: { token: string; password: string } = body
+  const { password }: { token: string; password: string } = body
+
+  const token: string | undefined = c.req.header("session-validation")
 
   if (!token || !password) {
     return c.json(
       {
         error: "Unauthorized",
       },
-      401
+      402
     )
   }
   let data: jwtOTPSession
@@ -86,7 +97,7 @@ forgotPassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
   if(user.password && await bcrypt.compare(password, user.password)){
     return c.json({
       error : "New password cannot be same as previous"
-    }, 401)
+    }, 402)
   }
 
   const salt = await bcrypt.genSalt(5)
@@ -118,6 +129,6 @@ function fatalError(c: Context<Env>, message: string, user: User) {
     {
       error: "Unauthorized",
     },
-    401
+    402
   )
 }
