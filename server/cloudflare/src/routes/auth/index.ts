@@ -13,17 +13,6 @@ import { forgotPassword } from "./forgotPassword"
 
 export const auth = new Hono<Env>()
 
-export type jwtUser = {
-  id?: ObjectId
-  iat: number
-  exp: number
-  iss: string
-  jti : string
-
-  username: string
-  email: string
-}
-
 export type jwtOTPSession = {
   iat: number
   exp: number

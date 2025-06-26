@@ -1,7 +1,7 @@
 import { createMiddleware } from "hono/factory"
 import { getMongoClient, User } from "../../database/db"
 
-export const getUser = createMiddleware(async (c, next) => {
+export const getUserMiddleware = createMiddleware(async (c, next) => {
   const body = await c.req.json()
   const { email } = body
 

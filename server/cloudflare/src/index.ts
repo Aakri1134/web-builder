@@ -2,6 +2,7 @@ import { Hono } from "hono"
 import { auth } from "./routes/auth/index"
 import * as Sentry from "@sentry/cloudflare"
 import { User } from "./database/db"
+import { ObjectId } from "mongodb"
 
 export type Env = {
   Bindings: {
@@ -20,6 +21,16 @@ export type Env = {
   Variables: {
     user : User
   }
+}
+export type jwtUser = {
+  id?: ObjectId
+  iat: number
+  exp: number
+  iss: string
+  jti : string
+
+  username: string
+  email: string
 }
 
 const app = new Hono<Env>()

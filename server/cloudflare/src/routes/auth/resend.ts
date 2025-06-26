@@ -5,11 +5,11 @@ import { sendEmailVerificationMail } from "../../utils/mail"
 import { captureException } from "@sentry/cloudflare"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
-import { getUser } from "../../middlewares/auth/getUser"
+import { getUserMiddleware } from "../../middlewares/auth/getUser"
 
 export const resend = new Hono<Env>()
 
-resend.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
+resend.post("/", userInputValidation, emailCheckupLogin, getUserMiddleware, async (c) => {
   try {
     const user = c.get("user")
     if(user.emailVerified){

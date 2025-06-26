@@ -1,18 +1,17 @@
 import { Hono } from "hono"
-import { Env } from "../.."
+import { Env, jwtUser } from "../.."
 import { getMongoClient, User } from "../../database/db"
 import bcrypt from "bcryptjs"
-import { jwtUser } from "./index"
 import jwt from "jsonwebtoken"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
-import { getUser } from "../../middlewares/auth/getUser"
+import { getUserMiddleware } from "../../middlewares/auth/getUser"
 import { MongoClient } from "mongodb"
 import { captureException } from "@sentry/cloudflare"
 
 export const login = new Hono<Env>()
 
-login.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
+login.post("/", userInputValidation, emailCheckupLogin, getUserMiddleware, async (c) => {
   const user = c.get("user")
 
   const { password }: User = await c.req.json()

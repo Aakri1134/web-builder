@@ -9,7 +9,7 @@ import { getMongoClient, User } from "../../database/db"
 import bcrypt from "bcryptjs"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
-import { getUser } from "../../middlewares/auth/getUser"
+import { getUserMiddleware } from "../../middlewares/auth/getUser"
 
 export const forgotPassword = new Hono<Env>()
 
@@ -23,7 +23,7 @@ export const forgotPassword = new Hono<Env>()
     password : <new password>
     */ 
    
-forgotPassword.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
+forgotPassword.post("/", userInputValidation, emailCheckupLogin, getUserMiddleware, async (c) => {
   const body = await c.req.json()
   
   let user = c.get("user")

@@ -4,12 +4,12 @@ import bcrypt from "bcryptjs"
 import { getMongoClient, User } from "../../database/db"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
-import { getUser } from "../../middlewares/auth/getUser"
+import { getUserMiddleware } from "../../middlewares/auth/getUser"
 
 
 export const changePassword = new Hono<Env>()
 
-changePassword.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
+changePassword.post("/", userInputValidation, emailCheckupLogin, getUserMiddleware, async (c) => {
   
   const client = await getMongoClient(c.env.MONGO_URL)
   const db = client.db(c.env.MONGO_DB_NAME)

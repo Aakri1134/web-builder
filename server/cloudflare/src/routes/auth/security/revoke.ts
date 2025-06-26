@@ -25,7 +25,6 @@ revoke.post("/", userInputValidation, async (c) => {
   if (!tokens || tokens.length == 0) {
     c.env.NODE_ENVIRONMENT == "DEV" && console.log("tokens : string[] Not found in revoke request")
 
-
     return c.json(
       {
         error: "Unauthorized",
