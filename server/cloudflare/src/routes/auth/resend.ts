@@ -5,11 +5,18 @@ import { sendEmailVerificationMail } from "../../utils/mail"
 import { captureException } from "@sentry/cloudflare"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
+import { getUser } from "../../middlewares/auth/getUser"
 
 export const resend = new Hono<Env>()
 
-resend.post("/", userInputValidation, emailCheckupLogin, async (c) => {
+resend.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
   try {
+    const user = c.get("user")
+    if(user.emailVerified){
+      return c.json({
+        error : "Email already verified"
+      }, 400)
+    }
     const { email } = await c.req.json()
     const token = jwt.sign(
       {
@@ -20,7 +27,7 @@ resend.post("/", userInputValidation, emailCheckupLogin, async (c) => {
         expiresIn: "24h",
       }
     )
-    await sendEmailVerificationMail(c, email, token)
+    if(c.env.NODE_ENVIRONMENT !== "DEV")sendEmailVerificationMail(c, email, token)
     return c.json(
       {
         message: "Mail sent successfully, also check spam",

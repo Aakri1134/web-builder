@@ -34,6 +34,8 @@ signup.post("/", userInputValidation, emailCheckupSignUp, async (c) => {
       )
     }
 
+    console.log(password)
+
     // password encryption
     const salt = await bcrypt.genSalt(5)
     const password_crypt = await bcrypt.hash(password, salt)
@@ -61,7 +63,7 @@ signup.post("/", userInputValidation, emailCheckupSignUp, async (c) => {
       }
     )
 
-    sendEmailVerificationMail(c, email, token)
+    if(c.env.NODE_ENVIRONMENT !== "DEV") sendEmailVerificationMail(c, email, token)
 
     return c.json(
       {

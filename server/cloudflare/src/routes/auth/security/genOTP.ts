@@ -24,6 +24,13 @@ function generateOTP(length = 6): string {
   return otp
 }
 
+/*
+Endpoint to generate OTP
+
+Body
+  email : <email for which otp is to be sent>
+*/
+
 genOTP.post(
   "/",
   sensitiveIPRateLimiting,
@@ -33,8 +40,8 @@ genOTP.post(
     const maxOTPAttemptsWithin24h = 5
     const OTPCooldown = 15
 
-    const user = c.get("user")
-    const { email } = user
+    const body = await c.req.json()
+    const { email } = body
 
     const redis = Redis.fromEnv(c.env)
 
@@ -86,7 +93,7 @@ genOTP.post(
 
     // const startTime = Date.now()
     const currentTime = Date.now()
-    const [res, cooldown] = await Promise.all([
+    const [res, cooldown, _] = await Promise.all([
       redis.set(
         key,
         JSON.stringify({
@@ -100,6 +107,7 @@ genOTP.post(
       redis.set(cooldownKey, 1, {
         ex: OTPCooldown,
       }),
+      redis.exists("123")
     ])
 
     const endTime = Date.now()
@@ -123,7 +131,7 @@ genOTP.post(
       )
     }
 
-    if(c.env.NODE_ENVIRONMENT !== "DEV")await sendOTPMail(c, email, OTP, OTPsessionID)
+    if(c.env.NODE_ENVIRONMENT !== "DEV") await sendOTPMail(c, email, OTP, OTPsessionID)
     return c.json(
       {
         message: "OTP sent to mail",

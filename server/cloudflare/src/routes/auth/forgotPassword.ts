@@ -9,6 +9,7 @@ import { getMongoClient, User } from "../../database/db"
 import bcrypt from "bcryptjs"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
+import { getUser } from "../../middlewares/auth/getUser"
 
 export const forgotPassword = new Hono<Env>()
 
@@ -16,17 +17,22 @@ export const forgotPassword = new Hono<Env>()
   To be called when OTP has been validated and password is to be changed
   Expected : 
   Header: 
-    session-validation : <token from validation>
+  session-validation : <token from validation>
   Body:
-    email : <email of user whose password is to be changes>
-*/ 
-
-forgotPassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
-  const user = c.get("user")
+  email : <email of user whose password is to be changes>
+    password : <new password>
+    */ 
+   
+forgotPassword.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
   const body = await c.req.json()
-
-  const { email } = user
-  const { password }: { token: string; password: string } = body
+  
+  let user = c.get("user")
+  
+  const client = await getMongoClient(c.env.MONGO_URL)
+  const db = client.db(c.env.MONGO_DB_NAME)
+  
+  const {email} = body
+  const { password }: { password: string } = body
 
   const token: string | undefined = c.req.header("session-validation")
 
@@ -91,8 +97,6 @@ forgotPassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
     )
   }
   
-  const client = await getMongoClient(c.env.MONGO_URL)
-  const db = client.db(c.env.MONGO_DB_NAME)
 
   if(user.password && await bcrypt.compare(password, user.password)){
     return c.json({

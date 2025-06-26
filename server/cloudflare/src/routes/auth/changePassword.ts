@@ -4,17 +4,23 @@ import bcrypt from "bcryptjs"
 import { getMongoClient, User } from "../../database/db"
 import emailCheckupLogin from "../../middlewares/auth/emailCheckupLogin"
 import userInputValidation from "../../middlewares/auth/userInputValidation"
+import { getUser } from "../../middlewares/auth/getUser"
 
 
 export const changePassword = new Hono<Env>()
 
-changePassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
-  const user = c.get("user")
-  const { email } = user
-  const password_correct_old = user.password
+changePassword.post("/", userInputValidation, emailCheckupLogin, getUser, async (c) => {
+  
+  const client = await getMongoClient(c.env.MONGO_URL)
+  const db = client.db(c.env.MONGO_DB_NAME)
 
   const body = await c.req.json()
+  const { email } = body
   const password_submitted = body.password
+
+  let user = c.get("user")
+
+  const password_correct_old = user.password
 
   if (!(await bcrypt.compare(password_correct_old, password_submitted))) {
     return c.json({
@@ -31,8 +37,6 @@ changePassword.post("/", userInputValidation, emailCheckupLogin, async (c) => {
   const salt = await bcrypt.genSalt(5)
   const password = await bcrypt.hash(password_submitted, salt)
 
-  const client = await getMongoClient(c.env.MONGO_URL)
-  const db = client.db(c.env.MONGO_DB_NAME)
 
   const new_user = await db
     .collection<User>("users")

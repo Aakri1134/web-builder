@@ -9,19 +9,20 @@ import { OTPRedis } from "./genOTP"
 import { captureEvent } from "@sentry/cloudflare"
 import emailCheckupLogin from "../../../middlewares/auth/emailCheckupLogin"
 import { sensitiveIPRateLimiting } from "../../../middlewares/auth/ipratelimiting"
+import { getUserIP, hashValue } from "../../../utils/info"
 
 export const validateOTP = new Hono<Env>()
 
 validateOTP.post("/",sensitiveIPRateLimiting, userInputValidation, emailCheckupLogin, async (c) => {
-  const user = c.get("user")
-  const { email } = user
+
 
   const body = await c.req.json()
-  const { OTP } = body
+  const { OTP, email } = body
 
   const redis = Redis.fromEnv(c.env)
 
-  const key = `otp:${email}`
+  const hashed  = await hashValue(email)
+  const key = `otp:${hashed}`
 
   const res : OTPRedis | null = await redis.get(key)
 
@@ -71,7 +72,10 @@ validateOTP.post("/",sensitiveIPRateLimiting, userInputValidation, emailCheckupL
   if(!resSession){
     captureEvent({
       message : "Failed to set OTP session in Redis",
-      user,
+      user : {
+        email,
+        ip_address : getUserIP(c)
+      },
       exception : { values: [{ type: "OTPValidationError", value: "Failed to set OTP session in Redis" }] },
     })
     return c.json({

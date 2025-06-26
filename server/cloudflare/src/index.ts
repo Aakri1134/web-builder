@@ -18,7 +18,7 @@ export type Env = {
     NODE_ENVIRONMENT: string
   }
   Variables: {
-    user: User
+    user : User
   }
 }
 
@@ -28,7 +28,7 @@ app.route("/auth", auth)
 
 app.onError((err, c) => {
   Sentry.captureException(err)
-  return c.text("Something went wrong", 500)
+  return c.json({error:"Something went wrong"}, 500)
 })
 
 const sentryApp = Sentry.withSentry(
