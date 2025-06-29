@@ -1,6 +1,14 @@
-function App() {
+import ResizableCard from "././Resizable"
 
-  return <></>
+function App() {
+  return (
+    <div>
+      <h1>Adjustable Width Card</h1>
+        <ResizableCard />
+        <ResizableCard />
+        <ResizableCard />
+    </div>
+  )
 }
 
 export default App
