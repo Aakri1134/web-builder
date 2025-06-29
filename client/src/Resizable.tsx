@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import ContextModal from "./components/ContextModal"
+import Heading from "./components/Heading"
 
 export default function ResizableCard() {
   const [width, setWidth] = useState(300) // initial width
@@ -27,15 +28,10 @@ export default function ResizableCard() {
     isDragging.current = false
   }
 
-  interface RightClickEvent
-    extends React.MouseEvent<HTMLDivElement, MouseEvent> {}
-
-
-
-    const modalVisibilityToggle = () => {
-        setIsVisible(c => !c)
-    }
-  const rightClick = (e: RightClickEvent): void => {
+  const modalVisibilityToggle = () => {
+    setIsVisible((c) => !c)
+  }
+  const rightClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault()
     e.stopPropagation()
     setIsVisible((x) => !x)
@@ -59,9 +55,10 @@ export default function ResizableCard() {
             left: `${positionModal[0]}px`,
             top: `${positionModal[1]}px`,
           }}
-          option1={true}
-          option2={true}
           visibilityToggle={modalVisibilityToggle}
+          option1={() => {
+            alert("He;;p")
+          }}
         />
       )}
       <div
@@ -76,7 +73,7 @@ export default function ResizableCard() {
           minWidth: "300px",
         }}
       >
-        <h3>Resizable Card</h3>
+        <Heading initialValue="ResizableCard" />
         <p>You can resize this card by dragging the handle.</p>
       </div>
       <div

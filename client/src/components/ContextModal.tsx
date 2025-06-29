@@ -2,17 +2,17 @@ import React from "react"
 
 interface ContextModalProps {
   style?: React.CSSProperties
-  option1?: boolean
-  option2?: boolean
-  option3?: boolean
+  option1: () => any 
+  option2?: () => void | null
+  option3?: () => void | null
   visibilityToggle: () => void
 }
 
 const ContextModal = ({
   style,
-  option1 = false,
-  option2 = false,
-  option3 = false,
+  option1 ,
+  option2 ,
+  option3 ,
   visibilityToggle,
 }: ContextModalProps) => {
   const clickHandle = (): void => {
@@ -23,39 +23,30 @@ const ContextModal = ({
       style={{
         inset: 0,
         position: "absolute",
-        backgroundColor : "rgba(0,0,0,0.4)"
+        backgroundColor: "rgba(0,0,0,0.3)",
       }}
       onClick={clickHandle}
     >
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
           ...style,
-          backgroundColor: "rgba(255, 255, 61, 0.8)",
+          backgroundColor: "rgba(255, 255, 61, 0.7)",
           display: "flex",
           flexDirection: "column",
-          height: "200px",
-          width: "100px",
+          height: "fit",
+          width: "200px",
+          borderRadius: 10,
+          alignItems: "stretch",
+          justifyContent: "flex-start",
         }}
         onClick={(e) => {
           e.stopPropagation()
         }}
       >
-        {option1 && (
-          <div>
-            <h1>Options 1</h1>
-          </div>
-        )}
-        {option2 && (
-          <div>
-            <h1>Options 2</h1>
-          </div>
-        )}
-        {option3 && (
-          <div>
-            <h1>Options 3</h1>
-          </div>
-        )}
+        <button onClick={()=>{option1()}}>Option1</button>
+        {option2 && <p>Options 2</p>}
+        {option3 && <p>Options 3</p>}
       </div>
     </div>
   )

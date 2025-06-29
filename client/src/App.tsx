@@ -1,11 +1,10 @@
 import ResizableCard from "././Resizable"
+import Heading from "./components/Heading"
 
 function App() {
   return (
     <div>
-      <h1>Adjustable Width Card</h1>
-        <ResizableCard />
-        <ResizableCard />
+      <Heading initialValue="Heading" style={{}}/>
         <ResizableCard />
     </div>
   )
