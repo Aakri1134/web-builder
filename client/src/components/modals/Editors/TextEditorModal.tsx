@@ -1,4 +1,4 @@
-interface InputTextEditor {
+export interface InputTextEditor {
     initial : string
     position : {
         left : string,
@@ -6,18 +6,12 @@ interface InputTextEditor {
     },
     handleChange : (value : string) => void
     toggleVisibility : () => void
+    heading : string
 }
 
-const TextEditorModal = ({initial, position, handleChange, toggleVisibility} : InputTextEditor) => {
+const TextEditorModal = ({initial, position, handleChange, toggleVisibility, heading} : InputTextEditor) => {
 
     return(
-        <div 
-        style={{
-            position : "absolute",
-            inset : 0,
-            backgroundColor : "rgba(0, 0, 0, 0.2)"
-        }}
-        onClick={toggleVisibility}>
             <div 
             style={{
                 position : "fixed",
@@ -27,6 +21,7 @@ const TextEditorModal = ({initial, position, handleChange, toggleVisibility} : I
                 backgroundColor : "rgba(255, 255, 255, 0.95)"
             }}
             onClick={(e) => {e.stopPropagation()}}>
+                <h1>{heading}</h1>
                 <input
                     value={initial}
                     onChange={(e) => {handleChange(e.target.value)}}
@@ -37,7 +32,6 @@ const TextEditorModal = ({initial, position, handleChange, toggleVisibility} : I
                     }}
                 />
             </div>
-        </div>
     )
 }   
 

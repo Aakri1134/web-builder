@@ -1,0 +1,26 @@
+/* index.css */
+:root {
+  --primary-bg: #ffffff;
+  --primary-text: #000000;
+  --button-bg: #f0f0f0;
+  --button-hover: #e0e0e0;
+  --border-color: rgb(97, 97, 97);
+}
+
+/* Dark theme */
+.theme-dark {
+  --primary-bg: #121212;
+  --primary-text: #f5f5f5;
+  --button-bg: #333;
+  --border-color: rgb(255, 255, 255);
+  --button-hover: #444;
+}
+
+/* Light theme */
+.theme-light {
+  --primary-bg: #ffffff;
+  --primary-text: #000000;
+  --button-bg: #f0f0f0;
+  --border-color: rgb(97, 97, 97);
+  --button-hover: #e0e0e0;
+}
