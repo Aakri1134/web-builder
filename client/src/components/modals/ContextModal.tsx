@@ -7,14 +7,18 @@ interface InputContextModal {
     top: string
   }
   options: Option[]
+  handleResponse : (token : EditTokens) => void
 }
 
-interface Option {
+interface Option extends EditTokens {
   name: string
-  callback: () => void
 }
 
-const ContextModal = ({ position, options }: InputContextModal) => {
+export interface EditTokens{
+  token: "text" | "weight" | "family" | "line-height" | "height" | "size"
+}
+
+const ContextModal = ({ position, options, handleResponse }: InputContextModal) => {
   return (
       <div
         style={{
@@ -26,10 +30,11 @@ const ContextModal = ({ position, options }: InputContextModal) => {
           e.stopPropagation()
         }}
       >
-        {options.map(({name, callback}: Option) => {
+        {options.map(({name, token}: Option) => {
             return(
                 <div
-                    onClick={callback}
+                key={name}
+                    onClick={() => {handleResponse({token})}}
                     className="button"
                 >
                     <p style={{ margin: 0 }}>{name}</p>

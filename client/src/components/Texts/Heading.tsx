@@ -1,7 +1,16 @@
-import React, { useState } from "react"
-import ContextModal from "../modals/ContextModal"
+import React, { useRef, useState } from "react"
+import ContextModal, { type EditTokens } from "../modals/ContextModal"
 import TextEditorModal from "../modals/Editors/TextEditorModal"
 import ModalPortal from "../modals/ModalPortal"
+import type { Option } from "../modals/Editors/DropdownEditorModal"
+import {
+  fontFamilyOptions,
+  fontSizeOptions,
+  fontWeightOptions,
+  heightOptions,
+  lineHeightOptions,
+} from "../../utils/DropdownOptions"
+import DropdownEditorModal from "../modals/Editors/DropdownEditorModal"
 
 interface InputText {
   initial: string
@@ -18,25 +27,30 @@ const Heading = ({ initial, style }: InputText) => {
   const [value, setValue] = useState(initial)
   const [isTextEditorModalVisible, setTextEditorModalVisible] =
     useState<boolean>(false)
-  const [fontSize, setFontSize] = useState<string | number | undefined>(
+  const [dropdownOptions, setDropdownOptions] = useState<Option[]>([])
+  const [showDropdown, setShowDropdown] = useState<boolean>(false)
+  const responseModalChangeFunction =
+    useRef<React.Dispatch<React.SetStateAction<string | number | undefined>>>(
+      null
+    )
+  const responseModalType = useRef<"text" | "number">("text")
+  const responseModalValue = useRef<string | number>("")
+  const [ResponseModalHeading, setResponseModalHeading] = useState<string>("")
+  const [fontSize, setFontSize] = useState<string | number>(
     style.fontSize || 32
   )
-  const [lineHeight, setLineHeight] = useState<string | number | undefined>(
+  const [lineHeight, setLineHeight] = useState<string | number>(
     style.lineHeight || "normal"
   )
-  const [fontWeight, setFontWeight] = useState<string | number | undefined>(
-    style.fontWeight || "bold"
+  const [fontWeight, setFontWeight] = useState<string | number>(
+    style.fontWeight || 400
   )
-  const [height, setHeight] = useState<string | number | undefined>(
-    style?.height || "auto"
-  )
-  const [link, setLink] = useState<string | null>()
+  const [height, setHeight] = useState<string | number>(style?.height || "auto")
+  // const [link, setLink] = useState<string | null>()
   const [fontFamily, setFontFamily] = useState<string>(
-    style.fontFamily || "sans-serif"
+    style.fontFamily || "'Roboto'"
   )
-  const [fontColor, setFontColor] = useState<string | undefined>(
-    style.color || "#000"
-  ) // TODO later update with theme color
+  const [fontColor, setFontColor] = useState<string>(style.color || "#000") // TODO later update with theme color
   const [margin, setMargin] = useState<
     [string | number, string | number, string | number, string | number]
   >(
@@ -79,9 +93,76 @@ const Heading = ({ initial, style }: InputText) => {
     setTextEditorModalVisible(true)
   }
 
+  const openDropdownModal = (
+    options: Option[],
+    heading: string,
+    changeFunction: React.Dispatch<React.SetStateAction<any>>,
+    initial: string | number
+  ) => {
+    responseModalValue.current = initial
+    responseModalChangeFunction.current = changeFunction
+    setDropdownOptions(options)
+    setResponseModalHeading(heading)
+    setShowDropdown(true)
+  }
+
+  const handleModalResponse = ({ token }: EditTokens) => {
+    hideModal()
+    switch (token) {
+      case "text":
+        openTextEditorModal()
+        break
+      case "weight":
+        openDropdownModal(
+          fontWeightOptions,
+          "Edit Weight",
+          setFontWeight,
+          fontWeight
+        )
+        responseModalType.current = "number"
+        break
+      case "family":
+        openDropdownModal(
+          fontFamilyOptions,
+          "Edit style",
+          setFontFamily,
+          fontFamily
+        )
+        responseModalType.current = "text"
+        break
+      case "size":
+        openDropdownModal(fontSizeOptions, "Edit size", setFontSize, fontSize)
+        responseModalType.current = "number"
+        break
+      case "line-height":
+        openDropdownModal(
+          lineHeightOptions,
+          "Edit line height",
+          setLineHeight,
+          lineHeight
+        )
+        responseModalType.current = "number"
+        break
+      case "height":
+        openDropdownModal(heightOptions, "Edit Height", setHeight, height)
+        responseModalType.current = "number"
+        break
+      default:
+        alert("Invalid Option")
+    }
+  }
+
   const hideModal = () => {
     setContextModalVisible(false)
     setTextEditorModalVisible(false)
+    setShowDropdown(false)
+  }
+
+  const handleDropdownChange = (value: string | number) => {
+    if (responseModalChangeFunction.current) {
+      responseModalValue.current = value
+      responseModalChangeFunction.current(value)
+    }
   }
 
   return (
@@ -93,16 +174,27 @@ const Heading = ({ initial, style }: InputText) => {
               top: `${positionModal[1]}px`,
               left: `${positionModal[0]}px`,
             }}
+            handleResponse={handleModalResponse}
             options={[
               {
-                name: "Edit Text",
-                callback: openTextEditorModal,
+                name: "Text",
+                token: "text",
               },
               {
-                name: "123",
-                callback: () => {
-                  alert("Demo")
-                },
+                name: "Weight",
+                token: "weight",
+              },
+              {
+                name: "Style",
+                token: "family",
+              },
+              {
+                token: "size",
+                name: "Size",
+              },
+              {
+                token: "line-height",
+                name: "Line Height",
               },
             ]}
           />
@@ -119,6 +211,22 @@ const Heading = ({ initial, style }: InputText) => {
             }}
             handleChange={setValue}
             toggleVisibility={hideModal}
+          />
+        </ModalPortal>
+      )}
+      {showDropdown && (
+        <ModalPortal hideModal={hideModal}>
+          <DropdownEditorModal
+            type={responseModalType.current}
+            options={dropdownOptions}
+            position={{
+              top: `${positionModal[1]}px`,
+              left: `${positionModal[0]}px`,
+            }}
+            toggleVisibility={hideModal}
+            handleChange={handleDropdownChange}
+            heading={ResponseModalHeading}
+            value={responseModalValue.current}
           />
         </ModalPortal>
       )}
@@ -149,3 +257,5 @@ const Heading = ({ initial, style }: InputText) => {
 }
 
 export default Heading
+
+//TODO values update not working as needed

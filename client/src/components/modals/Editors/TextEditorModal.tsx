@@ -1,5 +1,5 @@
 export interface InputTextEditor {
-    initial : string
+    initial : string | number
     position : {
         left : string,
         top : string
