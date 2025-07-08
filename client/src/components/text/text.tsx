@@ -4,7 +4,7 @@ interface Input {
 
 const text = ({children} : Input) => {
     return(
-        <h1> </h1>
+        <h1>{children}</h1>
     )
 }
 

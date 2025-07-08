@@ -41,10 +41,9 @@ interface DSL {
   functions : DSLFunctions[]
 }
 
-export default function sanetizer(data: string) {
+export default function sanetizer(data: DSL) {
   try {
-    const DSL : DSL = JSON.parse(data)
-    
+    console.log(data)
   } catch (err) {
     console.log(err)
   }
