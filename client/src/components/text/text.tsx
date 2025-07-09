@@ -1,11 +1,10 @@
 interface Input {
-    children : React.ReactNode
+  children: React.ReactNode
+  style: React.CSSProperties
 }
 
-const text = ({children} : Input) => {
-    return(
-        <h1>{children}</h1>
-    )
+const text = ({ children, style }: Input) => {
+  return <h1 style={style}>{children}</h1>
 }
 
 export default text
