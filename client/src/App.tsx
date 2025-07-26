@@ -1,7 +1,7 @@
 function App() {
   
   return <>
-  <button onClick={() => {throw new Error("Trial Error")}}>Error</button>
+  <h1>Hello </h1>
   </>
 }
 
