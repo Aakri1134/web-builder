@@ -1,4 +1,3 @@
-import useStyle from "../../hooks/useStyle"
 import type { DSLComponent } from "../../utils/DSL/sanetizer"
 
 

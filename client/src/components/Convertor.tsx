@@ -43,17 +43,20 @@ export default function Convertor({
                 props={child.props}
               />
             )
-          case "Card":
-          case "Section-Horizontal":
-          case "Section-Vertical":
-          case "Image":
-          case "Link":
-          case "Button":
-          case "Body":
-          case "Loop":
-          case "Show":
+          case "Nav"://
+          case "Main"://
+          case "Section"://
+          case "Article"://
+          case "Image"://
+          case "Link"://
+          case "Button"://
+          case "Body"://
+          case "Loop"://
+          case "Show"://
           case "Modal":
-          case "Dropdown":
+          case "Dropdown"://
+          case "ListItems"://
+          case "List"://
           default:
             alert(`Unexpected Component found ${child.id}`)
             return <h1>Error</h1>

@@ -4,20 +4,23 @@ import { checkRequirements } from "./requirements"
 
 export interface DSLComponent {
   type:
+    | "Body" // <body>
     | "Heading" // <h1>
     | "Text" // <p>
-    | "Card" // Custom UI component
-    | "Section-Horizontal" // Has parent's maximum width
-    | "Section-Vertical" // Has parent's maximum height
-    | "Image" // Imgae connector
+    | "Section" // <section>
+    | "Div" // <div>
+    | "Main" // <main>
+    | "Nav" // <nav>
+    | "Article" // <article>
+    | "Image" // Image connector
     | "Link" // To connect to internal or external links, href will not be sent by AI
     | "Button" // Button frfr
-    | "Body" // Base component
-    | "Div" // Neutral container without style
     | "Loop" // repetitive viewing logic
     | "Show" // optional viewing logic
     | "Modal" // using Modal portal
     | "Dropdown" // Dropdown modal, options in form of links / buttons
+    | "List"
+    | "ListItems"
   id: string
   children: DSLComponent[]
   style: React.CSSProperties
@@ -50,19 +53,19 @@ export interface DSL {
 const validComponentTypes = new Set([
   "Heading",
   "Text",
-  "Card",
-  "Section-Horizontal",
-  "Section-Vertical",
+  "Div",
+  "Article",
+  "Main",
+  "Section",
+  "Nav",
   "Image",
   "Link",
   "Button",
   "Body",
   "Modal",
   "Dropdown",
-  "Checkbox",
   "Loop",
   "Show",
-  "Div",
 ])
 // const validFunctionTypes = new Set(["api-call", "navigate", "show-modal"])
 
