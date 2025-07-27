@@ -1,17 +1,10 @@
 import useStyle from "../../hooks/useStyle"
+import type { DSLComponent } from "../../utils/DSL/sanetizer"
 
-interface Input {
-  children: React.ReactNode
-  initial? : React.CSSProperties
-}
 
-export default function Text ({ children, initial }: Input) {
+export default function Text ({ id, props, style }: Partial<DSLComponent>) {
 
-  const [style, updateStyle] = useStyle(initial || {
-    color : "black",
-    
-  })
-  return <h1 style={{...style}}>{children}</h1>
+  return <p style={{...style}}>{props?.text}</p>
 }
 
 

@@ -6,6 +6,8 @@ import App from "./App.tsx"
 import * as Sentry from "@sentry/react"
 import { RecoilRoot } from "recoil"
 import { createBrowserRouter, RouterProvider } from "react-router"
+import Home from "./pages/Home.tsx"
+import Edit from "./pages/Edit.tsx"
 
 const root = createRoot(document.getElementById("root")!, {
   // Callback called when an error is thrown and not caught by an ErrorBoundary.
@@ -21,7 +23,11 @@ const root = createRoot(document.getElementById("root")!, {
 const router = createBrowserRouter([
   {
     path : "/",
-    Component : App
+    element : <Home/>
+  },
+  {
+    path : "/edit/:id",
+    element : <Edit/>
   }
 ])
 

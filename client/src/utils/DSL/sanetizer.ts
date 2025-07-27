@@ -62,8 +62,9 @@ const validComponentTypes = new Set([
   "Checkbox",
   "Loop",
   "Show",
+  "Div",
 ])
-const validFunctionTypes = new Set(["api-call", "navigate", "show-modal"])
+// const validFunctionTypes = new Set(["api-call", "navigate", "show-modal"])
 
 const functionIDs = new Set<string>([])
 
@@ -90,6 +91,61 @@ const allowedComponentStyles = new Set([
   "left",
   "right",
   "bottom",
+  "alignItems",
+  "backgroundColor",
+  "borderBottom",
+  "borderRight",
+  "borderRadius",
+  "boxShadow",
+  "boxSizing",
+  "color",
+  "cursor",
+  "display",
+  "flex",
+  "flexDirection",
+  "flexWrap",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "gap",
+  "justifyContent",
+  "left",
+  "lineHeight",
+  "margin",
+  "marginTop",
+  "maxWidth",
+  "minHeight",
+  "minWidth",
+  "padding",
+  "position",
+  "textAlign",
+  "top",
+  "width",
+  "alignItems",
+  "backgroundColor",
+  "borderRadius",
+  "boxShadow",
+  "boxSizing",
+  "color",
+  "cursor",
+  "display",
+  "flex",
+  "flexDirection",
+  "fontFamily",
+  "fontSize",
+  "fontWeight",
+  "gap",
+  "justifyContent",
+  "left",
+  "lineHeight",
+  "margin",
+  "maxWidth",
+  "minHeight",
+  "padding",
+  "position",
+  "textAlign",
+  "top",
+  "width",
 ])
 
 function checkMaliciousStrings(input: string) {
@@ -222,7 +278,7 @@ function recursiveCheckComponents(data: DSLComponent[]): {
         return false
       }
     }
-    
+
     // component specific tests
     const res = checkRequirements(component)
     report.push(...res.report)
@@ -238,33 +294,36 @@ function recursiveCheckComponents(data: DSLComponent[]): {
   }
 }
 
-function typeCheckFunction(data: DSLFunctions[]) {
-  return data.every((func: DSLFunctions) => {
-    return validFunctionTypes.has(func.type)
-  })
-}
+// function typeCheckFunction(data: DSLFunctions[]) {
+//   return data.every((func: DSLFunctions) => {
+//     return validFunctionTypes.has(func.type)
+//   })
+// }
 
 export default function sanetizer(data: DSL) {
+  console.log("Checks begin")
   try {
     const { components, functions } = data
     functions.map((func: DSLFunctions) => {
       functionIDs.add(func.id)
     })
     const res1 = recursiveCheckComponents(components)
-    const res2 = typeCheckFunction(functions)
-    if(res1.report.length > 0){
+    // const res2 = typeCheckFunction(functions)
+    if (res1.report.length > 0) {
       // can add logic to remove components in reports, might add level, to check components to be removed
       captureEvent({
-        level : "log",
-        message : "Sanetization with reports",
-        extra : {
-          reports : res1.report
-        }
+        level: "log",
+        message: "Sanetization with reports",
+        extra: {
+          reports: res1.report,
+        },
       })
     }
-    if(res1.success && res2)
-      return data
-    else return false
+    console.log("Check Complete")
+    if (res1.success /*&& res2*/) return data
+    console.log(res1.report)
+
+    return false
   } catch (err) {
     console.log(err)
     captureEvent({
