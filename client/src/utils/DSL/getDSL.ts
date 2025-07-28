@@ -5,7 +5,7 @@ const tempDSL : DSLComponent = {
   id: "root-container",
   style: {
     minHeight: "100vh",
-    width: "100vw",
+    width: "inherit",
     margin: "0",
     padding: "0",
     fontFamily: "Arial, sans-serif",

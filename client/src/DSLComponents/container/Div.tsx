@@ -25,7 +25,7 @@ export default function Div({
   }, [])
 
   return (
-    <div style={style}>
+    <div style={{...style}}>
       <Convertor components={children} parents={updatedParents}/>
     </div>
   )

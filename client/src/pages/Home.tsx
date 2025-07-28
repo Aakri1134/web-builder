@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import AdjustableDiv from "../components/AdjustableDiv";
 
 export default function Home () {
     return(
