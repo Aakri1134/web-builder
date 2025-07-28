@@ -1,6 +1,28 @@
-import { atom } from "recoil";
+import {  atom, atomFamily, useRecoilState, useResetRecoilState } from "recoil"
+import type { DSLComponent } from "../../utils/DSL/sanetizer"
 
-export const style = atom({
-  key: 'component',
-  default: null,
-});
+type Style = DSLComponent["style"]
+type ID = DSLComponent["id"]
+type Props = DSLComponent["props"]
+type Children = DSLComponent["children"]
+
+export const styleFamily = atomFamily<Style, ID>({
+  key : `styleFamily`,
+  default: () => ({})
+})
+
+export const propsFamily = atomFamily<Props, ID>({
+  key : `propsFamily`,
+  default: () => ({})
+})
+
+export const childFamily = atomFamily<Children, ID>({
+  key : `childFamily`,
+  default: () => []
+})
+
+export const activeComponents = atom<ID[]>({
+  key : "activeComponents",
+  default : []
+})
+

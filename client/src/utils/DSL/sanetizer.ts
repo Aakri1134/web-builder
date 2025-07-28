@@ -1,5 +1,4 @@
 import { captureEvent, captureException } from "@sentry/react"
-import { style } from "../../recoil/atoms/component"
 import { checkRequirements } from "./requirements"
 
 export interface DSLComponent {
@@ -72,84 +71,78 @@ const validComponentTypes = new Set([
 const functionIDs = new Set<string>([])
 
 const allowedComponentStyles = new Set([
-  "fontSize",
-  "margin",
-  "padding",
-  "color",
-  "backgroundColor",
-  "lineHeight",
-  "fontWeight",
-  "fontFamily",
-  "height",
-  "width",
-  "display",
-  "justifyContent",
-  "alignItems",
-  "flexDirection",
-  "border",
-  "borderRadius",
-  "boxShadow",
-  "position",
-  "top",
-  "left",
-  "right",
-  "bottom",
-  "alignItems",
-  "backgroundColor",
-  "borderBottom",
-  "borderRight",
-  "borderRadius",
-  "boxShadow",
-  "boxSizing",
-  "color",
-  "cursor",
-  "display",
-  "flex",
-  "flexDirection",
-  "flexWrap",
-  "fontFamily",
-  "fontSize",
-  "fontWeight",
-  "gap",
-  "justifyContent",
-  "left",
-  "lineHeight",
-  "margin",
-  "marginTop",
-  "maxWidth",
-  "minHeight",
-  "minWidth",
-  "padding",
-  "position",
-  "textAlign",
-  "top",
-  "width",
-  "alignItems",
-  "backgroundColor",
-  "borderRadius",
-  "boxShadow",
-  "boxSizing",
-  "color",
-  "cursor",
-  "display",
-  "flex",
-  "flexDirection",
-  "fontFamily",
-  "fontSize",
-  "fontWeight",
-  "gap",
-  "justifyContent",
-  "left",
-  "lineHeight",
-  "margin",
-  "maxWidth",
-  "minHeight",
-  "padding",
-  "position",
-  "textAlign",
-  "top",
-  "width",
+  'fontSize',
+  'margin',
+  'padding',
+  'color',
+  'backgroundColor',
+  'lineHeight',
+  'fontWeight',
+  'fontFamily',
+  'height',
+  'width',
+  'display',
+  'justifyContent',
+  'alignItems',
+  'flexDirection',
+  'border',
+  'borderRadius',
+  'boxShadow',
+  'position',
+  'top',
+  'left',
+  'right',
+  'bottom',
+  'borderBottom',
+  'borderRight',
+  'boxSizing',
+  'cursor',
+  'flex',
+  'flexWrap',
+  'gap',
+  'marginTop',
+  'maxWidth',
+  'minHeight',
+  'minWidth',
+  'textAlign'
 ])
+
+export interface validStyles {
+  style : | "fontSize"
+| "margin"
+| "padding"
+| "color"
+| "backgroundColor"
+| "lineHeight"
+| "fontWeight"
+| "fontFamily"
+| "height"
+| "width"
+| "display"
+| "justifyContent"
+| "alignItems"
+| "flexDirection"
+| "border"
+| "borderRadius"
+| "boxShadow"
+| "position"
+| "top"
+| "left"
+| "right"
+| "bottom"
+| "borderBottom"
+| "borderRight"
+| "boxSizing"
+| "cursor"
+| "flex"
+| "flexWrap"
+| "gap"
+| "marginTop"
+| "maxWidth"
+| "minHeight"
+| "minWidth"
+| "textAlign"
+}
 
 function checkMaliciousStrings(input: string) {
   // can add malicious string checks later
@@ -202,7 +195,7 @@ function recursiveCheckComponents(data: DSLComponent[]): {
       report.push({
         id: component.id,
         reason: `Invalid style type ${component.type}`,
-        additional: style,
+        additional: component.style,
       })
       return false
     }

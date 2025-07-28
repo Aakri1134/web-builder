@@ -1,8 +1,29 @@
-import Convertor from "../../components/Convertor";
-import type { DSLComponent } from "../../utils/DSL/sanetizer";
+import { useEffect } from "react"
+import { useSetRecoilState } from "recoil"
+import Convertor from "../../components/Convertor"
+import { activeComponents } from "../../recoil/atoms/component"
+import type { DSLComponent } from "../../utils/DSL/sanetizer"
 
-export default function Nav({ id, style, children } : {id : DSLComponent["id"], style : DSLComponent["style"], children : DSLComponent["children"]}) {
-  return <nav style={style}>
-    <Convertor components={children}/>
-  </nav>
+export default function Nav({
+  id,
+  style,
+  children,
+}: {
+  id: DSLComponent["id"]
+  style: DSLComponent["style"]
+  children: DSLComponent["children"]
+}) {
+  const setActive = useSetRecoilState(activeComponents)
+
+  useEffect(() => {
+    if (typeof id === "string") {
+      setActive((x) => [...x, id])
+    }
+  }, [])
+
+  return (
+    <nav style={style}>
+      <Convertor components={children} />
+    </nav>
+  )
 }
