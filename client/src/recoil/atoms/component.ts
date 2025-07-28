@@ -1,4 +1,4 @@
-import {  atom, atomFamily, useRecoilState, useResetRecoilState } from "recoil"
+import {  atom, atomFamily } from "recoil"
 import type { DSLComponent } from "../../utils/DSL/sanetizer"
 
 type Style = DSLComponent["style"]
@@ -23,6 +23,14 @@ export const childFamily = atomFamily<Children, ID>({
 
 export const activeComponents = atom<ID[]>({
   key : "activeComponents",
-  default : []
+  default : [],
+  effects: [
+    ({ onSet }) => {
+      onSet((newValue, oldValue) => {
+        console.log("activeComponents changed:", newValue)
+        console.log(oldValue)
+      })
+    }
+  ]
 })
 
