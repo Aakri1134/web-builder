@@ -1,7 +1,7 @@
 import { useRecoilState, useResetRecoilState } from "recoil"
 import {
   activeComponents,
-  childFamily,
+  parentFamily,
   propsFamily,
   styleFamily,
 } from "../recoil/atoms/component"
@@ -13,7 +13,7 @@ export const useClearComponentAtoms = () => {
     active.forEach((id: string) => {
       useResetRecoilState(styleFamily(id))
       useResetRecoilState(propsFamily(id))
-      useResetRecoilState(childFamily(id))
+      useResetRecoilState(parentFamily(id))
     })
     setActive([])
   }

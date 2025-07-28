@@ -4,7 +4,6 @@ import type { DSLComponent } from "../../utils/DSL/sanetizer"
 type Style = DSLComponent["style"]
 type ID = DSLComponent["id"]
 type Props = DSLComponent["props"]
-type Children = DSLComponent["children"]
 
 export const styleFamily = atomFamily<Style, ID>({
   key : `styleFamily`,
@@ -16,8 +15,8 @@ export const propsFamily = atomFamily<Props, ID>({
   default: () => ({})
 })
 
-export const childFamily = atomFamily<Children, ID>({
-  key : `childFamily`,
+export const parentFamily = atomFamily<ID[], ID>({
+  key : `parentFamily`,
   default: () => []
 })
 

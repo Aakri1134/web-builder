@@ -5,8 +5,10 @@ import type { DSLComponent } from "../utils/DSL/sanetizer"
 
 export default function Convertor({
   components,
+  parents
 }: {
   components: DSLComponent[]
+  parents : DSLComponent["id"][]
 }) {
   if (components.length === 0) {
     return <></>
@@ -23,6 +25,7 @@ export default function Convertor({
                 id={child.id}
                 style={child.style}
                 children={child.children}
+                parents={parents}
               />
             )
           case "Heading":
@@ -32,6 +35,7 @@ export default function Convertor({
                 id={child.id}
                 style={child.style}
                 props={child.props}
+                parents={parents}
               />
             )
           case "Text":
@@ -41,6 +45,7 @@ export default function Convertor({
                 id={child.id}
                 style={child.style}
                 props={child.props}
+                parents={parents}
               />
             )
           case "Nav"://

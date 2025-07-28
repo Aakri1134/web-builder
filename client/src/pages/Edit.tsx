@@ -32,7 +32,7 @@ export default function Edit() {
     <div style={{
         margin : 0
     }}>
-      <Convertor components={DSL.components}/>
+      <Convertor components={DSL.components} parents={[]}/>
     </div>
   )
 }

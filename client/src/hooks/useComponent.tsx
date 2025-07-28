@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil"
 import {
-  childFamily,
+  parentFamily,
   propsFamily,
   styleFamily,
 } from "../recoil/atoms/component"
@@ -11,17 +11,17 @@ export default function useComponent(
   id: string,
   styleInit: DSLComponent["style"],
   propsInit: DSLComponent["props"],
-  parentInit: DSLComponent["children"]
+  parentInit: DSLComponent["id"][]
 ) {
   const [style, setStyle] = useRecoilState(styleFamily(id))
   const [props, setProps] = useRecoilState(propsFamily(id))
-  const [parent, setParent] = useRecoilState(childFamily(id))
+  const [parents, setParents] = useRecoilState(parentFamily(id))
 
   useEffect(() => {
     setStyle(styleInit)
     setProps(propsInit)
-    setParent(parentInit)
-  }, [id, styleInit, propsInit, parentInit, setStyle, setProps, setParent])
+    setParents(parentInit)
+  }, [id, styleInit, propsInit, parentInit, setStyle, setProps, setParents])
 
-  return { style, props, parent }
+  return { style, props, parents, setStyle, setParents, setProps }
 }
