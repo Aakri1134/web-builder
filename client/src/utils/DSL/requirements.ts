@@ -3,8 +3,25 @@ import { type DSLComponent, type Report } from "./sanetizer"
 // to check if the required parameters are present in component.props
 type PropKeys = keyof NonNullable<DSLComponent["props"]>
 const requirements: { [key in DSLComponent["type"]]: PropKeys[] } = {
-  Button: ["className", "text", "onClick"],
-  Link: ["className", "text", "href"],
+//   Button: ["className", "text", "onClick"],
+//   Link: ["className", "text", "href"],
+//   Image: ["className", "src", "alt"],
+//   Heading: ["className", "text"],
+//   Text: ["className", "text"],
+//   Show: ["className", "onClick"],
+//   Body: ["className"],
+//   Div: ["className"],
+//   Loop: ["className"],
+//   Dropdown: ["className"],
+//   Modal: ["className"],
+//   Section: ["className"],
+//   Main: ["className"],
+//   Nav: ["className"],
+//   Article: ["className"],
+//   List: ["className"],
+//   ListItems: ["className"],
+      Button: ["className", "text"],
+  Link: ["className", "text"],
   Image: ["className", "src", "alt"],
   Heading: ["className", "text"],
   Text: ["className", "text"],
@@ -37,22 +54,33 @@ export function checkRequirements(component: DSLComponent): {
       report,
     }
   }
-//   console.log("Hello")
-//   console.log(component)
-  const res: boolean = requirements[component.type].every((x: PropKeys) => {
+  //   console.log("Hello")
+  //   console.log(component)
+  requirements[component.type].map((x: PropKeys) => {
     // console.log(x)
-    
-    if (component.props[x] === undefined || component.props[x] === null || !component.props[x]) {
-      report.push({
-        id: component.id,
-        reason: `${x} not found in the ${component.type}`,
-      })
-      
+
+    if (
+      component.props[x] === undefined ||
+      component.props[x] === null ||
+      !component.props[x]
+    ) {
+      if (x === "className") {
+        component.props.className = ""
+      } else {
+        report.push({
+          id: component.id,
+          reason: `${x} not found in the ${component.type}`,
+        })
+      }
+
       return false
-    }else {
-    return true}
+    } else {
+      return true
+    }
   })
-//   console.log(report)
+  //   console.log(report)
+
+  const res = report.length == 0
   return {
     success: res,
     report,

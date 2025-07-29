@@ -36,6 +36,11 @@ export default function Edit() {
         {DSL.animations}
         {DSL.theme?.light}
         {DSL.theme?.dark}
+
+        {DSL.responsiveUtilities?.mobile}
+        {DSL.responsiveUtilities?.tablet}
+        {DSL.responsiveUtilities?.desktop}
+        {DSL.responsiveUtilities?.large}
       </style>
     <div style={{
         margin : 0

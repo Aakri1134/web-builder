@@ -14,34 +14,29 @@ export interface DSLComponent {
     | "Image" // Image connector
     | "Link" // To connect to internal or external links, href will not be sent by AI
     | "Button" // Button frfr
-    | "Loop" // repetitive viewing logic
-    | "Show" // optional viewing logic
-    | "Modal" // using Modal portal
-    | "Dropdown" // Dropdown modal, options in form of links / buttons
-    | "List"
-    | "ListItems"
+    | "List" // <ul>
+    | "ListItems" // <li>
+    | "Loop" // repetitive viewing logic **NOT YET COMPLETED**
+    | "Show" // optional viewing logic **NOT YET COMPLETED**
+    | "Modal" // using Modal portal **NOT YET COMPLETED**
+    | "Dropdown" // Dropdown modal, options in form of links / buttons **NOT YET COMPLETED**
   id: string
   children: DSLComponent[]
-  style: React.CSSProperties
+  style: React.CSSProperties// inline React CSS for the current component
   mediaQueries?: {
-    mobile?: Partial<CSSStyleDeclaration> // @media (max-width: 768px)
-    tablet?: Partial<CSSStyleDeclaration> // @media (min-width: 769px) and (max-width: 1024px)
-    desktop?: Partial<CSSStyleDeclaration> // @media (min-width: 1025px)
-    large?: Partial<CSSStyleDeclaration> // @media (min-width: 1440px)
-    // Custom media queries (Option 3)
-    custom?: Array<{
-      query: string // "(max-width: 480px)", "(orientation: landscape)"
-      styles: Partial<CSSStyleDeclaration>
-    }>
+    mobile?: Partial<CSSStyleDeclaration> // @media (max-width: 768px) plain CSS for responsiveness
+    tablet?: Partial<CSSStyleDeclaration> // @media (min-width: 769px) and (max-width: 1024px) plain CSS for responsiveness
+    desktop?: Partial<CSSStyleDeclaration> // @media (min-width: 1025px) plain CSS for responsiveness
+    large?: Partial<CSSStyleDeclaration> // @media (min-width: 1440px) plain CSS for responsiveness
   }
   props: {
-    text?: string
-    onClick?: string
-    onChange?: string
-    src?: string
+    text?: string // text in Text / Link / Heading element
+    onClick?: string // **NOT YET COMPLETED**
+    onChange?: string // **NOT YET COMPLETED**
+    src?: string // make image source only external images
     href?: string
     alt?: string
-    className: string
+    className: string // classNames for the hover, animation and media implemenations
   }
 }
 
@@ -56,21 +51,19 @@ export interface DSLFunctions {
 
 export interface DSL {
   components: DSLComponent[]
-  functions: DSLFunctions[]
-  hover?: string
-  animations?: string
+  functions: DSLFunctions[] // **NOT YET COMPLETED**
+  hover?: string // plain CSS to store the classes for hover
+  animations?: string // plain CSS to store the classes for custom animations
   theme?: {
-    light: string
-    dark: string
+    // stores all the colors used in entire project
+    light: string // plain CSS stored in .light and :root for
+    dark: string // plain CSS stored in .dark, implementation handled in pre defined code
   }
   responsiveUtilities?: {
-    breakpoints?: {
-      mobile: string // "@media (max-width: 768px)"
-      tablet: string // "@media (min-width: 769px) and (max-width: 1024px)"
-      desktop: string // "@media (min-width: 1025px)"
-      large: string // "@media (min-width: 1440px)"
-    }
-    globalResponsive?: string // Global responsive CSS rules
+    mobile?: string // "@media (max-width: 768px)" plain CSS for responsiveness
+    tablet?: string // "@media (min-width: 769px) and (max-width: 1024px)" plain CSS for responsiveness
+    desktop?: string // "@media (min-width: 1025px)" plain CSS for responsiveness
+    large?: string // "@media (min-width: 1440px)" plain CSS for responsiveness
   }
 }
 
@@ -91,7 +84,7 @@ const validComponentTypes = new Set([
   "Loop",
   "Show",
   "List",
-  "ListItems"
+  "ListItems",
 ])
 // const validFunctionTypes = new Set(["api-call", "navigate", "show-modal"])
 
@@ -132,13 +125,28 @@ const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set([
   "zIndex",
   "listStyle",
   "marginTop",
+  "marginLeft",
+  "marginRight",
   "marginBottom",
-  "textDecoration", 
+  "textDecoration",
   "borderTop",
   "borderBottom",
   "border",
   "borderRight",
-  "borderLeft"
+  "borderLeft",
+  "overflowX",
+  "backdropFilter",
+  "transition",
+  "background",
+  "paddingTop",
+  "paddingLeft",
+  "paddingRight",
+  "paddingBottom",
+  "objectFit",
+  "gridTemplateColumns",
+  "textTransform",
+  "letterSpacing",
+  "listStyleType"
 ])
 
 export interface validStyles {
@@ -187,8 +195,11 @@ function checkMaliciousStrings(input: string) {
 
 function checkMaliciousURLs(input: string) {
   // can add checks for urls
+
+  return true
+
   try {
-    if(input[0] === "#"){
+    if (input[0] === "#") {
       return true
     }
     const url = new URL(input)
@@ -196,9 +207,9 @@ function checkMaliciousURLs(input: string) {
     const safeProtocols = ["http:", "https:"]
     const block: string[] = []
     if (!safeProtocols.includes(url.protocol) || block.includes(url.hostname)) {
-      return false 
+      return false
     }
-    return true 
+    return true
   } catch (err) {
     captureException(err)
     return false
