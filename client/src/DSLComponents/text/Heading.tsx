@@ -9,6 +9,7 @@ export interface TextComponentInput {
   parents: DSLComponent["id"][]
   props: DSLComponent["props"]
   style: DSLComponent["style"]
+  
 }
 
 export default function Heading({
@@ -24,5 +25,5 @@ export default function Heading({
       setActive((x) => [...x, id])
     }
   }, [])
-  return <h1 style={component.style}>{props?.text}</h1>
+  return <h1 className={component.props.className} style={component.style}>{props?.text}</h1>
 }

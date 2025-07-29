@@ -23,15 +23,25 @@ export interface DSLComponent {
   id: string
   children: DSLComponent[]
   style: React.CSSProperties
-  hover?: Partial<CSSStyleDeclaration>
-  animations?: Partial<CSSStyleDeclaration>
-  props?: {
+  mediaQueries?: {
+    mobile?: Partial<CSSStyleDeclaration> // @media (max-width: 768px)
+    tablet?: Partial<CSSStyleDeclaration> // @media (min-width: 769px) and (max-width: 1024px)
+    desktop?: Partial<CSSStyleDeclaration> // @media (min-width: 1025px)
+    large?: Partial<CSSStyleDeclaration> // @media (min-width: 1440px)
+    // Custom media queries (Option 3)
+    custom?: Array<{
+      query: string // "(max-width: 480px)", "(orientation: landscape)"
+      styles: Partial<CSSStyleDeclaration>
+    }>
+  }
+  props: {
     text?: string
     onClick?: string
     onChange?: string
     src?: string
     href?: string
     alt?: string
+    className : string
   }
 }
 
@@ -47,6 +57,21 @@ export interface DSLFunctions {
 export interface DSL {
   components: DSLComponent[]
   functions: DSLFunctions[]
+  hover?: Partial<CSSStyleDeclaration>
+  animations?: Partial<CSSStyleDeclaration>
+  theme? : {
+    light : Partial<CSSStyleDeclaration>
+    dark : Partial<CSSStyleDeclaration>
+  }
+  responsiveUtilities?: {
+    breakpoints?: {
+      mobile: string    // "@media (max-width: 768px)"
+      tablet: string    // "@media (min-width: 769px) and (max-width: 1024px)"
+      desktop: string   // "@media (min-width: 1025px)"
+      large: string     // "@media (min-width: 1440px)"
+    }
+    globalResponsive?: string  // Global responsive CSS rules
+  }
 }
 
 const validComponentTypes = new Set([
@@ -71,77 +96,78 @@ const validComponentTypes = new Set([
 const functionIDs = new Set<string>([])
 
 const allowedComponentStyles = new Set([
-  'fontSize',
-  'margin',
-  'padding',
-  'color',
-  'backgroundColor',
-  'lineHeight',
-  'fontWeight',
-  'fontFamily',
-  'height',
-  'width',
-  'display',
-  'justifyContent',
-  'alignItems',
-  'flexDirection',
-  'border',
-  'borderRadius',
-  'boxShadow',
-  'position',
-  'top',
-  'left',
-  'right',
-  'bottom',
-  'borderBottom',
-  'borderRight',
-  'boxSizing',
-  'cursor',
-  'flex',
-  'flexWrap',
-  'gap',
-  'marginTop',
-  'maxWidth',
-  'minHeight',
-  'minWidth',
-  'textAlign'
+  "fontSize",
+  "margin",
+  "padding",
+  "color",
+  "backgroundColor",
+  "lineHeight",
+  "fontWeight",
+  "fontFamily",
+  "height",
+  "width",
+  "display",
+  "justifyContent",
+  "alignItems",
+  "flexDirection",
+  "border",
+  "borderRadius",
+  "boxShadow",
+  "position",
+  "top",
+  "left",
+  "right",
+  "bottom",
+  "borderBottom",
+  "borderRight",
+  "boxSizing",
+  "cursor",
+  "flex",
+  "flexWrap",
+  "gap",
+  "marginTop",
+  "maxWidth",
+  "minHeight",
+  "minWidth",
+  "textAlign",
 ])
 
 export interface validStyles {
-  style : | "fontSize"
-| "margin"
-| "padding"
-| "color"
-| "backgroundColor"
-| "lineHeight"
-| "fontWeight"
-| "fontFamily"
-| "height"
-| "width"
-| "display"
-| "justifyContent"
-| "alignItems"
-| "flexDirection"
-| "border"
-| "borderRadius"
-| "boxShadow"
-| "position"
-| "top"
-| "left"
-| "right"
-| "bottom"
-| "borderBottom"
-| "borderRight"
-| "boxSizing"
-| "cursor"
-| "flex"
-| "flexWrap"
-| "gap"
-| "marginTop"
-| "maxWidth"
-| "minHeight"
-| "minWidth"
-| "textAlign"
+  style:
+    | "fontSize"
+    | "margin"
+    | "padding"
+    | "color"
+    | "backgroundColor"
+    | "lineHeight"
+    | "fontWeight"
+    | "fontFamily"
+    | "height"
+    | "width"
+    | "display"
+    | "justifyContent"
+    | "alignItems"
+    | "flexDirection"
+    | "border"
+    | "borderRadius"
+    | "boxShadow"
+    | "position"
+    | "top"
+    | "left"
+    | "right"
+    | "bottom"
+    | "borderBottom"
+    | "borderRight"
+    | "boxSizing"
+    | "cursor"
+    | "flex"
+    | "flexWrap"
+    | "gap"
+    | "marginTop"
+    | "maxWidth"
+    | "minHeight"
+    | "minWidth"
+    | "textAlign"
 }
 
 function checkMaliciousStrings(input: string) {

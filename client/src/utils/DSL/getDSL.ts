@@ -1,557 +1,470 @@
 import sanetizer, { type DSL, type DSLComponent } from "./sanetizer";
 
-const tempDSL : DSLComponent = {
-  type: "Div",
-  id: "root-container",
-  style: {
-    minHeight: "100vh",
-    width: "inherit",
-    margin: "0",
-    padding: "0",
-    fontFamily: "Arial, sans-serif",
-    display: "flex",
-    flexDirection: "column",
-    boxSizing: "border-box",
-    position: "absolute",
-    top: "0",
-    left: "0"
-  },
-  children: [
+const tempDSL : DSLComponent = 
     {
-      type: "Div",
-      id: "header",
-      style: {
-        width: "100%",
-        backgroundColor: "#d63384",
-        padding: "15px 20px",
-        boxSizing: "border-box"
+      "type": "Body",
+      "id": "main-body",
+      "style": {
+        "margin": "0",
+        "padding": "0",
+        "fontFamily": "Arial, sans-serif",
+        "backgroundColor": "var(--background-color)",
+        "color": "var(--text-color)",
+        "minHeight": "100vh"
       },
-      children: [
+      "props": {
+        "className": "main-body"
+      },
+      "children": [
         {
-          type: "Div",
-          id: "header-content",
-          style: {
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto",
-            boxSizing: "border-box",
-            flexWrap: "wrap",
-            gap: "10px"
+          "type": "Nav",
+          "id": "header-nav",
+          "style": {
+            "backgroundColor": "var(--primary-color)",
+            "padding": "16px 24px",
+            "position": "fixed",
+            "top": "0",
+            "left": "0",
+            "right": "0",
+            "zIndex": "1000",
+            "boxShadow": "0 2px 4px rgba(0,0,0,0.1)"
           },
-          children: [
+          "props": {
+            "className": "header-nav"
+          },
+          "children": [
             {
-              type: "Heading",
-              id: "logo-heading",
-              style: {
-                fontSize: "clamp(18px, 4vw, 24px)",
-                color: "white",
-                margin: "0",
-                fontWeight: "bold"
+              "type": "Heading",
+              "id": "header-logo",
+              "style": {
+                "color": "white",
+                "margin": "0",
+                "fontSize": "24px",
+                "fontWeight": "bold"
               },
-              props: {
-                text: "MyWebsite"
+              "props": {
+                "text": "My Website",
+                "className": "header-logo"
               },
-              children: []
-            },
-            {
-              type: "Div",
-              id: "desktop-nav",
-              style: {
-                display: "flex",
-                gap: "clamp(10px, 3vw, 25px)",
-                alignItems: "center",
-                flexWrap: "wrap"
-              },
-              children: [
-                {
-                  type: "Text",
-                  id: "nav-home",
-                  style: {
-                    color: "white",
-                    fontSize: "clamp(14px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "5px 10px"
-                  },
-                  props: {
-                    text: "Home"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "nav-about",
-                  style: {
-                    color: "white",
-                    fontSize: "clamp(14px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "5px 10px"
-                  },
-                  props: {
-                    text: "About"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "nav-contact",
-                  style: {
-                    color: "white",
-                    fontSize: "clamp(14px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "5px 10px"
-                  },
-                  props: {
-                    text: "Contact"
-                  },
-                  children: []
-                }
-              ]
+              "children": []
             }
           ]
-        }
-      ]
-    },
-    {
-      type: "Div",
-      id: "content-area",
-      style: {
-        flex: "1",
-        display: "flex",
-        width: "100%",
-        boxSizing: "border-box",
-        flexDirection: "row"
-      },
-      children: [
+        },
         {
-          type: "Div",
-          id: "sidebar",
-          style: {
-            width: "max(0px, min(280px, 100vw - 768px))",
-            minWidth: "0px",
-            backgroundColor: "#f8bbd9",
-            padding: "max(0px, min(20px, (100vw - 768px) * 0.1))",
-            boxSizing: "border-box",
-            borderRight: "max(0px, min(2px, 100vw - 768px)) solid #ec4899",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden"
+          "type": "Div",
+          "id": "content-wrapper",
+          "style": {
+            "display": "flex",
+            "marginTop": "72px",
+            "minHeight": "calc(100vh - 72px)"
           },
-          children: [
+          "mediaQueries": {
+            "mobile": {
+              "flexDirection": "column",
+              "paddingBottom": "80px"
+            }
+          },
+          "props": {
+            "className": "content-wrapper"
+          },
+          "children": [
             {
-              type: "Heading",
-              id: "sidebar-title",
-              style: {
-                fontSize: "clamp(0px, 3vw, 18px)",
-                color: "#be185d",
-                margin: "0 0 clamp(0px, 3vw, 20px) 0",
-                fontWeight: "bold"
+              "type": "Nav",
+              "id": "sidebar",
+              "style": {
+                "width": "250px",
+                "backgroundColor": "var(--secondary-color)",
+                "padding": "24px",
+                "borderRight": "1px solid var(--border-color)",
+                "position": "sticky",
+                "top": "72px",
+                "height": "fit-content"
               },
-              props: {
-                text: "Features"
+              "mediaQueries": {
+                "mobile": {
+                  "display": "none"
+                }
               },
-              children: []
+              "props": {
+                "className": "sidebar"
+              },
+              "children": [
+                {
+                  "type": "List",
+                  "id": "sidebar-menu",
+                  "style": {
+                    "listStyle": "none",
+                    "padding": "0",
+                    "margin": "0"
+                  },
+                  "props": {
+                    "className": "sidebar-menu"
+                  },
+                  "children": [
+                    {
+                      "type": "ListItems",
+                      "id": "menu-item-1",
+                      "style": {
+                        "marginBottom": "12px"
+                      },
+                      "props": {
+                        "className": "menu-item"
+                      },
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "menu-link-1",
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "12px 16px",
+                            "display": "block",
+                            "borderRadius": "4px"
+                          },
+                          "props": {
+                            "text": "Home",
+                            "href": "#home",
+                            "className": "menu-link"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "menu-item-2",
+                      "style": {
+                        "marginBottom": "12px"
+                      },
+                      "props": {
+                        "className": "menu-item"
+                      },
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "menu-link-2",
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "12px 16px",
+                            "display": "block",
+                            "borderRadius": "4px"
+                          },
+                          "props": {
+                            "text": "About",
+                            "href": "#about",
+                            "className": "menu-link"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "menu-item-3",
+                      "style": {
+                        "marginBottom": "12px"
+                      },
+                      "props": {
+                        "className": "menu-item"
+                      },
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "menu-link-3",
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "12px 16px",
+                            "display": "block",
+                            "borderRadius": "4px"
+                          },
+                          "props": {
+                            "text": "Services",
+                            "href": "#services",
+                            "className": "menu-link"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "menu-item-4",
+                      "style": {
+                        "marginBottom": "12px"
+                      },
+                      "props": {
+                        "className": "menu-item"
+                      },
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "menu-link-4",
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "12px 16px",
+                            "display": "block",
+                            "borderRadius": "4px"
+                          },
+                          "props": {
+                            "text": "Contact",
+                            "href": "#contact",
+                            "className": "menu-link"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
-              type: "Div",
-              id: "sidebar-menu",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                gap: "clamp(0px, 2vw, 15px)"
+              "type": "Main",
+              "id": "main-content",
+              "style": {
+                "flex": "1",
+                "padding": "32px",
+                "backgroundColor": "var(--background-color)"
               },
-              children: [
+              "mediaQueries": {
+                "mobile": {
+                  "padding": "16px"
+                }
+              },
+              "props": {
+                "className": "main-content"
+              },
+              "children": [
                 {
-                  type: "Text",
-                  id: "feature-dashboard",
-                  style: {
-                    color: "#be185d",
-                    fontSize: "clamp(0px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "clamp(0px, 2vw, 10px) clamp(0px, 2.5vw, 15px)",
-                    backgroundColor: "#fce7f3",
-                    borderRadius: "6px"
+                  "type": "Section",
+                  "id": "hero-section",
+                  "style": {
+                    "marginBottom": "48px"
                   },
-                  props: {
-                    text: "Dashboard"
+                  "props": {
+                    "className": "hero-section"
                   },
-                  children: []
+                  "children": [
+                    {
+                      "type": "Heading",
+                      "id": "hero-title",
+                      "style": {
+                        "fontSize": "48px",
+                        "marginBottom": "16px",
+                        "color": "var(--primary-color)"
+                      },
+                      "mediaQueries": {
+                        "mobile": {
+                          "fontSize": "32px"
+                        }
+                      },
+                      "props": {
+                        "text": "Welcome to Our Website",
+                        "className": "hero-title"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Text",
+                      "id": "hero-description",
+                      "style": {
+                        "fontSize": "18px",
+                        "lineHeight": "1.6",
+                        "color": "var(--text-color)",
+                        "maxWidth": "600px"
+                      },
+                      "mediaQueries": {
+                        "mobile": {
+                          "fontSize": "16px"
+                        }
+                      },
+                      "props": {
+                        "text": "This is a responsive website built with our custom DSL. The sidebar transforms into a bottom navigation on mobile devices for better user experience.",
+                        "className": "hero-description"
+                      },
+                      "children": []
+                    }
+                  ]
                 },
                 {
-                  type: "Text",
-                  id: "feature-analytics",
-                  style: {
-                    color: "#be185d",
-                    fontSize: "clamp(0px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "clamp(0px, 2vw, 10px) clamp(0px, 2.5vw, 15px)",
-                    backgroundColor: "#fce7f3",
-                    borderRadius: "6px"
+                  "type": "Section",
+                  "id": "content-section",
+                  "style": {
+                    "marginBottom": "48px"
                   },
-                  props: {
-                    text: "Analytics"
+                  "props": {
+                    "className": "content-section"
                   },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "feature-settings",
-                  style: {
-                    color: "#be185d",
-                    fontSize: "clamp(0px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "clamp(0px, 2vw, 10px) clamp(0px, 2.5vw, 15px)",
-                    backgroundColor: "#fce7f3",
-                    borderRadius: "6px"
-                  },
-                  props: {
-                    text: "Settings"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "feature-profile",
-                  style: {
-                    color: "#be185d",
-                    fontSize: "clamp(0px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "clamp(0px, 2vw, 10px) clamp(0px, 2.5vw, 15px)",
-                    backgroundColor: "#fce7f3",
-                    borderRadius: "6px"
-                  },
-                  props: {
-                    text: "Profile"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "feature-help",
-                  style: {
-                    color: "#be185d",
-                    fontSize: "clamp(0px, 2.5vw, 16px)",
-                    cursor: "pointer",
-                    margin: "0",
-                    padding: "clamp(0px, 2vw, 10px) clamp(0px, 2.5vw, 15px)",
-                    backgroundColor: "#fce7f3",
-                    borderRadius: "6px"
-                  },
-                  props: {
-                    text: "Help & Support"
-                  },
-                  children: []
+                  "children": [
+                    {
+                      "type": "Article",
+                      "id": "main-article",
+                      "style": {
+                        "backgroundColor": "white",
+                        "padding": "32px",
+                        "borderRadius": "8px",
+                        "boxShadow": "0 2px 8px rgba(0,0,0,0.1)"
+                      },
+                      "mediaQueries": {
+                        "mobile": {
+                          "padding": "16px"
+                        }
+                      },
+                      "props": {
+                        "className": "main-article"
+                      },
+                      "children": [
+                        {
+                          "type": "Heading",
+                          "id": "article-title",
+                          "style": {
+                            "fontSize": "32px",
+                            "marginBottom": "24px",
+                            "color": "var(--primary-color)"
+                          },
+                          "mediaQueries": {
+                            "mobile": {
+                              "fontSize": "24px"
+                            }
+                          },
+                          "props": {
+                            "text": "About Our Platform",
+                            "className": "article-title"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "Text",
+                          "id": "article-content",
+                          "style": {
+                            "fontSize": "16px",
+                            "lineHeight": "1.7",
+                            "marginBottom": "24px"
+                          },
+                          "props": {
+                            "text": "Our platform provides innovative solutions for modern web development. We focus on creating responsive, accessible, and performant websites that work seamlessly across all devices.",
+                            "className": "article-content"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          type: "Div",
-          id: "main-content",
-          style: {
-            flex: "1",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "clamp(20px, 5vw, 40px)",
-            backgroundColor: "#fdf2f8",
-            boxSizing: "border-box",
-            minHeight: "calc(100vh - 140px)"
+          "type": "Nav",
+          "id": "mobile-bottom-nav",
+          "style": {
+            "display": "none",
+            "position": "fixed",
+            "bottom": "0",
+            "left": "0",
+            "right": "0",
+            "backgroundColor": "var(--primary-color)",
+            "padding": "12px 0",
+            "borderTop": "1px solid var(--border-color)",
+            "zIndex": "1000"
           },
-          children: [
-            {
-              type: "Div",
-              id: "content-wrapper",
-              style: {
-                textAlign: "center",
-                padding: "clamp(20px, 5vw, 30px)",
-                backgroundColor: "#fce7f3",
-                borderRadius: "8px",
-                boxShadow: "0 4px 6px rgba(214, 51, 132, 0.2)",
-                maxWidth: "clamp(300px, 80vw, 500px)",
-                width: "100%",
-                boxSizing: "border-box"
-              },
-              children: [
-                {
-                  type: "Heading",
-                  id: "main-heading",
-                  style: {
-                    fontSize: "clamp(24px, 6vw, 36px)",
-                    color: "#be185d",
-                    margin: "0 0 clamp(15px, 3vw, 20px) 0",
-                    fontWeight: "bold"
-                  },
-                  props: {
-                    text: "Welcome"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "welcome-text",
-                  style: {
-                    fontSize: "clamp(16px, 3vw, 18px)",
-                    color: "#ec4899",
-                    lineHeight: "1.6",
-                    margin: "0 0 clamp(12px, 2.5vw, 15px) 0"
-                  },
-                  props: {
-                    text: "Desktop shows sidebar navigation, mobile shows bottom navigation for optimal experience."
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "description-text",
-                  style: {
-                    fontSize: "clamp(14px, 2.5vw, 16px)",
-                    color: "#f472b6",
-                    lineHeight: "1.5",
-                    margin: "0"
-                  },
-                  props: {
-                    text: "Adaptive navigation design that works perfectly on any device."
-                  },
-                  children: []
-                }
-              ]
+          "mediaQueries": {
+            "mobile": {
+              "display": "flex"
             }
-          ]
-        }
-      ]
-    },
-    {
-      type: "Div",
-      id: "mobile-bottom-nav",
-      style: {
-        width: "100%",
-        height: "max(0px, min(70px, 768px - 100vw))",
-        backgroundColor: "#d63384",
-        padding: "max(0px, min(12px, (768px - 100vw) * 0.02)) 0",
-        boxSizing: "border-box",
-        position: "fixed",
-        bottom: "0",
-        left: "0",
-        borderTop: "max(0px, min(2px, 768px - 100vw)) solid #be185d",
-        display: "flex",
-        overflow: "hidden"
-      },
-      children: [
-        {
-          type: "Div",
-          id: "bottom-nav-container",
-          style: {
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-            width: "100%",
-            maxWidth: "600px",
-            margin: "0 auto"
           },
-          children: [
+          "props": {
+            "className": "mobile-bottom-nav"
+          },
+          "children": [
             {
-              type: "Div",
-              id: "bottom-nav-dashboard",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: "5px"
+              "type": "Div",
+              "id": "bottom-nav-container",
+              "style": {
+                "display": "flex",
+                "justifyContent": "space-around",
+                "alignItems": "center",
+                "width": "100%"
               },
-              children: [
+              "props": {
+                "className": "bottom-nav-container"
+              },
+              "children": [
                 {
-                  type: "Text",
-                  id: "bottom-icon-dashboard",
-                  style: {
-                    color: "white",
-                    fontSize: "18px",
-                    margin: "0 0 2px 0"
+                  "type": "Link",
+                  "id": "bottom-nav-home",
+                  "style": {
+                    "color": "white",
+                    "textDecoration": "none",
+                    "padding": "12px",
+                    "fontSize": "14px",
+                    "textAlign": "center",
+                    "flex": "1"
                   },
-                  props: {
-                    text: "📊"
+                  "props": {
+                    "text": "Home",
+                    "href": "#home",
+                    "className": "bottom-nav-link"
                   },
-                  children: []
+                  "children": []
                 },
                 {
-                  type: "Text",
-                  id: "bottom-text-dashboard",
-                  style: {
-                    color: "white",
-                    fontSize: "10px",
-                    margin: "0"
+                  "type": "Link",
+                  "id": "bottom-nav-about",
+                  "style": {
+                    "color": "white",
+                    "textDecoration": "none",
+                    "padding": "12px",
+                    "fontSize": "14px",
+                    "textAlign": "center",
+                    "flex": "1"
                   },
-                  props: {
-                    text: "Dashboard"
+                  "props": {
+                    "text": "About",
+                    "href": "#about",
+                    "className": "bottom-nav-link"
                   },
-                  children: []
-                }
-              ]
-            },
-            {
-              type: "Div",
-              id: "bottom-nav-analytics",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: "5px"
-              },
-              children: [
-                {
-                  type: "Text",
-                  id: "bottom-icon-analytics",
-                  style: {
-                    color: "white",
-                    fontSize: "18px",
-                    margin: "0 0 2px 0"
-                  },
-                  props: {
-                    text: "📈"
-                  },
-                  children: []
+                  "children": []
                 },
                 {
-                  type: "Text",
-                  id: "bottom-text-analytics",
-                  style: {
-                    color: "white",
-                    fontSize: "10px",
-                    margin: "0"
+                  "type": "Link",
+                  "id": "bottom-nav-services",
+                  "style": {
+                    "color": "white",
+                    "textDecoration": "none",
+                    "padding": "12px",
+                    "fontSize": "14px",
+                    "textAlign": "center",
+                    "flex": "1"
                   },
-                  props: {
-                    text: "Analytics"
+                  "props": {
+                    "text": "Services",
+                    "href": "#services",
+                    "className": "bottom-nav-link"
                   },
-                  children: []
-                }
-              ]
-            },
-            {
-              type: "Div",
-              id: "bottom-nav-settings",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: "5px"
-              },
-              children: [
-                {
-                  type: "Text",
-                  id: "bottom-icon-settings",
-                  style: {
-                    color: "white",
-                    fontSize: "18px",
-                    margin: "0 0 2px 0"
-                  },
-                  props: {
-                    text: "⚙️"
-                  },
-                  children: []
+                  "children": []
                 },
                 {
-                  type: "Text",
-                  id: "bottom-text-settings",
-                  style: {
-                    color: "white",
-                    fontSize: "10px",
-                    margin: "0"
+                  "type": "Link",
+                  "id": "bottom-nav-contact",
+                  "style": {
+                    "color": "white",
+                    "textDecoration": "none",
+                    "padding": "12px",
+                    "fontSize": "14px",
+                    "textAlign": "center",
+                    "flex": "1"
                   },
-                  props: {
-                    text: "Settings"
+                  "props": {
+                    "text": "Contact",
+                    "href": "#contact",
+                    "className": "bottom-nav-link"
                   },
-                  children: []
-                }
-              ]
-            },
-            {
-              type: "Div",
-              id: "bottom-nav-profile",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: "5px"
-              },
-              children: [
-                {
-                  type: "Text",
-                  id: "bottom-icon-profile",
-                  style: {
-                    color: "white",
-                    fontSize: "18px",
-                    margin: "0 0 2px 0"
-                  },
-                  props: {
-                    text: "👤"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "bottom-text-profile",
-                  style: {
-                    color: "white",
-                    fontSize: "10px",
-                    margin: "0"
-                  },
-                  props: {
-                    text: "Profile"
-                  },
-                  children: []
-                }
-              ]
-            },
-            {
-              type: "Div",
-              id: "bottom-nav-help",
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                padding: "5px"
-              },
-              children: [
-                {
-                  type: "Text",
-                  id: "bottom-icon-help",
-                  style: {
-                    color: "white",
-                    fontSize: "18px",
-                    margin: "0 0 2px 0"
-                  },
-                  props: {
-                    text: "❓"
-                  },
-                  children: []
-                },
-                {
-                  type: "Text",
-                  id: "bottom-text-help",
-                  style: {
-                    color: "white",
-                    fontSize: "10px",
-                    margin: "0"
-                  },
-                  props: {
-                    text: "Help"
-                  },
-                  children: []
+                  "children": []
                 }
               ]
             }
@@ -559,8 +472,8 @@ const tempDSL : DSLComponent = {
         }
       ]
     }
-  ]
-}
+  
+  
 export function getDSL(prompt : string){
     // fetch DSL
     //@ts-ignore

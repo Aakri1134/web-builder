@@ -1,0 +1,89 @@
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #f8fafc;
+  --background-color: #ffffff;
+  --text-color: #1f2937;
+  --accent-color: #3b82f6;
+  --border-color: #e5e7eb;
+}
+.light {
+  --primary-color: #2563eb;
+  --secondary-color: #f8fafc;
+  --background-color: #ffffff;
+  --text-color: #1f2937;
+  --accent-color: #3b82f6;
+  --border-color: #e5e7eb;
+}
+.dark {
+  --primary-color: #1d4ed8;
+  --secondary-color: #1f2937;
+  --background-color: #111827;
+  --text-color: #f9fafb;
+  --accent-color: #60a5fa;
+  --border-color: #374151;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.hero-title {
+  animation: fadeInUp 0.8s ease-out;
+}
+.main-article {
+  animation: slideInLeft 0.6s ease-out;
+}
+.header-logo {
+  transition: transform 0.3s ease;
+}
+.header-logo:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+
+.menu-link {
+  transition: all 0.3s ease;
+}
+.menu-link:hover {
+  background-color: var(--accent-color);
+  transform: translateX(4px);
+}
+.bottom-nav-link {
+  transition: background-color 0.2s ease;
+}
+.bottom-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.hero-title {
+  transition: color 0.3s ease;
+}
+.hero-title:hover {
+  color: var(--accent-color);
+}
+
+

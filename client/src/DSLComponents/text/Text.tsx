@@ -17,5 +17,5 @@ export default function Text({
       setActive((x) => [...x, id])
     }
   }, [])
-  return <p style={component.style}>{component.props?.text}</p>
+  return <p className={component.props.className} style={component.style}>{component.props?.text}</p>
 }

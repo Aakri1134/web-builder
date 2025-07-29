@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import useComponent from "../../hooks/useComponent"
 import type { TextComponentInput } from "./Heading"
 
-export default function Text({
+export default function Anchor({
   id,
   props,
   style,
@@ -19,7 +19,7 @@ export default function Text({
     }
   }, [])
   return (
-    <a href={component.props?.href} style={component.style}>
+    <a className={component.props.className} href={component.props?.href} style={component.style}>
       {component.props?.text}
     </a>
   )

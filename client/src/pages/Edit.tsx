@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 import type { DSL } from "../utils/DSL/sanetizer"
 import Convertor from "../components/Convertor"
 import { getDSL } from "../utils/DSL/getDSL"
-import AdjustableDiv from "../components/AdjustableDiv"
+import "../Custom.css"
 
 export default function Edit() {
 //@ts-ignore
@@ -33,9 +33,7 @@ export default function Edit() {
     <div style={{
         margin : 0
     }}>
-      <AdjustableDiv>
       <Convertor components={DSL.components} parents={[]}/>
-      </AdjustableDiv>
     </div>
   )
 }

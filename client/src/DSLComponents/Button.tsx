@@ -4,13 +4,20 @@ import { activeComponents } from "../recoil/atoms/component"
 import type { DSLComponent } from "../utils/DSL/sanetizer"
 import useComponent from "../hooks/useComponent"
 
-export default function Button({ id, style, props }: DSLComponent) {
+interface InputButton {
+  id : DSLComponent["id"]
+  style : DSLComponent["style"]
+  props : DSLComponent["props"]
+  parent : DSLComponent["id"][]
+}
+
+export default function Button({ id, style, props, parent }: InputButton) {
   // logic to convert props.onClick to premade functions
   // logic for visibility
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
 
-  const {} = useComponent(id, style, props, )
+  const component = useComponent(id, style, props, parent )
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -18,5 +25,5 @@ export default function Button({ id, style, props }: DSLComponent) {
     }
   }, [])
 
-  return <button style={style}>{props?.text}</button>
+  return <button style={component.style}>{component.props?.text}</button>
 }
