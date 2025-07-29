@@ -9,9 +9,10 @@ export default function Anchor({
   props,
   style,
   parents,
+  
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
-  const component = useComponent(id, style, props, parents)
+  const component = useComponent(id, style, props, parents, [])
 
   useEffect(() => {
     if (typeof id === "string") {

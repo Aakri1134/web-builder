@@ -41,7 +41,7 @@ export interface DSLComponent {
     src?: string
     href?: string
     alt?: string
-    className : string
+    className: string
   }
 }
 
@@ -57,20 +57,20 @@ export interface DSLFunctions {
 export interface DSL {
   components: DSLComponent[]
   functions: DSLFunctions[]
-  hover?: Partial<CSSStyleDeclaration>
-  animations?: Partial<CSSStyleDeclaration>
-  theme? : {
-    light : Partial<CSSStyleDeclaration>
-    dark : Partial<CSSStyleDeclaration>
+  hover?: string
+  animations?: string
+  theme?: {
+    light: string
+    dark: string
   }
   responsiveUtilities?: {
     breakpoints?: {
-      mobile: string    // "@media (max-width: 768px)"
-      tablet: string    // "@media (min-width: 769px) and (max-width: 1024px)"
-      desktop: string   // "@media (min-width: 1025px)"
-      large: string     // "@media (min-width: 1440px)"
+      mobile: string // "@media (max-width: 768px)"
+      tablet: string // "@media (min-width: 769px) and (max-width: 1024px)"
+      desktop: string // "@media (min-width: 1025px)"
+      large: string // "@media (min-width: 1440px)"
     }
-    globalResponsive?: string  // Global responsive CSS rules
+    globalResponsive?: string // Global responsive CSS rules
   }
 }
 
@@ -90,12 +90,14 @@ const validComponentTypes = new Set([
   "Dropdown",
   "Loop",
   "Show",
+  "List",
+  "ListItems"
 ])
 // const validFunctionTypes = new Set(["api-call", "navigate", "show-modal"])
 
 const functionIDs = new Set<string>([])
 
-const allowedComponentStyles = new Set([
+const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set([
   "fontSize",
   "margin",
   "padding",
@@ -110,7 +112,6 @@ const allowedComponentStyles = new Set([
   "justifyContent",
   "alignItems",
   "flexDirection",
-  "border",
   "borderRadius",
   "boxShadow",
   "position",
@@ -118,8 +119,6 @@ const allowedComponentStyles = new Set([
   "left",
   "right",
   "bottom",
-  "borderBottom",
-  "borderRight",
   "boxSizing",
   "cursor",
   "flex",
@@ -130,6 +129,16 @@ const allowedComponentStyles = new Set([
   "minHeight",
   "minWidth",
   "textAlign",
+  "zIndex",
+  "listStyle",
+  "marginTop",
+  "marginBottom",
+  "textDecoration", 
+  "borderTop",
+  "borderBottom",
+  "border",
+  "borderRight",
+  "borderLeft"
 ])
 
 export interface validStyles {
@@ -168,6 +177,7 @@ export interface validStyles {
     | "minHeight"
     | "minWidth"
     | "textAlign"
+    | "zIndex"
 }
 
 function checkMaliciousStrings(input: string) {
@@ -178,14 +188,17 @@ function checkMaliciousStrings(input: string) {
 function checkMaliciousURLs(input: string) {
   // can add checks for urls
   try {
+    if(input[0] === "#"){
+      return true
+    }
     const url = new URL(input)
     // if input can become url then return true;
     const safeProtocols = ["http:", "https:"]
     const block: string[] = []
     if (!safeProtocols.includes(url.protocol) || block.includes(url.hostname)) {
-      return false
+      return false 
     }
-    return true
+    return true 
   } catch (err) {
     captureException(err)
     return false
@@ -202,28 +215,33 @@ function recursiveCheckComponents(data: DSLComponent[]): {
   success: boolean
   report: Report[]
 } {
+  // console.log(data)
   let report: Report[] = []
-  const res = data.every((component: DSLComponent) => {
+  data.map((component: DSLComponent) => {
     // General tests
     if (!validComponentTypes.has(component.type)) {
       report.push({
         id: component.id,
         reason: `Invalid type ${component.type}`,
       })
-      return false
     }
+    let InvalidKey: string[] = []
 
-    if (
-      !Object.keys(component.style).every((key: string) => {
-        return allowedComponentStyles.has(key)
-      })
-    ) {
+    !Object.keys(component.style).map((key: string) => {
+      const temp = allowedComponentStyles.has(key as keyof React.CSSProperties)
+      if (!temp) {
+        InvalidKey.push(key)
+      }
+      return temp
+    })
+    if (InvalidKey.length > 0) {
       report.push({
         id: component.id,
         reason: `Invalid style type ${component.type}`,
-        additional: component.style,
+        additional: {
+          InvalidKey,
+        },
       })
-      return false
     }
     if (component.props) {
       if (
@@ -238,7 +256,6 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.text",
           },
         })
-        return false
       }
       if (component.props.src && !checkMaliciousURLs(component.props.src)) {
         report.push({
@@ -249,7 +266,6 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.src",
           },
         })
-        return false
       }
       if (component.props.alt && !checkMaliciousStrings(component.props.alt)) {
         report.push({
@@ -260,7 +276,6 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.alt",
           },
         })
-        return false
       }
       if (component.props.href && !checkMaliciousURLs(component.props.href)) {
         report.push({
@@ -271,7 +286,6 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.href",
           },
         })
-        return false
       }
       if (
         component.props.onChange &&
@@ -284,7 +298,6 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.onChange",
           },
         })
-        return false
       }
       if (
         component.props.onClick &&
@@ -297,19 +310,22 @@ function recursiveCheckComponents(data: DSLComponent[]): {
             location: "props.onClick",
           },
         })
-        return false
       }
     }
 
     // component specific tests
-    const res = checkRequirements(component)
-    report.push(...res.report)
-    if (!res.success) return false
-    if (component.children.length > 0)
-      return recursiveCheckComponents(component.children)
-    return true
-  })
+    // console.log("Hello")
+    const res2 = checkRequirements(component)
+    report.push(...res2.report)
+    if (component.children.length > 0) {
+      // console.log("wooow")
+      // console.log(component.children)
+      const fin = recursiveCheckComponents(component.children)
 
+      report.push(...fin.report)
+    }
+  })
+  const res = report.length == 0
   return {
     success: res,
     report: report,

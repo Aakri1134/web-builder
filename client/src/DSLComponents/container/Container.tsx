@@ -52,9 +52,9 @@ export default function Container({
       )
     case "Body":
       return (
-        <body style={component.style} className={component.props.className}>
+        <div style={component.style} className={component.props.className}>
           <Convertor components={component.children} parents={updatedParents} />
-        </body>
+        </div>
       )
     case "Div":
       return (

@@ -15,7 +15,7 @@ export default function Image({ id, style, props, parent }: InputImage) {
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
 
-  const component = useComponent(id, style, props, parent)
+  const component = useComponent(id, style, props, parent, [])
 
   useEffect(() => {
     if (typeof id === "string") {

@@ -27,13 +27,24 @@ export default function Edit() {
 
   useEffect(() => {
     fetchDSL()
+    console.log(DSL)
   }, [])
 
   return (
+    <><style>
+        {DSL.hover}
+        {DSL.animations}
+        {DSL.theme?.light}
+        {DSL.theme?.dark}
+      </style>
     <div style={{
         margin : 0
-    }}>
+    }}
+    className="light"
+    >
+      
       <Convertor components={DSL.components} parents={[]}/>
     </div>
+    </>
   )
 }

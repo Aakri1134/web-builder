@@ -17,7 +17,7 @@ export default function Button({ id, style, props, parent }: InputButton) {
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
 
-  const component = useComponent(id, style, props, parent )
+  const component = useComponent(id, style, props, parent, [] )
 
   useEffect(() => {
     if (typeof id === "string") {

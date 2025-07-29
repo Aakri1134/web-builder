@@ -11,7 +11,7 @@ export default function Text({
   parents,
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
-  const component = useComponent(id, style, props, parents)
+  const component = useComponent(id, style, props, parents, [])
   useEffect(() => {
     if (typeof id === "string") {
       setActive((x) => [...x, id])

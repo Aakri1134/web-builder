@@ -5,7 +5,7 @@ import {
   propsFamily,
   styleFamily,
 } from "../recoil/atoms/component"
-import type { DSL, DSLComponent } from "../utils/DSL/sanetizer"
+import type { DSLComponent } from "../utils/DSL/sanetizer"
 import { useEffect } from "react"
 
 export default function useComponent(

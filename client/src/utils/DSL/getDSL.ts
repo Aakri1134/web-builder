@@ -1,6 +1,7 @@
 import sanetizer, { type DSL, type DSLComponent } from "./sanetizer";
 
-const tempDSL : DSLComponent = 
+const tempDSL : DSL = {
+  "components": [
     {
       "type": "Body",
       "id": "main-body",
@@ -472,15 +473,21 @@ const tempDSL : DSLComponent =
         }
       ]
     }
+  ],
+  "functions": [],
+  "hover": "/* Menu link hover effects */\n.menu-link {\n  transition: all 0.3s ease;\n  background-color: transparent;\n}\n\n.menu-link:hover {\n  background-color: var(--accent-color) !important;\n  transform: translateX(4px);\n  color: white;\n}\n\n/* Bottom navigation hover effects */\n.bottom-nav-link {\n  transition: background-color 0.2s ease;\n}\n\n.bottom-nav-link:hover {\n  background-color: rgba(255, 255, 255, 0.1) !important;\n}\n\n/* Hero title hover effect */\n.hero-title {\n  transition: color 0.3s ease;\n  cursor: pointer;\n}\n\n.hero-title:hover {\n  color: var(--accent-color) !important;\n}\n\n/* Header logo hover effect */\n.header-logo {\n  transition: transform 0.3s ease;\n  cursor: pointer;\n}\n\n.header-logo:hover {\n  transform: scale(1.05);\n}\n\n/* Article hover effect */\n.main-article {\n  transition: box-shadow 0.3s ease, transform 0.2s ease;\n}\n\n.main-article:hover {\n  box-shadow: 0 4px 16px rgba(0,0,0,0.15);\n  transform: translateY(-2px);\n}",
+  "animations": "@keyframes fadeInUp {\n  from {\n    opacity: 0;\n    transform: translateY(30px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n\n@keyframes slideInLeft {\n  from {\n    opacity: 0;\n    transform: translateX(-50px);\n  }\n  to {\n    opacity: 1;\n    transform: translateX(0);\n  }\n}\n\n@keyframes pulse {\n  0% { transform: scale(1); }\n  50% { transform: scale(1.05); }\n  100% { transform: scale(1); }\n}\n\n.hero-title {\n  animation: fadeInUp 0.8s ease-out;\n}\n\n.main-article {\n  animation: slideInLeft 0.6s ease-out;\n}\n\n.header-logo {\n  transition: transform 0.3s ease;\n}\n\n.header-logo:hover {\n  animation: pulse 0.6s ease-in-out;\n}",
+  "theme": {
+    "light": ":root {\n  --primary-color: #2563eb;\n  --secondary-color: #f8fafc;\n  --background-color: #ffffff;\n  --text-color: #1f2937;\n  --accent-color: #3b82f6;\n  --border-color: #e5e7eb;\n}\n\n[data-theme='light'] {\n  --primary-color: #2563eb;\n  --secondary-color: #f8fafc;\n  --background-color: #ffffff;\n  --text-color: #1f2937;\n  --accent-color: #3b82f6;\n  --border-color: #e5e7eb;\n}",
+    "dark": "[data-theme='dark'] {\n  --primary-color: #1d4ed8;\n  --secondary-color: #1f2937;\n  --background-color: #111827;\n  --text-color: #f9fafb;\n  --accent-color: #60a5fa;\n  --border-color: #374151;\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n    --primary-color: #1d4ed8;\n    --secondary-color: #1f2937;\n    --background-color: #111827;\n    --text-color: #f9fafb;\n    --accent-color: #60a5fa;\n    --border-color: #374151;\n  }\n}"
+  }
+}
   
   
 export function getDSL(prompt : string){
     // fetch DSL
     //@ts-ignore
-    const DSL : DSL = {
-        components : [tempDSL],
-        functions : []
-    }
+    const DSL : DSL = tempDSL
 
     //@ts-ignore
     prompt
@@ -491,7 +498,6 @@ export function getDSL(prompt : string){
         return res
     }else{
         // handle invalid DSLs
-        alert("Invalid DSL")
         return false
     }
 }
