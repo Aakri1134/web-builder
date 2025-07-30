@@ -20,7 +20,9 @@ export default function Anchor({
     }
   }, [])
   return (
-    <a className={component.props.className} href={component.props?.href} style={component.style}>
+    <a className={component.props.className} href={component.props?.href} style={component.style
+      
+    }>
       {component.props?.text}
     </a>
   )

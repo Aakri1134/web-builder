@@ -48,6 +48,7 @@ export default function Convertor({
                 style={child.style}
                 props={child.props}
                 parents={parents}
+                mediaQueries={child.mediaQueries}
               />
             )
           case "Text":
@@ -58,6 +59,7 @@ export default function Convertor({
                 style={child.style}
                 props={child.props}
                 parents={parents}
+                mediaQueries={child.mediaQueries}
               />
             )
           case "Image": //
@@ -78,6 +80,7 @@ export default function Convertor({
                 id={child.id}
                 style={child.style}
                 parents={parents}
+                mediaQueries={child.mediaQueries}
               />
             )
 

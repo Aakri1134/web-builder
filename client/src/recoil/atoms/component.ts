@@ -45,3 +45,8 @@ export const currentComponentID = atom<ID | null>({
   key : "currentComponentID",
   default : null
 })
+
+export const currentComponentType = atom<DSLComponent["type"] | null>({
+  key:"currentComponentType",
+  
+})

@@ -65,7 +65,8 @@ const AdjustableDiv = ({children} : {children : React.ReactNode}) => {
       ref={divRef}
       onMouseDown={handleMouseDown}
       style={{
-        position: "absolute",
+        containerType : "inline-size",
+        position: "relative",
         top: position.y,
         left: position.x,
         width: size.width,
@@ -74,7 +75,7 @@ const AdjustableDiv = ({children} : {children : React.ReactNode}) => {
         minHeight : "600px",
         border: "2px solid black",
         cursor: isDragging ? "grabbing" : "grab",
-        overflow: "hidden",
+        overflow: "scroll",
       }}
     >
       {children}
@@ -83,8 +84,8 @@ const AdjustableDiv = ({children} : {children : React.ReactNode}) => {
         onMouseDown={handleResizeMouseDown}
         style={{
           position: "absolute",
-          width: 5,
-          height: 5,
+          width: 20,
+          height: 20,
           bottom: 0,
           right: 0,
           borderRadius : 3,

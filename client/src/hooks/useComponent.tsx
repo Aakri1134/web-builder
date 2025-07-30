@@ -27,5 +27,5 @@ export default function useComponent(
     setChildren(childrenInit)
   }, [id, styleInit, propsInit, parentInit, setStyle, setProps, setParents])
 
-  return { style, props, parents, children, setStyle, setParents, setProps, setChildren }
+  return { style, props, parents, children }
 }

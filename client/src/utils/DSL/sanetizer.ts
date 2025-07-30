@@ -146,7 +146,8 @@ const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set([
   "gridTemplateColumns",
   "textTransform",
   "letterSpacing",
-  "listStyleType"
+  "listStyleType",
+  "fontStyle"
 ])
 
 export interface validStyles {

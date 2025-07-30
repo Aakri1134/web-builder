@@ -20,7 +20,7 @@ const requirements: { [key in DSLComponent["type"]]: PropKeys[] } = {
 //   Article: ["className"],
 //   List: ["className"],
 //   ListItems: ["className"],
-      Button: ["className", "text"],
+  Button: ["className", "text"],
   Link: ["className", "text"],
   Image: ["className", "src", "alt"],
   Heading: ["className", "text"],
@@ -85,4 +85,8 @@ export function checkRequirements(component: DSLComponent): {
     success: res,
     report,
   }
+}
+
+export function checkPresence(type: DSLComponent["type"], propKey: PropKeys) {
+  return requirements[type].includes(propKey);
 }

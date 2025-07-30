@@ -6,7 +6,7 @@ const tempDSL : DSL = {
       type: "Body",
       id: "main-body",
       children: [
-        // Header/Navigation
+        // Navigation Header
         {
           type: "Nav",
           id: "main-nav",
@@ -20,1244 +20,1228 @@ const tempDSL : DSL = {
                   id: "logo",
                   children: [],
                   style: {
-                    fontSize: "28px",
+                    fontSize: "24px",
                     fontWeight: "bold",
-                    color: "#0ea5e9",
-                    margin: "0"
+                    color: "#c41e3a"
+                  },
+                  mediaQueries: {
+                    mobile: { fontSize: "20px" }
                   },
                   props: {
-                    text: "日本語 Learn",
+                    text: "日本語マスター",
                     className: "logo-hover"
                   }
                 },
                 {
-                  type: "Div",
-                  id: "nav-links",
+                  type: "List",
+                  id: "nav-menu",
                   children: [
                     {
-                      type: "Link",
+                      type: "ListItems",
+                      id: "nav-home",
+                      children: [
+                        {
+                          type: "Link",
+                          id: "home-link",
+                          children: [],
+                          style: { color: "#333", textDecoration: "none" },
+                          props: {
+                            text: "Home",
+                            href: "#home",
+                            className: "nav-link-hover"
+                          }
+                        }
+                      ],
+                      style: {},
+                      props: { className: "" }
+                    },
+                    {
+                      type: "ListItems",
                       id: "nav-courses",
-                      children: [],
-                      style: {
-                        textDecoration: "none",
-                        color: "#64748b",
-                        fontWeight: "500",
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        text: "Courses",
-                        href: "#courses",
-                        className: "nav-link-hover"
-                      }
+                      children: [
+                        {
+                          type: "Link",
+                          id: "courses-link",
+                          children: [],
+                          style: { color: "#333", textDecoration: "none" },
+                          props: {
+                            text: "Courses",
+                            href: "#courses",
+                            className: "nav-link-hover"
+                          }
+                        }
+                      ],
+                      style: {},
+                      props: { className: "" }
                     },
                     {
-                      type: "Link",
+                      type: "ListItems",
                       id: "nav-about",
-                      children: [],
-                      style: {
-                        textDecoration: "none",
-                        color: "#64748b",
-                        fontWeight: "500",
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        text: "About",
-                        href: "#about",
-                        className: "nav-link-hover"
-                      }
+                      children: [
+                        {
+                          type: "Link",
+                          id: "about-link",
+                          children: [],
+                          style: { color: "#333", textDecoration: "none" },
+                          props: {
+                            text: "About",
+                            href: "#about",
+                            className: "nav-link-hover"
+                          }
+                        }
+                      ],
+                      style: {},
+                      props: { className: "" }
                     },
                     {
-                      type: "Link",
-                      id: "nav-testimonials",
-                      children: [],
-                      style: {
-                        textDecoration: "none",
-                        color: "#64748b",
-                        fontWeight: "500",
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        text: "Reviews",
-                        href: "#testimonials",
-                        className: "nav-link-hover"
-                      }
-                    },
-                    {
-                      type: "Button",
-                      id: "nav-cta",
-                      children: [],
-                      style: {
-                        backgroundColor: "#f472b6",
-                        color: "white",
-                        border: "none",
-                        padding: "12px 24px",
-                        borderRadius: "25px",
-                        fontWeight: "600",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        text: "Start Learning",
-                        className: "cta-button-hover"
-                      }
+                      type: "ListItems",
+                      id: "nav-contact",
+                      children: [
+                        {
+                          type: "Button",
+                          id: "contact-btn",
+                          children: [],
+                          style: {
+                            backgroundColor: "#c41e3a",
+                            color: "white",
+                            padding: "10px 20px",
+                            border: "none",
+                            borderRadius: "5px"
+                          },
+                          props: {
+                            text: "Contact",
+                            className: "btn-hover"
+                          }
+                        }
+                      ],
+                      style: {},
+                      props: { className: "" }
                     }
                   ],
                   style: {
                     display: "flex",
-                    alignItems: "center",
-                    gap: "20px"
+                    gap: "30px",
+                    listStyle: "none",
+                    alignItems: "center"
                   },
-                  props: {
-                    className: "nav-links"
-                  }
+                  mediaQueries: {
+                    mobile: { flexDirection: "column", gap: "15px" }
+                  },
+                  props: { className: "" }
                 }
               ],
               style: {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                padding: "0 50px",
                 maxWidth: "1200px",
-                margin: "0 auto",
-                padding: "0 20px"
+                margin: "0 auto"
               },
-              props: {
-                className: ""
-              }
+              mediaQueries: {
+                mobile: { padding: "0 20px", flexDirection: "column", gap: "20px" }
+              },
+              props: { className: "" }
             }
           ],
           style: {
-            backgroundColor: "rgba(255, 255, 255, 0.95)",
-            backdropFilter: "blur(10px)",
-            position: "fixed",
+            backgroundColor: "white",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+            position: "sticky",
             top: "0",
-            left: "0",
-            right: "0",
-            zIndex: "1000",
-            padding: "15px 0",
-            borderBottom: "1px solid rgba(14, 165, 233, 0.1)"
+            zIndex: "100",
+            padding: "15px 0"
           },
-          mediaQueries: {
-            mobile: {
-              padding: "10px 0"
-            }
-          },
-          props: {
-            className: "main-nav"
-          }
+          props: { className: "" }
         },
 
-        // Hero Section
+        // Main Content
         {
-          type: "Section",
-          id: "hero-section",
+          type: "Main",
+          id: "main-content",
           children: [
+            // Hero Section
             {
-              type: "Div",
-              id: "hero-container",
+              type: "Section",
+              id: "hero-section",
               children: [
                 {
                   type: "Div",
-                  id: "hero-content",
+                  id: "hero-container",
+                  children: [
+                    {
+                      type: "Div",
+                      id: "hero-content",
+                      children: [
+                        {
+                          type: "Heading",
+                          id: "hero-title",
+                          children: [],
+                          style: {
+                            fontSize: "48px",
+                            fontWeight: "bold",
+                            marginBottom: "20px",
+                            color: "#2c3e50"
+                          },
+                          mediaQueries: {
+                            mobile: { fontSize: "32px" },
+                            tablet: { fontSize: "40px" }
+                          },
+                          props: {
+                            text: "Master Japanese Language",
+                            className: "fade-in-up"
+                          }
+                        },
+                        {
+                          type: "Text",
+                          id: "hero-subtitle",
+                          children: [],
+                          style: {
+                            fontSize: "20px",
+                            color: "#7f8c8d",
+                            marginBottom: "30px",
+                            lineHeight: "1.6"
+                          },
+                          mediaQueries: {
+                            mobile: { fontSize: "16px" }
+                          },
+                          props: {
+                            text: "Learn Japanese from beginner to advanced with our interactive courses, expert instructors, and immersive cultural experiences.",
+                            className: "fade-in-up-delay"
+                          }
+                        },
+                        {
+                          type: "Div",
+                          id: "hero-buttons",
+                          children: [
+                            {
+                              type: "Button",
+                              id: "start-learning-btn",
+                              children: [],
+                              style: {
+                                backgroundColor: "#c41e3a",
+                                color: "white",
+                                padding: "15px 30px",
+                                border: "none",
+                                borderRadius: "8px",
+                                fontSize: "18px",
+                                marginRight: "20px"
+                              },
+                              mediaQueries: {
+                                mobile: { marginRight: "0", marginBottom: "15px", width: "100%" }
+                              },
+                              props: {
+                                text: "Start Learning",
+                                className: "btn-hover btn-scale"
+                              }
+                            },
+                            {
+                              type: "Button",
+                              id: "watch-demo-btn",
+                              children: [],
+                              style: {
+                                backgroundColor: "transparent",
+                                color: "#c41e3a",
+                                padding: "15px 30px",
+                                border: "2px solid #c41e3a",
+                                borderRadius: "8px",
+                                fontSize: "18px"
+                              },
+                              mediaQueries: {
+                                mobile: { width: "100%" }
+                              },
+                              props: {
+                                text: "Watch Demo",
+                                className: "btn-outline-hover"
+                              }
+                            }
+                          ],
+                          style: {
+                            display: "flex",
+                            gap: "20px"
+                          },
+                          mediaQueries: {
+                            mobile: { flexDirection: "column", gap: "0" }
+                          },
+                          props: { className: "" }
+                        }
+                      ],
+                      style: {
+                        flex: "1",
+                        paddingRight: "50px"
+                      },
+                      mediaQueries: {
+                        mobile: { paddingRight: "0", textAlign: "center" },
+                        tablet: { paddingRight: "30px" }
+                      },
+                      props: { className: "" }
+                    },
+                    
+                  ],
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    maxWidth: "1200px",
+                    margin: "0 auto",
+                    padding: "0 50px"
+                  },
+                  mediaQueries: {
+                    mobile: { flexDirection: "column", padding: "0 20px" },
+                    tablet: { padding: "0 30px" }
+                  },
+                  props: { className: "" }
+                }
+              ],
+              style: {
+                minHeight: "80vh",
+                display: "flex",
+                alignItems: "center",
+                background: "linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%)"
+              },
+              props: { className: "" }
+            },
+
+            // Features Section
+            {
+              type: "Section",
+              id: "features-section",
+              children: [
+                {
+                  type: "Div",
+                  id: "features-container",
                   children: [
                     {
                       type: "Heading",
-                      id: "hero-title",
+                      id: "features-title",
                       children: [],
                       style: {
-                        fontSize: "60px",
-                        fontWeight: "800",
-                        color: "#1e293b",
-                        marginBottom: "20px",
-                        lineHeight: "1.1"
+                        fontSize: "36px",
+                        textAlign: "center",
+                        marginBottom: "50px",
+                        color: "#2c3e50"
                       },
                       mediaQueries: {
-                        mobile: {
-                          fontSize: "36px"
-                        },
-                        tablet: {
-                          fontSize: "48px"
-                        }
+                        mobile: { fontSize: "28px", marginBottom: "30px" }
                       },
                       props: {
-                        text: "Master Japanese with Native Speakers",
-                        className: "fade-in-up"
+                        text: "Why Choose Our Japanese Courses?",
+                        className: "section-title"
+                      }
+                    },
+                    {
+                      type: "Div",
+                      id: "features-grid",
+                      children: [
+                        {
+                          type: "Div",
+                          id: "feature-1",
+                          children: [
+                            {
+                              type: "Heading",
+                              id: "feature-1-title",
+                              children: [],
+                              style: {
+                                fontSize: "24px",
+                                marginBottom: "15px",
+                                color: "#c41e3a"
+                              },
+                              props: {
+                                text: "Interactive Learning",
+                                className: ""
+                              }
+                            },
+                            {
+                              type: "Text",
+                              id: "feature-1-desc",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                lineHeight: "1.6"
+                              },
+                              props: {
+                                text: "Engage with interactive exercises, games, and real-time feedback to accelerate your learning process.",
+                                className: ""
+                              }
+                            }
+                          ],
+                          style: {
+                            backgroundColor: "white",
+                            padding: "30px",
+                            borderRadius: "15px",
+                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                            textAlign: "center"
+                          },
+                          props: { className: "feature-card-hover" }
+                        },
+                        {
+                          type: "Div",
+                          id: "feature-2",
+                          children: [
+                            {
+                              type: "Heading",
+                              id: "feature-2-title",
+                              children: [],
+                              style: {
+                                fontSize: "24px",
+                                marginBottom: "15px",
+                                color: "#c41e3a"
+                              },
+                              props: {
+                                text: "Native Instructors",
+                                className: ""
+                              }
+                            },
+                            {
+                              type: "Text",
+                              id: "feature-2-desc",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                lineHeight: "1.6"
+                              },
+                              props: {
+                                text: "Learn from certified native Japanese speakers who understand the nuances of the language and culture.",
+                                className: ""
+                              }
+                            }
+                          ],
+                          style: {
+                            backgroundColor: "white",
+                            padding: "30px",
+                            borderRadius: "15px",
+                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                            textAlign: "center"
+                          },
+                          props: { className: "feature-card-hover" }
+                        },
+                        {
+                          type: "Div",
+                          id: "feature-3",
+                          children: [
+                            {
+                              type: "Heading",
+                              id: "feature-3-title",
+                              children: [],
+                              style: {
+                                fontSize: "24px",
+                                marginBottom: "15px",
+                                color: "#c41e3a"
+                              },
+                              props: {
+                                text: "Cultural Immersion",
+                                className: ""
+                              }
+                            },
+                            {
+                              type: "Text",
+                              id: "feature-3-desc",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                lineHeight: "1.6"
+                              },
+                              props: {
+                                text: "Dive deep into Japanese culture, traditions, and customs while learning the language for a complete experience.",
+                                className: ""
+                              }
+                            }
+                          ],
+                          style: {
+                            backgroundColor: "white",
+                            padding: "30px",
+                            borderRadius: "15px",
+                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                            textAlign: "center"
+                          },
+                          props: { className: "feature-card-hover" }
+                        }
+                      ],
+                      style: {
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                        gap: "30px"
+                      },
+                      mediaQueries: {
+                        mobile: { gridTemplateColumns: "1fr", gap: "20px" }
+                      },
+                      props: { className: "" }
+                    }
+                  ],
+                  style: {
+                    maxWidth: "1200px",
+                    margin: "0 auto",
+                    padding: "0 50px"
+                  },
+                  mediaQueries: {
+                    mobile: { padding: "0 20px" }
+                  },
+                  props: { className: "" }
+                }
+              ],
+              style: {
+                padding: "80px 0",
+                backgroundColor: "#f8f9fa"
+              },
+              mediaQueries: {
+                mobile: { padding: "50px 0" }
+              },
+              props: { className: "" }
+            },
+
+            // CTA Section
+            {
+              type: "Section",
+              id: "cta-section",
+              children: [
+                {
+                  type: "Div",
+                  id: "cta-container",
+                  children: [
+                    {
+                      type: "Heading",
+                      id: "cta-title",
+                      children: [],
+                      style: {
+                        fontSize: "42px",
+                        textAlign: "center",
+                        marginBottom: "20px",
+                        color: "white"
+                      },
+                      mediaQueries: {
+                        mobile: { fontSize: "28px" }
+                      },
+                      props: {
+                        text: "Ready to Start Your Journey?",
+                        className: ""
                       }
                     },
                     {
                       type: "Text",
-                      id: "hero-subtitle",
+                      id: "cta-subtitle",
                       children: [],
                       style: {
                         fontSize: "20px",
-                        color: "#64748b",
+                        textAlign: "center",
                         marginBottom: "40px",
-                        lineHeight: "1.6",
-                        maxWidth: "600px"
+                        color: "rgba(255,255,255,0.9)"
                       },
                       mediaQueries: {
-                        mobile: {
-                          fontSize: "16px",
-                          marginBottom: "30px"
-                        }
+                        mobile: { fontSize: "16px", marginBottom: "30px" }
                       },
                       props: {
-                        text: "Learn Japanese through immersive lessons, cultural insights, and personalized guidance from experienced native teachers.",
-                        className: "fade-in-up-delay"
+                        text: "Join thousands of students who have mastered Japanese with our proven teaching methods.",
+                        className: ""
                       }
                     },
                     {
                       type: "Div",
-                      id: "hero-buttons",
+                      id: "cta-buttons",
                       children: [
                         {
                           type: "Button",
-                          id: "hero-primary-btn",
+                          id: "get-started-btn",
                           children: [],
                           style: {
-                            backgroundColor: "#0ea5e9",
-                            color: "white",
+                            backgroundColor: "white",
+                            color: "#c41e3a",
+                            padding: "18px 40px",
                             border: "none",
-                            padding: "16px 32px",
+                            borderRadius: "8px",
                             fontSize: "18px",
-                            fontWeight: "600",
-                            borderRadius: "30px",
-                            cursor: "pointer",
-                            marginRight: "20px",
-                            transition: "all 0.3s ease"
+                            fontWeight: "bold"
                           },
                           props: {
-                            text: "Start Free Trial",
-                            className: "primary-button-hover fade-in-up-delay-2"
-                          }
-                        },
-                        {
-                          type: "Button",
-                          id: "hero-secondary-btn",
-                          children: [],
-                          style: {
-                            backgroundColor: "transparent",
-                            color: "#0ea5e9",
-                            border: "2px solid #0ea5e9",
-                            padding: "14px 30px",
-                            fontSize: "18px",
-                            fontWeight: "600",
-                            borderRadius: "30px",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease"
-                          },
-                          props: {
-                            text: "Watch Demo",
-                            className: "secondary-button-hover fade-in-up-delay-2"
+                            text: "Get Started Today",
+                            className: "btn-hover btn-pulse"
                           }
                         }
                       ],
                       style: {
-                        display: "flex",
-                        gap: "20px",
-                        flexWrap: "wrap"
+                        textAlign: "center"
+                      },
+                      props: { className: "" }
+                    }
+                  ],
+                  style: {
+                    maxWidth: "800px",
+                    margin: "0 auto",
+                    padding: "0 50px",
+                    textAlign: "center"
+                  },
+                  mediaQueries: {
+                    mobile: { padding: "0 20px" }
+                  },
+                  props: { className: "" }
+                }
+              ],
+              style: {
+                padding: "80px 0",
+                background: "linear-gradient(135deg, #c41e3a 0%, #8b0000 100%)"
+              },
+              mediaQueries: {
+                mobile: { padding: "50px 0" }
+              },
+              props: { className: "" }
+            }
+          ],
+          style: {},
+          props: { className: "" }
+        },
+
+        // Footer
+        {
+          type: "Section",
+          id: "footer",
+          children: [
+            {
+              type: "Div",
+              id: "footer-container",
+              children: [
+                {
+                  type: "Div",
+                  id: "footer-content",
+                  children: [
+                    // Company Info Column
+                    {
+                      type: "Div",
+                      id: "footer-company",
+                      children: [
+                        {
+                          type: "Heading",
+                          id: "footer-logo",
+                          children: [],
+                          style: {
+                            fontSize: "24px",
+                            fontWeight: "bold",
+                            color: "#c41e3a",
+                            marginBottom: "15px"
+                          },
+                          props: {
+                            text: "日本語マスター",
+                            className: ""
+                          }
+                        },
+                        {
+                          type: "Text",
+                          id: "footer-description",
+                          children: [],
+                          style: {
+                            color: "#7f8c8d",
+                            marginBottom: "20px",
+                            lineHeight: "1.6"
+                          },
+                          props: {
+                            text: "Your trusted partner in mastering the Japanese language and culture. Join thousands of successful students worldwide.",
+                            className: ""
+                          }
+                        },
+                        {
+                          type: "Div",
+                          id: "social-links",
+                          children: [
+                            {
+                              type: "Link",
+                              id: "facebook-link",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                textDecoration: "none",
+                                marginRight: "15px",
+                                fontSize: "18px"
+                              },
+                              props: {
+                                text: "Facebook",
+                                href: "#facebook",
+                                className: "social-hover"
+                              }
+                            },
+                            {
+                              type: "Link",
+                              id: "twitter-link",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                textDecoration: "none",
+                                marginRight: "15px",
+                                fontSize: "18px"
+                              },
+                              props: {
+                                text: "Twitter",
+                                href: "#twitter",
+                                className: "social-hover"
+                              }
+                            },
+                            {
+                              type: "Link",
+                              id: "instagram-link",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                textDecoration: "none",
+                                fontSize: "18px"
+                              },
+                              props: {
+                                text: "Instagram",
+                                href: "#instagram",
+                                className: "social-hover"
+                              }
+                            }
+                          ],
+                          style: {
+                            display: "flex",
+                            gap: "15px"
+                          },
+                          mediaQueries: {
+                            mobile: { justifyContent: "center" }
+                          },
+                          props: { className: "" }
+                        }
+                      ],
+                      style: {
+                        flex: "1",
+                        minWidth: "250px"
                       },
                       mediaQueries: {
-                        mobile: {
-                          flexDirection: "column",
-                          gap: "15px"
+                        mobile: { 
+                          textAlign: "center", 
+                          marginBottom: "25px",
+                          minWidth: "100%"
                         }
                       },
+                      props: { className: "" }
+                    },
+
+                    // Quick Links Column
+                    {
+                      type: "Div",
+                      id: "footer-links",
+                      children: [
+                        {
+                          type: "Heading",
+                          id: "footer-links-title",
+                          children: [],
+                          style: {
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                            color: "#2c3e50",
+                            marginBottom: "15px"
+                          },
+                          props: {
+                            text: "Quick Links",
+                            className: ""
+                          }
+                        },
+                        {
+                          type: "List",
+                          id: "footer-nav-list",
+                          children: [
+                            {
+                              type: "ListItems",
+                              id: "footer-courses",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-courses-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "All Courses",
+                                    href: "#courses",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-beginner",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-beginner-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Beginner Course",
+                                    href: "#beginner",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-advanced",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-advanced-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Advanced Course",
+                                    href: "#advanced",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-pricing",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-pricing-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Pricing",
+                                    href: "#pricing",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: {},
+                              props: { className: "" }
+                            }
+                          ],
+                          style: {
+                            listStyle: "none",
+                            padding: "0"
+                          },
+                          props: { className: "" }
+                        }
+                      ],
+                      style: {
+                        flex: "1",
+                        minWidth: "200px"
+                      },
+                      mediaQueries: {
+                        mobile: { 
+                          textAlign: "center", 
+                          marginBottom: "25px",
+                          minWidth: "100%"
+                        }
+                      },
+                      props: { className: "" }
+                    },
+
+                    // Support Column
+                    {
+                      type: "Div",
+                      id: "footer-support",
+                      children: [
+                        {
+                          type: "Heading",
+                          id: "footer-support-title",
+                          children: [],
+                          style: {
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                            color: "#2c3e50",
+                            marginBottom: "15px"
+                          },
+                          props: {
+                            text: "Support",
+                            className: ""
+                          }
+                        },
+                        {
+                          type: "List",
+                          id: "footer-support-list",
+                          children: [
+                            {
+                              type: "ListItems",
+                              id: "footer-help",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-help-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Help Center",
+                                    href: "#help",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-contact",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-contact-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Contact Us",
+                                    href: "#contact",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-faq",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-faq-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "FAQ",
+                                    href: "#faq",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: { marginBottom: "8px" },
+                              props: { className: "" }
+                            },
+                            {
+                              type: "ListItems",
+                              id: "footer-privacy",
+                              children: [
+                                {
+                                  type: "Link",
+                                  id: "footer-privacy-link",
+                                  children: [],
+                                  style: {
+                                    color: "#7f8c8d",
+                                    textDecoration: "none",
+                                    lineHeight: "2"
+                                  },
+                                  props: {
+                                    text: "Privacy Policy",
+                                    href: "#privacy",
+                                    className: "footer-link-hover"
+                                  }
+                                }
+                              ],
+                              style: {},
+                              props: { className: "" }
+                            }
+                          ],
+                          style: {
+                            listStyle: "none",
+                            padding: "0"
+                          },
+                          props: { className: "" }
+                        }
+                      ],
+                      style: {
+                        flex: "1",
+                        minWidth: "200px"
+                      },
+                      mediaQueries: {
+                        mobile: { 
+                          textAlign: "center", 
+                          marginBottom: "25px",
+                          minWidth: "100%"
+                        }
+                      },
+                      props: { className: "" }
+                    },
+
+                    // Contact Info Column
+                    {
+                      type: "Div",
+                      id: "footer-contact-info",
+                      children: [
+                        {
+                          type: "Heading",
+                          id: "footer-contact-title",
+                          children: [],
+                          style: {
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                            color: "#2c3e50",
+                            marginBottom: "15px"
+                          },
+                          props: {
+                            text: "Contact Info",
+                            className: ""
+                          }
+                        },
+                        {
+                          type: "Div",
+                          id: "contact-details",
+                          children: [
+                            {
+                              type: "Text",
+                              id: "footer-email",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                marginBottom: "10px",
+                                lineHeight: "1.8"
+                              },
+                              props: {
+                                text: "hello@japanesemaster.com",
+                                className: ""
+                              }
+                            },
+                            {
+                              type: "Text",
+                              id: "footer-phone",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                marginBottom: "10px",
+                                lineHeight: "1.8"
+                              },
+                              props: {
+                                text: "+1 (555) 123-4567",
+                                className: ""
+                              }
+                            },
+                            {
+                              type: "Text",
+                              id: "footer-address",
+                              children: [],
+                              style: {
+                                color: "#7f8c8d",
+                                lineHeight: "1.8"
+                              },
+                              props: {
+                                text: "123 Learning Street, Education City, EC 12345",
+                                className: ""
+                              }
+                            }
+                          ],
+                          style: {},
+                          props: { className: "" }
+                        }
+                      ],
+                      style: {
+                        flex: "1",
+                        minWidth: "250px"
+                      },
+                      mediaQueries: {
+                        mobile: { 
+                          textAlign: "center",
+                          minWidth: "100%"
+                        }
+                      },
+                      props: { className: "" }
+                    }
+                  ],
+                  style: {
+                    display: "flex",
+                    gap: "40px",
+                    marginBottom: "40px",
+                    flexWrap: "wrap"
+                  },
+                  mediaQueries: {
+                    mobile: { 
+                      flexDirection: "column", 
+                      gap: "30px",
+                      marginBottom: "30px"
+                    },
+                    tablet: { gap: "25px", flexWrap: "wrap" }
+                  },
+                  props: { className: "" }
+                },
+
+                // Footer Bottom
+                {
+                  type: "Div",
+                  id: "footer-bottom",
+                  children: [
+                    {
+                      type: "Text",
+                      id: "copyright",
+                      children: [],
+                      style: {
+                        color: "#7f8c8d",
+                        textAlign: "center",
+                        paddingTop: "20px",
+                        borderTop: "1px solid #e0e0e0"
+                      },
                       props: {
+                        text: "© 2025 Japanese Master. All rights reserved. Made with ❤️ for Japanese learners worldwide.",
                         className: ""
                       }
                     }
                   ],
-                  style: {
-                    flex: "1",
-                    paddingRight: "40px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      paddingRight: "0",
-                      textAlign: "center"
-                    }
-                  },
-                  props: {
-                    className: ""
-                  }
-                },
-                {
-                  type: "Div",
-                  id: "hero-image",
-                  children: [
-                    {
-                      type: "Image",
-                      id: "hero-img",
-                      children: [],
-                      style: {
-                        width: "100%",
-                        height: "400px",
-                        objectFit: "cover",
-                        borderRadius: "20px",
-                        boxShadow: "0 20px 50px rgba(14, 165, 233, 0.2)"
-                      },
-                      props: {
-                        src: "/api/placeholder/500/400",
-                        alt: "Japanese learning experience",
-                        className: "float-animation"
-                      }
-                    }
-                  ],
-                  style: {
-                    flex: "1"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      marginTop: "40px"
-                    }
-                  },
-                  props: {
-                    className: ""
-                  }
+                  style: {},
+                  props: { className: "" }
                 }
               ],
               style: {
-                display: "flex",
-                alignItems: "center",
-                gap: "60px",
                 maxWidth: "1200px",
                 margin: "0 auto",
-                padding: "0 20px"
+                padding: "0 50px"
               },
               mediaQueries: {
-                mobile: {
-                  flexDirection: "column",
-                  gap: "40px"
-                }
+                mobile: { padding: "0 20px" },
+                tablet: { padding: "0 30px" }
               },
-              props: {
-                className: ""
-              }
+              props: { className: "" }
             }
           ],
           style: {
-            minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
-            background: "linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%)",
-            paddingTop: "100px"
+            backgroundColor: "#f8f9fa",
+            padding: "60px 0 20px 0"
           },
-          props: {
-            className: ""
-          }
-        },
-
-        // Features Section
-        {
-          type: "Section",
-          id: "features-section",
-          children: [
-            {
-              type: "Div",
-              id: "features-container",
-              children: [
-                {
-                  type: "Heading",
-                  id: "features-title",
-                  children: [],
-                  style: {
-                    fontSize: "48px",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    color: "#1e293b",
-                    marginBottom: "60px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      fontSize: "32px",
-                      marginBottom: "40px"
-                    }
-                  },
-                  props: {
-                    text: "Why Choose Our Japanese Courses?",
-                    className: "scroll-fade-in"
-                  }
-                },
-                {
-                  type: "Div",
-                  id: "features-grid",
-                  children: [
-                    {
-                      type: "Div",
-                      id: "feature-1",
-                      children: [
-                        {
-                          type: "Text",
-                          id: "feature-1-icon",
-                          children: [],
-                          style: {
-                            fontSize: "48px",
-                            marginBottom: "20px",
-                            display: "block"
-                          },
-                          props: {
-                            text: "🎌",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Heading",
-                          id: "feature-1-title",
-                          children: [],
-                          style: {
-                            fontSize: "24px",
-                            fontWeight: "600",
-                            color: "#1e293b",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Native Teachers",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "feature-1-desc",
-                          children: [],
-                          style: {
-                            color: "#64748b",
-                            lineHeight: "1.6"
-                          },
-                          props: {
-                            text: "Learn from experienced native Japanese speakers who understand the nuances of the language and culture.",
-                            className: ""
-                          }
-                        }
-                      ],
-                      style: {
-                        backgroundColor: "white",
-                        padding: "40px",
-                        borderRadius: "20px",
-                        textAlign: "center",
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                        transition: "transform 0.3s ease"
-                      },
-                      props: {
-                        className: "feature-card-hover scroll-fade-in-delay"
-                      }
-                    },
-                    {
-                      type: "Div",
-                      id: "feature-2",
-                      children: [
-                        {
-                          type: "Text",
-                          id: "feature-2-icon",
-                          children: [],
-                          style: {
-                            fontSize: "48px",
-                            marginBottom: "20px",
-                            display: "block"
-                          },
-                          props: {
-                            text: "📚",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Heading",
-                          id: "feature-2-title",
-                          children: [],
-                          style: {
-                            fontSize: "24px",
-                            fontWeight: "600",
-                            color: "#1e293b",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Structured Learning",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "feature-2-desc",
-                          children: [],
-                          style: {
-                            color: "#64748b",
-                            lineHeight: "1.6"
-                          },
-                          props: {
-                            text: "Progressive curriculum from Hiragana to advanced conversation, designed for effective language acquisition.",
-                            className: ""
-                          }
-                        }
-                      ],
-                      style: {
-                        backgroundColor: "white",
-                        padding: "40px",
-                        borderRadius: "20px",
-                        textAlign: "center",
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                        transition: "transform 0.3s ease"
-                      },
-                      props: {
-                        className: "feature-card-hover scroll-fade-in-delay-2"
-                      }
-                    },
-                    {
-                      type: "Div",
-                      id: "feature-3",
-                      children: [
-                        {
-                          type: "Text",
-                          id: "feature-3-icon",
-                          children: [],
-                          style: {
-                            fontSize: "48px",
-                            marginBottom: "20px",
-                            display: "block"
-                          },
-                          props: {
-                            text: "🌸",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Heading",
-                          id: "feature-3-title",
-                          children: [],
-                          style: {
-                            fontSize: "24px",
-                            fontWeight: "600",
-                            color: "#1e293b",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Cultural Immersion",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "feature-3-desc",
-                          children: [],
-                          style: {
-                            color: "#64748b",
-                            lineHeight: "1.6"
-                          },
-                          props: {
-                            text: "Dive deep into Japanese culture, traditions, and social customs alongside language learning.",
-                            className: ""
-                          }
-                        }
-                      ],
-                      style: {
-                        backgroundColor: "white",
-                        padding: "40px",
-                        borderRadius: "20px",
-                        textAlign: "center",
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                        transition: "transform 0.3s ease"
-                      },
-                      props: {
-                        className: "feature-card-hover scroll-fade-in-delay-3"
-                      }
-                    }
-                  ],
-                  style: {
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "40px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      gridTemplateColumns: "1fr",
-                      gap: "30px"
-                    }
-                  },
-                  props: {
-                    className: ""
-                  }
-                }
-              ],
-              style: {
-                maxWidth: "1200px",
-                margin: "0 auto",
-                padding: "0 20px"
-              },
-              props: {
-                className: ""
-              }
-            }
-          ],
-          style: {
-            padding: "100px 0",
-            backgroundColor: "#f8fafc"
+          mediaQueries: {
+            mobile: { padding: "40px 0 20px 0" }
           },
-          props: {
-            className: ""
-          }
-        },
-
-        // Courses Section
-        {
-          type: "Section",
-          id: "courses-section",
-          children: [
-            {
-              type: "Div",
-              id: "courses-container",
-              children: [
-                {
-                  type: "Heading",
-                  id: "courses-title",
-                  children: [],
-                  style: {
-                    fontSize: "48px",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    color: "#1e293b",
-                    marginBottom: "60px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      fontSize: "32px",
-                      marginBottom: "40px"
-                    }
-                  },
-                  props: {
-                    text: "Choose Your Learning Path",
-                    className: "scroll-fade-in"
-                  }
-                },
-                {
-                  type: "Div",
-                  id: "courses-grid",
-                  children: [
-                    {
-                      type: "Div",
-                      id: "course-beginner",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "course-beginner-level",
-                          children: [],
-                          style: {
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            color: "#0ea5e9",
-                            marginBottom: "10px",
-                            textTransform: "uppercase",
-                            letterSpacing: "1px"
-                          },
-                          props: {
-                            text: "Beginner",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Heading",
-                          id: "course-beginner-title",
-                          children: [],
-                          style: {
-                            fontSize: "28px",
-                            fontWeight: "700",
-                            color: "#1e293b",
-                            marginBottom: "20px"
-                          },
-                          props: {
-                            text: "Foundation Course",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "course-beginner-desc",
-                          children: [],
-                          style: {
-                            color: "#64748b",
-                            lineHeight: "1.6",
-                            marginBottom: "30px"
-                          },
-                          props: {
-                            text: "Start your Japanese journey with Hiragana, Katakana, basic grammar, and essential vocabulary for daily conversations.",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Button",
-                          id: "course-beginner-btn",
-                          children: [],
-                          style: {
-                            backgroundColor: "#f472b6",
-                            color: "white",
-                            border: "none",
-                            padding: "14px 28px",
-                            borderRadius: "25px",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease"
-                          },
-                          props: {
-                            text: "Start Learning",
-                            className: "cta-button-hover"
-                          }
-                        }
-                      ],
-                      style: {
-                        backgroundColor: "white",
-                        padding: "40px",
-                        borderRadius: "20px",
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                        border: "2px solid transparent",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        className: "course-card-hover scroll-fade-in-delay"
-                      }
-                    },
-                    {
-                      type: "Div",
-                      id: "course-intermediate",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "course-intermediate-level",
-                          children: [],
-                          style: {
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            color: "#0ea5e9",
-                            marginBottom: "10px",
-                            textTransform: "uppercase",
-                            letterSpacing: "1px"
-                          },
-                          props: {
-                            text: "Intermediate",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Heading",
-                          id: "course-intermediate-title",
-                          children: [],
-                          style: {
-                            fontSize: "28px",
-                            fontWeight: "700",
-                            color: "#1e293b",
-                            marginBottom: "20px"
-                          },
-                          props: {
-                            text: "Kanji & Grammar",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "course-intermediate-desc",
-                          children: [],
-                          style: {
-                            color: "#64748b",
-                            lineHeight: "1.6",
-                            marginBottom: "30px"
-                          },
-                          props: {
-                            text: "Master essential Kanji characters, complex grammar patterns, and develop natural conversation skills.",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Button",
-                          id: "course-intermediate-btn",
-                          children: [],
-                          style: {
-                            backgroundColor: "#f472b6",
-                            color: "white",
-                            border: "none",
-                            padding: "14px 28px",
-                            borderRadius: "25px",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease"
-                          },
-                          props: {
-                            text: "Continue Journey",
-                            className: "cta-button-hover"
-                          }
-                        }
-                      ],
-                      style: {
-                        backgroundColor: "white",
-                        padding: "40px",
-                        borderRadius: "20px",
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                        border: "2px solid transparent",
-                        transition: "all 0.3s ease"
-                      },
-                      props: {
-                        className: "course-card-hover scroll-fade-in-delay-2"
-                      }
-                    }
-                  ],
-                  style: {
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-                    gap: "40px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      gridTemplateColumns: "1fr",
-                      gap: "30px"
-                    }
-                  },
-                  props: {
-                    className: ""
-                  }
-                }
-              ],
-              style: {
-                maxWidth: "1200px",
-                margin: "0 auto",
-                padding: "0 20px"
-              },
-              props: {
-                className: ""
-              }
-            }
-          ],
-          style: {
-            padding: "100px 0"
-          },
-          props: {
-            className: ""
-          }
-        },
-
-        // CTA Section
-        {
-          type: "Section",
-          id: "cta-section",
-          children: [
-            {
-              type: "Div",
-              id: "cta-container",
-              children: [
-                {
-                  type: "Heading",
-                  id: "cta-title",
-                  children: [],
-                  style: {
-                    fontSize: "48px",
-                    fontWeight: "700",
-                    textAlign: "center",
-                    color: "white",
-                    marginBottom: "20px"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      fontSize: "32px"
-                    }
-                  },
-                  props: {
-                    text: "Ready to Start Your Japanese Journey?",
-                    className: "scroll-fade-in"
-                  }
-                },
-                {
-                  type: "Text",
-                  id: "cta-subtitle",
-                  children: [],
-                  style: {
-                    fontSize: "20px",
-                    textAlign: "center",
-                    color: "rgba(255, 255, 255, 0.9)",
-                    marginBottom: "40px",
-                    maxWidth: "600px",
-                    margin: "0 auto 40px auto"
-                  },
-                  mediaQueries: {
-                    mobile: {
-                      fontSize: "16px",
-                      marginBottom: "30px"
-                    }
-                  },
-                  props: {
-                    text: "Join thousands of students who have successfully learned Japanese with our proven method.",
-                    className: "scroll-fade-in-delay"
-                  }
-                },
-                {
-                  type: "Button",
-                  id: "cta-button",
-                  children: [],
-                  style: {
-                    backgroundColor: "white",
-                    color: "#0ea5e9",
-                    border: "none",
-                    padding: "18px 36px",
-                    fontSize: "20px",
-                    fontWeight: "700",
-                    borderRadius: "30px",
-                    cursor: "pointer",
-                    display: "block",
-                    margin: "0 auto",
-                    transition: "all 0.3s ease"
-                  },
-                  props: {
-                    text: "Start Free Trial Today",
-                    className: "cta-white-button-hover scroll-fade-in-delay-2"
-                  }
-                }
-              ],
-              style: {
-                maxWidth: "800px",
-                margin: "0 auto",
-                padding: "0 20px",
-                textAlign: "center"
-              },
-              props: {
-                className: ""
-              }
-            }
-          ],
-          style: {
-            background: "linear-gradient(135deg, #0ea5e9 0%, #f472b6 100%)",
-            padding: "100px 0"
-          },
-          props: {
-            className: ""
-          }
+          props: { className: "" }
         }
       ],
       style: {
+        fontFamily: "'Inter', sans-serif",
         margin: "0",
         padding: "0",
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        lineHeight: "1.6",
-        color: "#334155",
-        overflowX: "hidden"
+        lineHeight: "1.6"
       },
-      props: {
-        className: ""
-      }
+      props: { className: "" }
     }
   ],
   functions: [],
   hover: `
-    .logo-hover:hover {
-      transform: scale(1.05);
-      color: #f472b6 !important;
-    }
-    
-    .nav-link-hover:hover {
-      background-color: rgba(14, 165, 233, 0.1) !important;
-      color: #0ea5e9 !important;
-    }
-    
-    .cta-button-hover:hover {
-      background-color: #ec4899 !important;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(244, 114, 182, 0.3);
-    }
-    
-    .primary-button-hover:hover {
-      background-color: #0284c7 !important;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
-    }
-    
-    .secondary-button-hover:hover {
-      background-color: #0ea5e9 !important;
-      color: white !important;
-      transform: translateY(-2px);
-    }
-    
-    .feature-card-hover:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
-    }
-    
-    .course-card-hover:hover {
-      transform: translateY(-5px);
-      border-color: #f472b6 !important;
-      box-shadow: 0 20px 40px rgba(244, 114, 182, 0.15) !important;
-    }
-    
-    .cta-white-button-hover:hover {
-      background-color: #f8fafc !important;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
-    }
+    .logo-hover:hover { color: #8b0000; transition: color 0.3s ease; }
+    .nav-link-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
+    .btn-hover:hover { transform: translateY(-2px); transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .btn-outline-hover:hover { background-color: #c41e3a; color: white; transition: all 0.3s ease; }
+    .feature-card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .btn-scale:hover { transform: scale(1.05); }
+    .btn-pulse:hover { animation: pulse 0.6s; }
+    .social-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
+    .footer-link-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
   `,
   animations: `
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
     @keyframes float {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
-    
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
-    
-    .fade-in-up {
-      animation: fadeInUp 0.8s ease-out;
-    }
-    
-    .fade-in-up-delay {
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-    
-    .fade-in-up-delay-2 {
-      animation: fadeInUp 0.8s ease-out 0.4s both;
-    }
-    
-    .float-animation {
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .scroll-fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
-    
-    .scroll-fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .scroll-fade-in-delay {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out 0.2s;
-    }
-    
-    .scroll-fade-in-delay.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .scroll-fade-in-delay-2 {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out 0.4s;
-    }
-    
-    .scroll-fade-in-delay-2.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .scroll-fade-in-delay-3 {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out 0.6s;
-    }
-    
-    .scroll-fade-in-delay-3.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in-up { animation: fadeInUp 0.8s ease-out; }
+    .fade-in-up-delay { animation: fadeInUp 0.8s ease-out 0.2s both; }
+    .float-animation { animation: float 3s ease-in-out infinite; }
   `,
   theme: {
     light: `
       :root {
-        --primary-sky: #0ea5e9;
-        --primary-sky-dark: #0284c7;
-        --primary-sky-light: #7dd3fc;
-        --sakura-pink: #f472b6;
-        --sakura-pink-dark: #ec4899;
-        --sakura-pink-light: #fbcfe8;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --text-muted: #94a3b8;
-        --background-primary: #ffffff;
-        --background-secondary: #f8fafc;
-        --background-accent: #f1f5f9;
-        --border-light: rgba(14, 165, 233, 0.1);
-        --shadow-light: rgba(0, 0, 0, 0.1);
-        --shadow-medium: rgba(0, 0, 0, 0.15);
-        --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #f472b6 100%);
-        --gradient-background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%);
-      }
-      
-      .light {
-        --primary-sky: #0ea5e9;
-        --primary-sky-dark: #0284c7;
-        --primary-sky-light: #7dd3fc;
-        --sakura-pink: #f472b6;
-        --sakura-pink-dark: #ec4899;
-        --sakura-pink-light: #fbcfe8;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --text-muted: #94a3b8;
-        --background-primary: #ffffff;
-        --background-secondary: #f8fafc;
-        --background-accent: #f1f5f9;
-        --border-light: rgba(14, 165, 233, 0.1);
-        --shadow-light: rgba(0, 0, 0, 0.1);
-        --shadow-medium: rgba(0, 0, 0, 0.15);
-        --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #f472b6 100%);
-        --gradient-background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%);
+        --primary-color: #c41e3a;
+        --secondary-color: #ffeaa7;
+        --text-dark: #2c3e50;
+        --text-light: #7f8c8d;
+        --background-light: #f8f9fa;
+        --white: #ffffff;
+        --shadow: rgba(0,0,0,0.1);
       }
     `,
     dark: `
       .dark {
-        --primary-sky: #38bdf8;
-        --primary-sky-dark: #0ea5e9;
-        --primary-sky-light: #7dd3fc;
-        --sakura-pink: #f472b6;
-        --sakura-pink-dark: #ec4899;
-        --sakura-pink-light: #fbcfe8;
-        --text-primary: #f8fafc;
-        --text-secondary: #cbd5e1;
-        --text-muted: #94a3b8;
-        --background-primary: #0f172a;
-        --background-secondary: #1e293b;
-        --background-accent: #334155;
-        --border-light: rgba(56, 189, 248, 0.2);
-        --shadow-light: rgba(0, 0, 0, 0.3);
-        --shadow-medium: rgba(0, 0, 0, 0.4);
-        --gradient-primary: linear-gradient(135deg, #38bdf8 0%, #f472b6 100%);
-        --gradient-background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(244, 114, 182, 0.1) 100%);
+        --primary-color: #ff6b6b;
+        --secondary-color: #4ecdc4;
+        --text-dark: #ffffff;
+        --text-light: #a0a0a0;
+        --background-light: #2c3e50;
+        --white: #34495e;
+        --shadow: rgba(0,0,0,0.3);
       }
     `
   },
   responsiveUtilities: {
     mobile: `
       @media (max-width: 768px) {
-        .nav-links {
-          display: none;
+        .section-title { font-size: 24px !important; }
+        .hero-container { padding: 30px 20px !important; }
+        .features-grid { gap: 15px !important; }
+        .hero-image-responsive { 
+          width: 100% !important;
+          height: 280px !important;
+          object-fit: cover !important;
+          border-radius: 10px !important;
         }
-        
-        .mobile-menu-toggle {
-          display: block;
+        .footer-column {
+          margin-bottom: 25px !important;
+          text-align: center !important;
         }
-        
-        .hero-buttons {
-          flex-direction: column;
-          gap: 15px;
+        .footer-content {
+          flex-direction: column !important;
+          gap: 30px !important;
         }
-        
-        .hero-buttons button {
-          width: 100%;
-          margin: 0;
-        }
-        
-        .features-grid {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-        
-        .courses-grid {
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-        
-        section {
-          padding: 60px 0;
-        }
-        
-        .hero-section {
-          padding-top: 80px;
+        .social-links {
+          justify-content: center !important;
         }
       }
     `,
     tablet: `
       @media (min-width: 769px) and (max-width: 1024px) {
-        .features-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 30px;
-        }
-        
-        .courses-grid {
-          grid-template-columns: 1fr;
-          gap: 30px;
-        }
-        
-        .hero-container {
-          gap: 40px;
-        }
-        
-        .nav-links {
-          gap: 15px;
-        }
+        .hero-container { padding: 40px 30px !important; }
+        .section-title { font-size: 32px !important; }
       }
     `,
     desktop: `
       @media (min-width: 1025px) {
-        .features-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        
-        .courses-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .hero-container {
-          gap: 60px;
-        }
-        
-        .main-nav {
-          padding: 20px 0;
-        }
+        .hero-container { padding: 60px 50px !important; }
+        .features-grid { gap: 40px !important; }
       }
     `,
     large: `
       @media (min-width: 1440px) {
-        .hero-title {
-          font-size: 72px;
-        }
-        
-        .hero-subtitle {
-          font-size: 22px;
-        }
-        
-        .features-title,
-        .courses-title,
-        .cta-title {
-          font-size: 56px;
-        }
-        
-        .feature-card,
-        .course-card {
-          padding: 50px;
-        }
-        
-        .hero-container,
-        .features-container,
-        .courses-container,
-        .cta-container {
-          max-width: 1400px;
-        }
+        .hero-container { padding: 80px 100px !important; }
+        .section-title { font-size: 40px !important; }
       }
     `
   }
-}
+};
   
   
 export function getDSL(prompt : string){
