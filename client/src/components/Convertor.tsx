@@ -38,6 +38,7 @@ export default function Convertor({
                 children={child.children}
                 parents={parents}
                 props={child.props}
+                mediaQueries={child.mediaQueries}
               />
             )
           case "Heading":
@@ -70,6 +71,7 @@ export default function Convertor({
                 style={child.style}
                 props={child.props}
                 parent={parents}
+                mediaQueries={child.mediaQueries}
               />
             )
           case "Link": //
@@ -92,6 +94,7 @@ export default function Convertor({
                 style={child.style}
                 props={child.props}
                 parent={parents}
+                mediaQueries={child.mediaQueries}
               />
             )
           case "Loop": //

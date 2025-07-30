@@ -1,5 +1,6 @@
 import { captureEvent, captureException } from "@sentry/react"
 import { checkRequirements } from "./requirements"
+import { addElementToTypeMap } from "./typeMap"
 
 export interface DSLComponent {
   type:
@@ -24,10 +25,10 @@ export interface DSLComponent {
   children: DSLComponent[]
   style: React.CSSProperties// inline React CSS for the current component
   mediaQueries?: {
-    mobile?: Partial<CSSStyleDeclaration> // @media (max-width: 768px) plain CSS for responsiveness
-    tablet?: Partial<CSSStyleDeclaration> // @media (min-width: 769px) and (max-width: 1024px) plain CSS for responsiveness
-    desktop?: Partial<CSSStyleDeclaration> // @media (min-width: 1025px) plain CSS for responsiveness
-    large?: Partial<CSSStyleDeclaration> // @media (min-width: 1440px) plain CSS for responsiveness
+    mobile?: string // @media (max-width: 768px) {${mobile}} plain CSS for responsiveness
+    tablet?: string // @media (min-width: 769px) and (max-width: 1024px) {${tablet}}plain CSS for responsiveness
+    desktop?: string // @media (min-width: 1025px) {${desktop}} plain CSS for responsiveness
+    large?: string // @media (min-width: 1440px) {${large}} plain CSS for responsiveness
   }
   props: {
     text?: string // text in Text / Link / Heading element
@@ -228,8 +229,10 @@ function recursiveCheckComponents(data: DSLComponent[]): {
   report: Report[]
 } {
   // console.log(data)
+  
   let report: Report[] = []
   data.map((component: DSLComponent) => {
+    addElementToTypeMap(component.type, component.id)
     // General tests
     if (!validComponentTypes.has(component.type)) {
       report.push({
@@ -370,9 +373,10 @@ export default function sanetizer(data: DSL) {
       })
     }
     console.log("Check Complete")
+    // DEV_TEST_PRINT_MAP()
     if (res1.success /*&& res2*/) return data
-    console.log(res1.report)
-
+    // console.log(res1.report)
+    
     return false
   } catch (err) {
     console.log(err)

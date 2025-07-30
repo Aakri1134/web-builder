@@ -1,1248 +1,696 @@
 import sanetizer, { type DSL } from "./sanetizer";
 
 const tempDSL : DSL = {
-  components: [
+  "components": [
     {
-      type: "Body",
-      id: "main-body",
-      children: [
-        // Navigation Header
+      "type": "Body",
+      "id": "main-body",
+      "children": [
         {
-          type: "Nav",
-          id: "main-nav",
-          children: [
+          "type": "Nav",
+          "id": "navigation",
+          "children": [
             {
-              type: "Div",
-              id: "nav-container",
-              children: [
+              "type": "Div",
+              "id": "nav-container",
+              "children": [
                 {
-                  type: "Heading",
-                  id: "logo",
-                  children: [],
-                  style: {
-                    fontSize: "24px",
-                    fontWeight: "bold",
-                    color: "#c41e3a"
+                  "type": "Heading",
+                  "id": "logo",
+                  "children": [],
+                  "style": {
+                    "fontSize": "24px",
+                    "fontWeight": "bold",
+                    "color": "var(--primary-color)"
                   },
-                  mediaQueries: {
-                    mobile: { fontSize: "20px" }
-                  },
-                  props: {
-                    text: "日本語マスター",
-                    className: "logo-hover"
+                  "props": {
+                    "text": "PastelShop",
+                    "className": "logo-hover"
                   }
                 },
                 {
-                  type: "List",
-                  id: "nav-menu",
-                  children: [
+                  "type": "List",
+                  "id": "nav-menu",
+                  "children": [
                     {
-                      type: "ListItems",
-                      id: "nav-home",
-                      children: [
+                      "type": "ListItems",
+                      "id": "nav-home",
+                      "children": [
                         {
-                          type: "Link",
-                          id: "home-link",
-                          children: [],
-                          style: { color: "#333", textDecoration: "none" },
-                          props: {
-                            text: "Home",
-                            href: "#home",
-                            className: "nav-link-hover"
-                          }
-                        }
-                      ],
-                      style: {},
-                      props: { className: "" }
-                    },
-                    {
-                      type: "ListItems",
-                      id: "nav-courses",
-                      children: [
-                        {
-                          type: "Link",
-                          id: "courses-link",
-                          children: [],
-                          style: { color: "#333", textDecoration: "none" },
-                          props: {
-                            text: "Courses",
-                            href: "#courses",
-                            className: "nav-link-hover"
-                          }
-                        }
-                      ],
-                      style: {},
-                      props: { className: "" }
-                    },
-                    {
-                      type: "ListItems",
-                      id: "nav-about",
-                      children: [
-                        {
-                          type: "Link",
-                          id: "about-link",
-                          children: [],
-                          style: { color: "#333", textDecoration: "none" },
-                          props: {
-                            text: "About",
-                            href: "#about",
-                            className: "nav-link-hover"
-                          }
-                        }
-                      ],
-                      style: {},
-                      props: { className: "" }
-                    },
-                    {
-                      type: "ListItems",
-                      id: "nav-contact",
-                      children: [
-                        {
-                          type: "Button",
-                          id: "contact-btn",
-                          children: [],
-                          style: {
-                            backgroundColor: "#c41e3a",
-                            color: "white",
-                            padding: "10px 20px",
-                            border: "none",
-                            borderRadius: "5px"
+                          "type": "Link",
+                          "id": "home-link",
+                          "children": [],
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "8px 16px",
+                            "borderRadius": "20px",
+                            "transition": "all 0.3s ease"
                           },
-                          props: {
-                            text: "Contact",
-                            className: "btn-hover"
+                          "props": {
+                            "text": "Home",
+                            "href": "#home",
+                            "className": "nav-link-hover"
                           }
                         }
                       ],
-                      style: {},
-                      props: { className: "" }
+                      "style": {},
+                      "props": { "className": "" }
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "nav-products",
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "products-link",
+                          "children": [],
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "8px 16px",
+                            "borderRadius": "20px",
+                            "transition": "all 0.3s ease"
+                          },
+                          "props": {
+                            "text": "Products",
+                            "href": "#products",
+                            "className": "nav-link-hover"
+                          }
+                        }
+                      ],
+                      "style": {},
+                      "props": { "className": "" }
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "nav-about",
+                      "children": [
+                        {
+                          "type": "Link",
+                          "id": "about-link",
+                          "children": [],
+                          "style": {
+                            "color": "var(--text-color)",
+                            "textDecoration": "none",
+                            "padding": "8px 16px",
+                            "borderRadius": "20px",
+                            "transition": "all 0.3s ease"
+                          },
+                          "props": {
+                            "text": "About",
+                            "href": "#about",
+                            "className": "nav-link-hover"
+                          }
+                        }
+                      ],
+                      "style": {},
+                      "props": { "className": "" }
+                    },
+                    {
+                      "type": "ListItems",
+                      "id": "nav-contact",
+                      "children": [
+                        {
+                          "type": "Button",
+                          "id": "contact-btn",
+                          "children": [],
+                          "style": {
+                            "backgroundColor": "var(--accent-color)",
+                            "color": "white",
+                            "border": "none",
+                            "padding": "8px 20px",
+                            "borderRadius": "25px",
+                            "cursor": "pointer",
+                            "fontWeight": "500",
+                            "transition": "all 0.3s ease"
+                          },
+                          "props": {
+                            "text": "Contact",
+                            "className": "contact-btn-hover"
+                          }
+                        }
+                      ],
+                      "style": {},
+                      "props": { "className": "" }
                     }
                   ],
-                  style: {
-                    display: "flex",
-                    gap: "30px",
-                    listStyle: "none",
-                    alignItems: "center"
+                  "style": {
+                    "display": "flex",
+                    "listStyle": "none",
+                    "gap": "20px",
+                    "margin": "0",
+                    "padding": "0"
                   },
-                  mediaQueries: {
-                    mobile: { flexDirection: "column", gap: "15px" }
-                  },
-                  props: { className: "" }
+                  "props": { "className": "" }
                 }
               ],
-              style: {
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 50px",
-                maxWidth: "1200px",
-                margin: "0 auto"
+              "style": {
+                "display": "flex",
+                "justifyContent": "space-between",
+                "alignItems": "center",
+                "maxWidth": "1200px",
+                "margin": "0 auto",
+                "padding": "0 20px"
               },
-              mediaQueries: {
-                mobile: { padding: "0 20px", flexDirection: "column", gap: "20px" }
-              },
-              props: { className: "" }
+              "props": { "className": "" }
             }
           ],
-          style: {
-            backgroundColor: "white",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-            position: "sticky",
-            top: "0",
-            zIndex: "100",
-            padding: "15px 0"
+          "style": {
+            "position": "fixed",
+            "top": "0",
+            "left": "0",
+            "right": "0",
+            "backgroundColor": "rgba(255, 255, 255, 0.95)",
+            "backdropFilter": "blur(10px)",
+            "zIndex": "1000",
+            "padding": "15px 0",
+            "boxShadow": "0 2px 20px rgba(0,0,0,0.1)"
           },
-          props: { className: "" }
+          "props": { "className": "slide-down" }
         },
-
-        // Main Content
         {
-          type: "Main",
-          id: "main-content",
-          children: [
-            // Hero Section
+          "type": "Main",
+          "id": "main-content",
+          "children": [
             {
-              type: "Section",
-              id: "hero-section",
-              children: [
+              "type": "Section",
+              "id": "hero-section",
+              "children": [
                 {
-                  type: "Div",
-                  id: "hero-container",
-                  children: [
+                  "type": "Div",
+                  "id": "hero-container",
+                  "children": [
                     {
-                      type: "Div",
-                      id: "hero-content",
-                      children: [
+                      "type": "Div",
+                      "id": "hero-content",
+                      "children": [
                         {
-                          type: "Heading",
-                          id: "hero-title",
-                          children: [],
-                          style: {
-                            fontSize: "48px",
-                            fontWeight: "bold",
-                            marginBottom: "20px",
-                            color: "#2c3e50"
+                          "type": "Heading",
+                          "id": "hero-title",
+                          "children": [],
+                          "style": {
+                            "fontSize": "3.5rem",
+                            "fontWeight": "700",
+                            "color": "var(--primary-color)",
+                            "marginBottom": "20px",
+                            "lineHeight": "1.2"
                           },
-                          mediaQueries: {
-                            mobile: { fontSize: "32px" },
-                            tablet: { fontSize: "40px" }
+                          "mediaQueries": {
+                            "mobile": "font-size: 2.5rem;",
+                            "tablet": "font-size: 3rem;"
                           },
-                          props: {
-                            text: "Master Japanese Language",
-                            className: "fade-in-up"
+                          "props": {
+                            "text": "Discover Pastel Paradise",
+                            "className": "fade-in-up"
                           }
                         },
                         {
-                          type: "Text",
-                          id: "hero-subtitle",
-                          children: [],
-                          style: {
-                            fontSize: "20px",
-                            color: "#7f8c8d",
-                            marginBottom: "30px",
-                            lineHeight: "1.6"
+                          "type": "Text",
+                          "id": "hero-subtitle",
+                          "children": [],
+                          "style": {
+                            "fontSize": "1.2rem",
+                            "color": "var(--text-secondary)",
+                            "marginBottom": "30px",
+                            "maxWidth": "500px"
                           },
-                          mediaQueries: {
-                            mobile: { fontSize: "16px" }
-                          },
-                          props: {
-                            text: "Learn Japanese from beginner to advanced with our interactive courses, expert instructors, and immersive cultural experiences.",
-                            className: "fade-in-up-delay"
+                          "props": {
+                            "text": "Curated collection of beautiful products in soft, dreamy colors that bring joy to your everyday life.",
+                            "className": "fade-in-up delay-1"
                           }
                         },
                         {
-                          type: "Div",
-                          id: "hero-buttons",
-                          children: [
+                          "type": "Div",
+                          "id": "hero-buttons",
+                          "children": [
                             {
-                              type: "Button",
-                              id: "start-learning-btn",
-                              children: [],
-                              style: {
-                                backgroundColor: "#c41e3a",
-                                color: "white",
-                                padding: "15px 30px",
-                                border: "none",
-                                borderRadius: "8px",
-                                fontSize: "18px",
-                                marginRight: "20px"
+                              "type": "Button",
+                              "id": "shop-now-btn",
+                              "children": [],
+                              "style": {
+                                "backgroundColor": "var(--primary-color)",
+                                "color": "white",
+                                "border": "none",
+                                "padding": "15px 30px",
+                                "borderRadius": "30px",
+                                "fontSize": "1.1rem",
+                                "fontWeight": "600",
+                                "cursor": "pointer",
+                                "marginRight": "15px",
+                                "transition": "all 0.3s ease"
                               },
-                              mediaQueries: {
-                                mobile: { marginRight: "0", marginBottom: "15px", width: "100%" }
-                              },
-                              props: {
-                                text: "Start Learning",
-                                className: "btn-hover btn-scale"
+                              "props": {
+                                "text": "Shop Now",
+                                "className": "primary-btn-hover fade-in-up delay-2"
                               }
                             },
                             {
-                              type: "Button",
-                              id: "watch-demo-btn",
-                              children: [],
-                              style: {
-                                backgroundColor: "transparent",
-                                color: "#c41e3a",
-                                padding: "15px 30px",
-                                border: "2px solid #c41e3a",
-                                borderRadius: "8px",
-                                fontSize: "18px"
+                              "type": "Button",
+                              "id": "learn-more-btn",
+                              "children": [],
+                              "style": {
+                                "backgroundColor": "transparent",
+                                "color": "var(--primary-color)",
+                                "border": "2px solid var(--primary-color)",
+                                "padding": "13px 30px",
+                                "borderRadius": "30px",
+                                "fontSize": "1.1rem",
+                                "fontWeight": "600",
+                                "cursor": "pointer",
+                                "transition": "all 0.3s ease"
                               },
-                              mediaQueries: {
-                                mobile: { width: "100%" }
-                              },
-                              props: {
-                                text: "Watch Demo",
-                                className: "btn-outline-hover"
+                              "props": {
+                                "text": "Learn More",
+                                "className": "secondary-btn-hover fade-in-up delay-3"
                               }
                             }
                           ],
-                          style: {
-                            display: "flex",
-                            gap: "20px"
+                          "style": {
+                            "display": "flex",
+                            "gap": "15px"
                           },
-                          mediaQueries: {
-                            mobile: { flexDirection: "column", gap: "0" }
+                          "mediaQueries": {
+                            "mobile": "flex-direction: column; gap: 10px;"
                           },
-                          props: { className: "" }
+                          "props": { "className": "" }
                         }
                       ],
-                      style: {
-                        flex: "1",
-                        paddingRight: "50px"
+                      "style": {
+                        "flex": "1",
+                        "paddingRight": "40px"
                       },
-                      mediaQueries: {
-                        mobile: { paddingRight: "0", textAlign: "center" },
-                        tablet: { paddingRight: "30px" }
+                      "mediaQueries": {
+                        "mobile": "padding-right: 0; text-align: center;",
+                        "tablet": "padding-right: 20px;"
                       },
-                      props: { className: "" }
-                    },
-                    
-                  ],
-                  style: {
-                    display: "flex",
-                    alignItems: "center",
-                    maxWidth: "1200px",
-                    margin: "0 auto",
-                    padding: "0 50px"
-                  },
-                  mediaQueries: {
-                    mobile: { flexDirection: "column", padding: "0 20px" },
-                    tablet: { padding: "0 30px" }
-                  },
-                  props: { className: "" }
-                }
-              ],
-              style: {
-                minHeight: "80vh",
-                display: "flex",
-                alignItems: "center",
-                background: "linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%)"
-              },
-              props: { className: "" }
-            },
-
-            // Features Section
-            {
-              type: "Section",
-              id: "features-section",
-              children: [
-                {
-                  type: "Div",
-                  id: "features-container",
-                  children: [
-                    {
-                      type: "Heading",
-                      id: "features-title",
-                      children: [],
-                      style: {
-                        fontSize: "36px",
-                        textAlign: "center",
-                        marginBottom: "50px",
-                        color: "#2c3e50"
-                      },
-                      mediaQueries: {
-                        mobile: { fontSize: "28px", marginBottom: "30px" }
-                      },
-                      props: {
-                        text: "Why Choose Our Japanese Courses?",
-                        className: "section-title"
-                      }
+                      "props": { "className": "" }
                     },
                     {
-                      type: "Div",
-                      id: "features-grid",
-                      children: [
+                      "type": "Div",
+                      "id": "hero-image",
+                      "children": [
                         {
-                          type: "Div",
-                          id: "feature-1",
-                          children: [
-                            {
-                              type: "Heading",
-                              id: "feature-1-title",
-                              children: [],
-                              style: {
-                                fontSize: "24px",
-                                marginBottom: "15px",
-                                color: "#c41e3a"
-                              },
-                              props: {
-                                text: "Interactive Learning",
-                                className: ""
-                              }
-                            },
-                            {
-                              type: "Text",
-                              id: "feature-1-desc",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                lineHeight: "1.6"
-                              },
-                              props: {
-                                text: "Engage with interactive exercises, games, and real-time feedback to accelerate your learning process.",
-                                className: ""
-                              }
-                            }
-                          ],
-                          style: {
-                            backgroundColor: "white",
-                            padding: "30px",
-                            borderRadius: "15px",
-                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-                            textAlign: "center"
+                          "type": "Image",
+                          "id": "hero-img",
+                          "children": [],
+                          "style": {
+                            "width": "100%",
+                            "height": "400px",
+                            "objectFit": "cover",
+                            "borderRadius": "20px",
+                            "boxShadow": "0 20px 40px rgba(0,0,0,0.1)"
                           },
-                          props: { className: "feature-card-hover" }
-                        },
-                        {
-                          type: "Div",
-                          id: "feature-2",
-                          children: [
-                            {
-                              type: "Heading",
-                              id: "feature-2-title",
-                              children: [],
-                              style: {
-                                fontSize: "24px",
-                                marginBottom: "15px",
-                                color: "#c41e3a"
-                              },
-                              props: {
-                                text: "Native Instructors",
-                                className: ""
-                              }
-                            },
-                            {
-                              type: "Text",
-                              id: "feature-2-desc",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                lineHeight: "1.6"
-                              },
-                              props: {
-                                text: "Learn from certified native Japanese speakers who understand the nuances of the language and culture.",
-                                className: ""
-                              }
-                            }
-                          ],
-                          style: {
-                            backgroundColor: "white",
-                            padding: "30px",
-                            borderRadius: "15px",
-                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-                            textAlign: "center"
-                          },
-                          props: { className: "feature-card-hover" }
-                        },
-                        {
-                          type: "Div",
-                          id: "feature-3",
-                          children: [
-                            {
-                              type: "Heading",
-                              id: "feature-3-title",
-                              children: [],
-                              style: {
-                                fontSize: "24px",
-                                marginBottom: "15px",
-                                color: "#c41e3a"
-                              },
-                              props: {
-                                text: "Cultural Immersion",
-                                className: ""
-                              }
-                            },
-                            {
-                              type: "Text",
-                              id: "feature-3-desc",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                lineHeight: "1.6"
-                              },
-                              props: {
-                                text: "Dive deep into Japanese culture, traditions, and customs while learning the language for a complete experience.",
-                                className: ""
-                              }
-                            }
-                          ],
-                          style: {
-                            backgroundColor: "white",
-                            padding: "30px",
-                            borderRadius: "15px",
-                            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-                            textAlign: "center"
-                          },
-                          props: { className: "feature-card-hover" }
+                          "props": {
+                            "src": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                            "alt": "Pastel colored products showcase",
+                            "className": "float-animation"
+                          }
                         }
                       ],
-                      style: {
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                        gap: "30px"
+                      "style": {
+                        "flex": "1"
                       },
-                      mediaQueries: {
-                        mobile: { gridTemplateColumns: "1fr", gap: "20px" }
+                      "mediaQueries": {
+                        "mobile": "margin-top: 30px;"
                       },
-                      props: { className: "" }
+                      "props": { "className": "" }
                     }
                   ],
-                  style: {
-                    maxWidth: "1200px",
-                    margin: "0 auto",
-                    padding: "0 50px"
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "maxWidth": "1200px",
+                    "margin": "0 auto",
+                    "padding": "0 20px",
+                    "minHeight": "80vh"
                   },
-                  mediaQueries: {
-                    mobile: { padding: "0 20px" }
+                  "mediaQueries": {
+                    "mobile": "flex-direction: column; min-height: 70vh; padding-top: 100px;",
+                    "tablet": "flex-direction: column; padding-top: 120px;"
                   },
-                  props: { className: "" }
+                  "props": { "className": "" }
                 }
               ],
-              style: {
-                padding: "80px 0",
-                backgroundColor: "#f8f9fa"
+              "style": {
+                "background": "linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%)",
+                "paddingTop": "80px"
               },
-              mediaQueries: {
-                mobile: { padding: "50px 0" }
-              },
-              props: { className: "" }
+              "props": { "className": "" }
             },
-
-            // CTA Section
             {
-              type: "Section",
-              id: "cta-section",
-              children: [
+              "type": "Section",
+              "id": "featured-section",
+              "children": [
                 {
-                  type: "Div",
-                  id: "cta-container",
-                  children: [
+                  "type": "Div",
+                  "id": "featured-container",
+                  "children": [
                     {
-                      type: "Heading",
-                      id: "cta-title",
-                      children: [],
-                      style: {
-                        fontSize: "42px",
-                        textAlign: "center",
-                        marginBottom: "20px",
-                        color: "white"
+                      "type": "Heading",
+                      "id": "featured-title",
+                      "children": [],
+                      "style": {
+                        "fontSize": "2.5rem",
+                        "fontWeight": "700",
+                        "color": "var(--primary-color)",
+                        "textAlign": "center",
+                        "marginBottom": "50px"
                       },
-                      mediaQueries: {
-                        mobile: { fontSize: "28px" }
-                      },
-                      props: {
-                        text: "Ready to Start Your Journey?",
-                        className: ""
+                      "props": {
+                        "text": "Featured Products",
+                        "className": "slide-up-on-scroll"
                       }
                     },
                     {
-                      type: "Text",
-                      id: "cta-subtitle",
-                      children: [],
-                      style: {
-                        fontSize: "20px",
-                        textAlign: "center",
-                        marginBottom: "40px",
-                        color: "rgba(255,255,255,0.9)"
-                      },
-                      mediaQueries: {
-                        mobile: { fontSize: "16px", marginBottom: "30px" }
-                      },
-                      props: {
-                        text: "Join thousands of students who have mastered Japanese with our proven teaching methods.",
-                        className: ""
-                      }
-                    },
-                    {
-                      type: "Div",
-                      id: "cta-buttons",
-                      children: [
+                      "type": "Div",
+                      "id": "products-grid",
+                      "children": [
                         {
-                          type: "Button",
-                          id: "get-started-btn",
-                          children: [],
-                          style: {
-                            backgroundColor: "white",
-                            color: "#c41e3a",
-                            padding: "18px 40px",
-                            border: "none",
-                            borderRadius: "8px",
-                            fontSize: "18px",
-                            fontWeight: "bold"
+                          "type": "Div",
+                          "id": "product-1",
+                          "children": [
+                            {
+                              "type": "Image",
+                              "id": "product-img-1",
+                              "children": [],
+                              "style": {
+                                "width": "100%",
+                                "height": "250px",
+                                "objectFit": "cover",
+                                "borderRadius": "15px",
+                                "marginBottom": "15px"
+                              },
+                              "props": {
+                                "src": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                                "alt": "Pastel skincare products",
+                                "className": "product-image-hover"
+                              }
+                            },
+                            {
+                              "type": "Heading",
+                              "id": "product-title-1",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.3rem",
+                                "fontWeight": "600",
+                                "color": "var(--text-color)",
+                                "marginBottom": "10px"
+                              },
+                              "props": {
+                                "text": "Pastel Skincare Set",
+                                "className" : ""
+                              }
+                            },
+                            {
+                              "type": "Text",
+                              "id": "product-price-1",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.1rem",
+                                "color": "var(--accent-color)",
+                                "fontWeight": "600"
+                              },
+                              "props": {
+                                "text": "$89.99",
+                                className: ""
+                              }
+                            }
+                          ],
+                          "style": {
+                            "backgroundColor": "white",
+                            "padding": "20px",
+                            "borderRadius": "20px",
+                            "boxShadow": "0 5px 20px rgba(0,0,0,0.08)",
+                            "transition": "all 0.3s ease"
                           },
-                          props: {
-                            text: "Get Started Today",
-                            className: "btn-hover btn-pulse"
+                          "props": {
+                            "className": "product-card-hover slide-up-on-scroll"
+                          }
+                        },
+                        {
+                          "type": "Div",
+                          "id": "product-2",
+                          "children": [
+                            {
+                              "type": "Image",
+                              "id": "product-img-2",
+                              "children": [],
+                              "style": {
+                                "width": "100%",
+                                "height": "250px",
+                                "objectFit": "cover",
+                                "borderRadius": "15px",
+                                "marginBottom": "15px"
+                              },
+                              "props": {
+                                "src": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                                "alt": "Pastel home decor",
+                                "className": "product-image-hover"
+                              }
+                            },
+                            {
+                              "type": "Heading",
+                              "id": "product-title-2",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.3rem",
+                                "fontWeight": "600",
+                                "color": "var(--text-color)",
+                                "marginBottom": "10px"
+                              },
+                              "props": {
+                                "text": "Dreamy Home Decor",
+                                "className" : ""
+                              }
+                            },
+                            {
+                              "type": "Text",
+                              "id": "product-price-2",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.1rem",
+                                "color": "var(--accent-color)",
+                                "fontWeight": "600"
+                              },
+                              "props": {
+                                "text": "$124.99",
+                                "className" : ""
+                              }
+                            }
+                          ],
+                          "style": {
+                            "backgroundColor": "white",
+                            "padding": "20px",
+                            "borderRadius": "20px",
+                            "boxShadow": "0 5px 20px rgba(0,0,0,0.08)",
+                            "transition": "all 0.3s ease"
+                          },
+                          "props": {
+                            "className": "product-card-hover slide-up-on-scroll delay-1"
+                          }
+                        },
+                        {
+                          "type": "Div",
+                          "id": "product-3",
+                          "children": [
+                            {
+                              "type": "Image",
+                              "id": "product-img-3",
+                              "children": [],
+                              "style": {
+                                "width": "100%",
+                                "height": "250px",
+                                "objectFit": "cover",
+                                "borderRadius": "15px",
+                                "marginBottom": "15px"
+                              },
+                              "props": {
+                                "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                                "alt": "Pastel stationery",
+                                "className": "product-image-hover"
+                              }
+                            },
+                            {
+                              "type": "Heading",
+                              "id": "product-title-3",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.3rem",
+                                "fontWeight": "600",
+                                "color": "var(--text-color)",
+                                "marginBottom": "10px"
+                              },
+                              "props": {
+                                "text": "Soft Stationery Kit",
+                                className : ""
+                              }
+                            },
+                            {
+                              "type": "Text",
+                              "id": "product-price-3",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.1rem",
+                                "color": "var(--accent-color)",
+                                "fontWeight": "600"
+                              },
+                              "props": {
+                                "text": "$45.99",
+                                className : ""
+                              }
+                            }
+                          ],
+                          "style": {
+                            "backgroundColor": "white",
+                            "padding": "20px",
+                            "borderRadius": "20px",
+                            "boxShadow": "0 5px 20px rgba(0,0,0,0.08)",
+                            "transition": "all 0.3s ease"
+                          },
+                          "props": {
+                            "className": "product-card-hover slide-up-on-scroll delay-2"
                           }
                         }
                       ],
-                      style: {
-                        textAlign: "center"
+                      "style": {
+                        "display": "grid",
+                        "gridTemplateColumns": "repeat(auto-fit, minmax(300px, 1fr))",
+                        "gap": "30px"
                       },
-                      props: { className: "" }
+                      "mediaQueries": {
+                        "mobile": "grid-template-columns: 1fr; gap: 20px;"
+                      },
+                      "props": { "className": "" }
                     }
                   ],
-                  style: {
-                    maxWidth: "800px",
-                    margin: "0 auto",
-                    padding: "0 50px",
-                    textAlign: "center"
+                  "style": {
+                    "maxWidth": "1200px",
+                    "margin": "0 auto",
+                    "padding": "80px 20px"
                   },
-                  mediaQueries: {
-                    mobile: { padding: "0 20px" }
-                  },
-                  props: { className: "" }
+                  "props": { "className": "" }
                 }
               ],
-              style: {
-                padding: "80px 0",
-                background: "linear-gradient(135deg, #c41e3a 0%, #8b0000 100%)"
+              "style": {
+                "backgroundColor": "var(--bg-light)"
               },
-              mediaQueries: {
-                mobile: { padding: "50px 0" }
+              "props": { "className": "" }
+            },
+            {
+              "type": "Section",
+              "id": "cta-section",
+              "children": [
+                {
+                  "type": "Div",
+                  "id": "cta-container",
+                  "children": [
+                    {
+                      "type": "Heading",
+                      "id": "cta-title",
+                      "children": [],
+                      "style": {
+                        "fontSize": "2.5rem",
+                        "fontWeight": "700",
+                        "color": "white",
+                        "textAlign": "center",
+                        "marginBottom": "20px"
+                      },
+                      "mediaQueries": {
+                        "mobile": "font-size: 2rem;"
+                      },
+                      "props": {
+                        "text": "Ready to Transform Your Space?",
+                        "className": "fade-in-up"
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "id": "cta-subtitle",
+                      "children": [],
+                      "style": {
+                        "fontSize": "1.2rem",
+                        "color": "rgba(255,255,255,0.9)",
+                        "textAlign": "center",
+                        "marginBottom": "40px",
+                        "maxWidth": "600px",
+                        "margin": "0 auto 40px auto"
+                      },
+                      "props": {
+                        "text": "Join thousands of happy customers who've discovered the magic of pastel living.",
+                        "className": "fade-in-up delay-1"
+                      }
+                    },
+                    {
+                      "type": "Button",
+                      "id": "cta-button",
+                      "children": [],
+                      "style": {
+                        "backgroundColor": "white",
+                        "color": "var(--primary-color)",
+                        "border": "none",
+                        "padding": "18px 40px",
+                        "borderRadius": "30px",
+                        "fontSize": "1.2rem",
+                        "fontWeight": "600",
+                        "cursor": "pointer",
+                        "transition": "all 0.3s ease",
+                        "display": "block",
+                        "margin": "0 auto"
+                      },
+                      "props": {
+                        "text": "Start Shopping",
+                        "className": "cta-btn-hover fade-in-up delay-2"
+                      }
+                    }
+                  ],
+                  "style": {
+                    "textAlign": "center",
+                    "maxWidth": "800px",
+                    "margin": "0 auto",
+                    "padding": "0 20px"
+                  },
+                  "props": { "className": "" }
+                }
+              ],
+              "style": {
+                "background": "linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%)",
+                "padding": "80px 0"
               },
-              props: { className: "" }
+              "props": { "className": "" }
             }
           ],
-          style: {},
-          props: { className: "" }
-        },
-
-        // Footer
-        {
-          type: "Section",
-          id: "footer",
-          children: [
-            {
-              type: "Div",
-              id: "footer-container",
-              children: [
-                {
-                  type: "Div",
-                  id: "footer-content",
-                  children: [
-                    // Company Info Column
-                    {
-                      type: "Div",
-                      id: "footer-company",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "footer-logo",
-                          children: [],
-                          style: {
-                            fontSize: "24px",
-                            fontWeight: "bold",
-                            color: "#c41e3a",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "日本語マスター",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Text",
-                          id: "footer-description",
-                          children: [],
-                          style: {
-                            color: "#7f8c8d",
-                            marginBottom: "20px",
-                            lineHeight: "1.6"
-                          },
-                          props: {
-                            text: "Your trusted partner in mastering the Japanese language and culture. Join thousands of successful students worldwide.",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Div",
-                          id: "social-links",
-                          children: [
-                            {
-                              type: "Link",
-                              id: "facebook-link",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                textDecoration: "none",
-                                marginRight: "15px",
-                                fontSize: "18px"
-                              },
-                              props: {
-                                text: "Facebook",
-                                href: "#facebook",
-                                className: "social-hover"
-                              }
-                            },
-                            {
-                              type: "Link",
-                              id: "twitter-link",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                textDecoration: "none",
-                                marginRight: "15px",
-                                fontSize: "18px"
-                              },
-                              props: {
-                                text: "Twitter",
-                                href: "#twitter",
-                                className: "social-hover"
-                              }
-                            },
-                            {
-                              type: "Link",
-                              id: "instagram-link",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                textDecoration: "none",
-                                fontSize: "18px"
-                              },
-                              props: {
-                                text: "Instagram",
-                                href: "#instagram",
-                                className: "social-hover"
-                              }
-                            }
-                          ],
-                          style: {
-                            display: "flex",
-                            gap: "15px"
-                          },
-                          mediaQueries: {
-                            mobile: { justifyContent: "center" }
-                          },
-                          props: { className: "" }
-                        }
-                      ],
-                      style: {
-                        flex: "1",
-                        minWidth: "250px"
-                      },
-                      mediaQueries: {
-                        mobile: { 
-                          textAlign: "center", 
-                          marginBottom: "25px",
-                          minWidth: "100%"
-                        }
-                      },
-                      props: { className: "" }
-                    },
-
-                    // Quick Links Column
-                    {
-                      type: "Div",
-                      id: "footer-links",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "footer-links-title",
-                          children: [],
-                          style: {
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            color: "#2c3e50",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Quick Links",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "List",
-                          id: "footer-nav-list",
-                          children: [
-                            {
-                              type: "ListItems",
-                              id: "footer-courses",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-courses-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "All Courses",
-                                    href: "#courses",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-beginner",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-beginner-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Beginner Course",
-                                    href: "#beginner",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-advanced",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-advanced-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Advanced Course",
-                                    href: "#advanced",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-pricing",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-pricing-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Pricing",
-                                    href: "#pricing",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: {},
-                              props: { className: "" }
-                            }
-                          ],
-                          style: {
-                            listStyle: "none",
-                            padding: "0"
-                          },
-                          props: { className: "" }
-                        }
-                      ],
-                      style: {
-                        flex: "1",
-                        minWidth: "200px"
-                      },
-                      mediaQueries: {
-                        mobile: { 
-                          textAlign: "center", 
-                          marginBottom: "25px",
-                          minWidth: "100%"
-                        }
-                      },
-                      props: { className: "" }
-                    },
-
-                    // Support Column
-                    {
-                      type: "Div",
-                      id: "footer-support",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "footer-support-title",
-                          children: [],
-                          style: {
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            color: "#2c3e50",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Support",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "List",
-                          id: "footer-support-list",
-                          children: [
-                            {
-                              type: "ListItems",
-                              id: "footer-help",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-help-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Help Center",
-                                    href: "#help",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-contact",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-contact-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Contact Us",
-                                    href: "#contact",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-faq",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-faq-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "FAQ",
-                                    href: "#faq",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: { marginBottom: "8px" },
-                              props: { className: "" }
-                            },
-                            {
-                              type: "ListItems",
-                              id: "footer-privacy",
-                              children: [
-                                {
-                                  type: "Link",
-                                  id: "footer-privacy-link",
-                                  children: [],
-                                  style: {
-                                    color: "#7f8c8d",
-                                    textDecoration: "none",
-                                    lineHeight: "2"
-                                  },
-                                  props: {
-                                    text: "Privacy Policy",
-                                    href: "#privacy",
-                                    className: "footer-link-hover"
-                                  }
-                                }
-                              ],
-                              style: {},
-                              props: { className: "" }
-                            }
-                          ],
-                          style: {
-                            listStyle: "none",
-                            padding: "0"
-                          },
-                          props: { className: "" }
-                        }
-                      ],
-                      style: {
-                        flex: "1",
-                        minWidth: "200px"
-                      },
-                      mediaQueries: {
-                        mobile: { 
-                          textAlign: "center", 
-                          marginBottom: "25px",
-                          minWidth: "100%"
-                        }
-                      },
-                      props: { className: "" }
-                    },
-
-                    // Contact Info Column
-                    {
-                      type: "Div",
-                      id: "footer-contact-info",
-                      children: [
-                        {
-                          type: "Heading",
-                          id: "footer-contact-title",
-                          children: [],
-                          style: {
-                            fontSize: "18px",
-                            fontWeight: "bold",
-                            color: "#2c3e50",
-                            marginBottom: "15px"
-                          },
-                          props: {
-                            text: "Contact Info",
-                            className: ""
-                          }
-                        },
-                        {
-                          type: "Div",
-                          id: "contact-details",
-                          children: [
-                            {
-                              type: "Text",
-                              id: "footer-email",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                marginBottom: "10px",
-                                lineHeight: "1.8"
-                              },
-                              props: {
-                                text: "hello@japanesemaster.com",
-                                className: ""
-                              }
-                            },
-                            {
-                              type: "Text",
-                              id: "footer-phone",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                marginBottom: "10px",
-                                lineHeight: "1.8"
-                              },
-                              props: {
-                                text: "+1 (555) 123-4567",
-                                className: ""
-                              }
-                            },
-                            {
-                              type: "Text",
-                              id: "footer-address",
-                              children: [],
-                              style: {
-                                color: "#7f8c8d",
-                                lineHeight: "1.8"
-                              },
-                              props: {
-                                text: "123 Learning Street, Education City, EC 12345",
-                                className: ""
-                              }
-                            }
-                          ],
-                          style: {},
-                          props: { className: "" }
-                        }
-                      ],
-                      style: {
-                        flex: "1",
-                        minWidth: "250px"
-                      },
-                      mediaQueries: {
-                        mobile: { 
-                          textAlign: "center",
-                          minWidth: "100%"
-                        }
-                      },
-                      props: { className: "" }
-                    }
-                  ],
-                  style: {
-                    display: "flex",
-                    gap: "40px",
-                    marginBottom: "40px",
-                    flexWrap: "wrap"
-                  },
-                  mediaQueries: {
-                    mobile: { 
-                      flexDirection: "column", 
-                      gap: "30px",
-                      marginBottom: "30px"
-                    },
-                    tablet: { gap: "25px", flexWrap: "wrap" }
-                  },
-                  props: { className: "" }
-                },
-
-                // Footer Bottom
-                {
-                  type: "Div",
-                  id: "footer-bottom",
-                  children: [
-                    {
-                      type: "Text",
-                      id: "copyright",
-                      children: [],
-                      style: {
-                        color: "#7f8c8d",
-                        textAlign: "center",
-                        paddingTop: "20px",
-                        borderTop: "1px solid #e0e0e0"
-                      },
-                      props: {
-                        text: "© 2025 Japanese Master. All rights reserved. Made with ❤️ for Japanese learners worldwide.",
-                        className: ""
-                      }
-                    }
-                  ],
-                  style: {},
-                  props: { className: "" }
-                }
-              ],
-              style: {
-                maxWidth: "1200px",
-                margin: "0 auto",
-                padding: "0 50px"
-              },
-              mediaQueries: {
-                mobile: { padding: "0 20px" },
-                tablet: { padding: "0 30px" }
-              },
-              props: { className: "" }
-            }
-          ],
-          style: {
-            backgroundColor: "#f8f9fa",
-            padding: "60px 0 20px 0"
+          "style": {
+            "paddingTop": "0"
           },
-          mediaQueries: {
-            mobile: { padding: "40px 0 20px 0" }
-          },
-          props: { className: "" }
+          "props": { "className": "" }
         }
       ],
-      style: {
-        fontFamily: "'Inter', sans-serif",
-        margin: "0",
-        padding: "0",
-        lineHeight: "1.6"
+      "style": {
+        "margin": "0",
+        "padding": "0",
+        "fontFamily": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+        "lineHeight": "1.6",
+        "color": "var(--text-color)",
+        "overflowX": "hidden"
       },
-      props: { className: "" }
+      "props": { "className": "" }
     }
   ],
-  functions: [],
-  hover: `
-    .logo-hover:hover { color: #8b0000; transition: color 0.3s ease; }
-    .nav-link-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
-    .btn-hover:hover { transform: translateY(-2px); transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-    .btn-outline-hover:hover { background-color: #c41e3a; color: white; transition: all 0.3s ease; }
-    .feature-card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-    .btn-scale:hover { transform: scale(1.05); }
-    .btn-pulse:hover { animation: pulse 0.6s; }
-    .social-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
-    .footer-link-hover:hover { color: #c41e3a; transition: color 0.3s ease; }
-  `,
-  animations: `
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .fade-in-up { animation: fadeInUp 0.8s ease-out; }
-    .fade-in-up-delay { animation: fadeInUp 0.8s ease-out 0.2s both; }
-    .float-animation { animation: float 3s ease-in-out infinite; }
-  `,
-  theme: {
-    light: `
-      :root {
-        --primary-color: #c41e3a;
-        --secondary-color: #ffeaa7;
-        --text-dark: #2c3e50;
-        --text-light: #7f8c8d;
-        --background-light: #f8f9fa;
-        --white: #ffffff;
-        --shadow: rgba(0,0,0,0.1);
-      }
-    `,
-    dark: `
-      .dark {
-        --primary-color: #ff6b6b;
-        --secondary-color: #4ecdc4;
-        --text-dark: #ffffff;
-        --text-light: #a0a0a0;
-        --background-light: #2c3e50;
-        --white: #34495e;
-        --shadow: rgba(0,0,0,0.3);
-      }
-    `
+  "functions": [],
+  "hover": ".logo-hover:hover { transform: scale(1.05); color: var(--accent-color) !important; } .nav-link-hover:hover { background-color: var(--primary-light); color: var(--primary-color) !important; transform: translateY(-2px); } .contact-btn-hover:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); } .primary-btn-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); background-color: var(--primary-dark); } .secondary-btn-hover:hover { background-color: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); } .product-card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); } .product-image-hover:hover { transform: scale(1.05); } .cta-btn-hover:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }",
+  "animations": "@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } } @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } @keyframes slideUpOnScroll { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } } .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; } .fade-in-up.delay-1 { animation-delay: 0.2s; } .fade-in-up.delay-2 { animation-delay: 0.4s; } .fade-in-up.delay-3 { animation-delay: 0.6s; } .slide-down { animation: slideDown 0.6s ease-out; } .float-animation { animation: float 3s ease-in-out infinite; } .slide-up-on-scroll { animation: slideUpOnScroll 0.8s ease-out forwards; opacity: 0; } .slide-up-on-scroll.delay-1 { animation-delay: 0.1s; } .slide-up-on-scroll.delay-2 { animation-delay: 0.2s; }",
+  "theme": {
+    "light": ":root, .light { --primary-color: #E8B4CB; --primary-light: #F5D7E3; --primary-dark: #D6A0BC; --accent-color: #A8D8EA; --secondary-color: #FFD93D; --text-color: #2D3748; --text-secondary: #718096; --bg-light: #FAF5FF; --bg-gradient-start: #FFF5F8; --bg-gradient-end: #F0F8FF; --success: #68D391; --warning: #F6E05E; --error: #FC8181; }",
+    "dark": ".dark { --primary-color: #D6A0BC; --primary-light: #E8B4CB; --primary-dark: #C491A8; --accent-color: #89CDF1; --secondary-color: #F7DC6F; --text-color: #F7FAFC; --text-secondary: #CBD5E0; --bg-light: #1A202C; --bg-gradient-start: #2D3748; --bg-gradient-end: #4A5568; --success: #48BB78; --warning: #ED8936; --error: #E53E3E; }"
   },
-  responsiveUtilities: {
-    mobile: `
-      @media (max-width: 768px) {
-        .section-title { font-size: 24px !important; }
-        .hero-container { padding: 30px 20px !important; }
-        .features-grid { gap: 15px !important; }
-        .hero-image-responsive { 
-          width: 100% !important;
-          height: 280px !important;
-          object-fit: cover !important;
-          border-radius: 10px !important;
-        }
-        .footer-column {
-          margin-bottom: 25px !important;
-          text-align: center !important;
-        }
-        .footer-content {
-          flex-direction: column !important;
-          gap: 30px !important;
-        }
-        .social-links {
-          justify-content: center !important;
-        }
-      }
-    `,
-    tablet: `
-      @media (min-width: 769px) and (max-width: 1024px) {
-        .hero-container { padding: 40px 30px !important; }
-        .section-title { font-size: 32px !important; }
-      }
-    `,
-    desktop: `
-      @media (min-width: 1025px) {
-        .hero-container { padding: 60px 50px !important; }
-        .features-grid { gap: 40px !important; }
-      }
-    `,
-    large: `
-      @media (min-width: 1440px) {
-        .hero-container { padding: 80px 100px !important; }
-        .section-title { font-size: 40px !important; }
-      }
-    `
+  "responsiveUtilities": {
+    "mobile": "@media (max-width: 768px) { .mobile-hide { display: none !important; } .mobile-center { text-align: center !important; } .mobile-full-width { width: 100% !important; } }",
+    "tablet": "@media (min-width: 769px) and (max-width: 1024px) { .tablet-hide { display: none !important; } .tablet-center { text-align: center !important; } }",
+    "desktop": "@media (min-width: 1025px) { .desktop-show { display: block !important; } }",
+    "large": "@media (min-width: 1440px) { .large-container { max-width: 1400px !important; } }"
   }
-};
-  
+}
   
 export function getDSL(prompt : string){
     // fetch DSL

@@ -27,45 +27,27 @@ export default function Heading({
     }
 
   }, [])
-  const formatResponsiveCSS = (mediaQueries: DSLComponent["mediaQueries"]) => {
+  const formatResponsiveCSS = (mediaQueries: TextComponentInput["mediaQueries"]) => {
     let css = ""
 
     if (mediaQueries?.mobile) {
-
-      let temp = ""
-      Object.keys(mediaQueries.mobile ?? {}).map((key: string) => {
-        temp += `${key}: ${(mediaQueries.mobile as Record<string, string | number>)[key]};`
-      })
-
-      css += `@container (max-width: 768px) { ${temp} }`
+      css += `@media (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
     }
 
     if (mediaQueries?.tablet) {
-      let temp = ""
-      Object.keys(mediaQueries.tablet ?? {}).map((key: string) => {
-        temp += `${key}: ${(mediaQueries.tablet as Record<string, string | number>)[key]};`
-      })
-      css += `@container (min-width: 769px) and (max-width: 1024px) { ${temp} }`
+      css += `@media (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
     }
 
     if (mediaQueries?.desktop) {
-      let temp = ""
-      Object.keys(mediaQueries.desktop ?? {}).map((key: string) => {
-        temp += `${key}: ${(mediaQueries.desktop as Record<string, string | number>)[key]};`
-      })
-      css += `@container (min-width: 1025px) { ${temp} }`
+      css += `@media (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
     }
 
     if (mediaQueries?.large) {
-      let temp = ""
-      Object.keys(mediaQueries.large ?? {}).map((key: string) => {
-        temp += `${key}: ${(mediaQueries.large as Record<string, string | number>)[key]};`
-      })
-      css += `@container (min-width: 1440px) { ${temp} }`
+      css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
     }
 
-    console.log("Heading")
-    console.log(css)
+    // console.log(id)
+    // console.log(css)
 
     return css
   }
@@ -74,7 +56,9 @@ export default function Heading({
     <style>
       {formatResponsiveCSS(mediaQueries)}
     </style>
-      <h1 className=
+      <h1 
+      id={id}
+      className=
       {component.props.className} style={component.style}>
         {props?.text}
       </h1>

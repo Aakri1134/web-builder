@@ -5,13 +5,20 @@ import type { DSLComponent } from "../utils/DSL/sanetizer"
 import useComponent from "../hooks/useComponent"
 
 interface InputImage {
-  id : DSLComponent["id"]
-  style : DSLComponent["style"]
-  props : DSLComponent["props"]
-  parent : DSLComponent["id"][]
+  id: DSLComponent["id"]
+  style: DSLComponent["style"]
+  props: DSLComponent["props"]
+  parent: DSLComponent["id"][]
+  mediaQueries: DSLComponent["mediaQueries"]
 }
 
-export default function Image({ id, style, props, parent }: InputImage) {
+export default function Image({
+  id,
+  style,
+  props,
+  parent,
+  mediaQueries,
+}: InputImage) {
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
 
@@ -22,6 +29,40 @@ export default function Image({ id, style, props, parent }: InputImage) {
       setActive((x) => [...x, id])
     }
   }, [])
+  const formatResponsiveCSS = (mediaQueries: DSLComponent["mediaQueries"]) => {
+    let css = ""
 
-  return <img style={component.style} src={component.props?.src} alt={component.props?.alt || ""}></img>
+    if (mediaQueries?.mobile) {
+      css += `@media (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
+    }
+
+    if (mediaQueries?.tablet) {
+      css += `@media (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
+    }
+
+    if (mediaQueries?.desktop) {
+      css += `@media (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
+    }
+
+    if (mediaQueries?.large) {
+      css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
+    }
+
+    // console.log(id)
+    // console.log(css)
+
+    return css
+  }
+
+  return (
+    <>
+      <style>{formatResponsiveCSS(mediaQueries)}</style>
+      <img
+        id={id}
+        style={component.style}
+        src={component.props?.src}
+        alt={component.props?.alt || ""}
+      ></img>
+    </>
+  )
 }

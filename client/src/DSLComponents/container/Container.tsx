@@ -20,6 +20,7 @@ export interface InputContainer {
     | "Main"
     | "Nav"
     | "Section"
+  mediaQueries: DSLComponent["mediaQueries"]
 }
 
 export default function Container({
@@ -29,6 +30,7 @@ export default function Container({
   parents,
   props,
   type,
+  mediaQueries,
 }: InputContainer) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, children)
@@ -43,56 +45,132 @@ export default function Container({
     }
   }, [])
 
+  const formatResponsiveCSS = (
+    mediaQueries: InputContainer["mediaQueries"]
+  ) => {
+    let css = ""
+
+    if (mediaQueries?.mobile) {
+      css += `@media (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
+    }
+
+    if (mediaQueries?.tablet) {
+      css += `@media (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
+    }
+
+    if (mediaQueries?.desktop) {
+      css += `@media (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
+    }
+
+    if (mediaQueries?.large) {
+      css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
+    }
+
+    console.log(id)
+    console.log(css)
+
+    return css
+  }
+
+  let content: JSX.Element = <></>
+
   switch (type) {
     case "Article":
-      return (
-        <article style={component.style} className={component.props.className}>
+      content = (
+        <article
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </article>
       )
+      break
     case "Body":
-      return (
-        <div style={component.style} className={component.props.className}>
+      content = (
+        <div
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
       )
+      break
     case "Div":
-      return (
-        <div style={{ ...component.style }} className={component.props.className}>
+      content = (
+        <div
+          id={id}
+          style={{ ...component.style }}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
       )
+      break
     case "List":
-      return (
-        <ul style={component.style} className={component.props.className}>
+      content = (
+        <ul
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </ul>
       )
+      break
     case "ListItems":
-      return (
-        <li style={component.style} className={component.props.className}>
+      content = (
+        <li
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </li>
       )
+      break
     case "Main":
-      return (
-        <main style={component.style} className={component.props.className}>
+      content = (
+        <main
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </main>
       )
+      break
     case "Nav":
-      return (
-        <nav style={component.style} className={component.props.className}>
+      content = (
+        <nav
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </nav>
       )
+      break
     case "Section":
-      return (
-        <section style={component.style} className={component.props.className}>
+      content = (
+        <section
+          id={id}
+          style={component.style}
+          className={component.props.className}
+        >
           <Convertor components={component.children} parents={updatedParents} />
         </section>
       )
+      break
     default:
-        return<></>
+      content = <></>
   }
+
+  return (
+    <>
+      <style>{formatResponsiveCSS(mediaQueries)}</style>
+      {content}
+    </>
+  )
 }

@@ -5,25 +5,63 @@ import type { DSLComponent } from "../utils/DSL/sanetizer"
 import useComponent from "../hooks/useComponent"
 
 interface InputButton {
-  id : DSLComponent["id"]
-  style : DSLComponent["style"]
-  props : DSLComponent["props"]
-  parent : DSLComponent["id"][]
+  id: DSLComponent["id"]
+  style: DSLComponent["style"]
+  props: DSLComponent["props"]
+  parent: DSLComponent["id"][]
+  mediaQueries: DSLComponent["mediaQueries"]
 }
 
-export default function Button({ id, style, props, parent }: InputButton) {
+export default function Button({
+  id,
+  style,
+  props,
+  parent,
+  mediaQueries,
+}: InputButton) {
   // logic to convert props.onClick to premade functions
   // logic for visibility
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
 
-  const component = useComponent(id, style, props, parent, [] )
+  const component = useComponent(id, style, props, parent, [])
 
   useEffect(() => {
     if (typeof id === "string") {
       setActive((x) => [...x, id])
     }
   }, [])
+  const formatResponsiveCSS = (mediaQueries: DSLComponent["mediaQueries"]) => {
+    let css = ""
 
-  return <button style={component.style}>{component.props?.text}</button>
+    if (mediaQueries?.mobile) {
+      css += `@media (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
+    }
+
+    if (mediaQueries?.tablet) {
+      css += `@media (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
+    }
+
+    if (mediaQueries?.desktop) {
+      css += `@media (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
+    }
+
+    if (mediaQueries?.large) {
+      css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
+    }
+
+    // console.log(id)
+    // console.log(css)
+
+    return css
+  }
+
+  return (
+    <>
+      <style>{formatResponsiveCSS(mediaQueries)}</style>
+      <button id={id} style={component.style}>
+        {component.props?.text}
+      </button>
+    </>
+  )
 }
