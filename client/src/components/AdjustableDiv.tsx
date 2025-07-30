@@ -75,10 +75,15 @@ const AdjustableDiv = ({children} : {children : React.ReactNode}) => {
         minHeight : "600px",
         border: "2px solid black",
         cursor: isDragging ? "grabbing" : "grab",
-        overflow: "scroll",
       }}
     >
+      <div style = {{
+        overflowY : "scroll",
+        height : "100%",
+        position : "absolute"
+      }}>
       {children}
+      </div>
       <div
         ref={resizeRef}
         onMouseDown={handleResizeMouseDown}

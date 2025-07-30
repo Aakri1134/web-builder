@@ -55,7 +55,9 @@ const tempDSL : DSL = {
                         }
                       ],
                       "style": {},
-                      "props": { "className": "" }
+                                                "props": { 
+                            "className": "" 
+                          }
                     },
                     {
                       "type": "ListItems",
@@ -179,6 +181,126 @@ const tempDSL : DSL = {
               "children": [
                 {
                   "type": "Div",
+                  "id": "bubble-1",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "80px",
+                    "height": "80px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(232, 180, 203, 0.6), rgba(168, 216, 234, 0.6))",
+                    "top": "15%",
+                    "left": "10%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-50px) scale(1.05)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-1"
+                  }
+                },
+                {
+                  "type": "Div",
+                  "id": "bubble-2",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "120px",
+                    "height": "120px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(168, 216, 234, 0.5), rgba(255, 217, 61, 0.5))",
+                    "top": "25%",
+                    "right": "8%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-100px) scale(1.1)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-2"
+                  }
+                },
+                {
+                  "type": "Div",
+                  "id": "bubble-3",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "60px",
+                    "height": "60px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(255, 217, 61, 0.6), rgba(232, 180, 203, 0.6))",
+                    "top": "60%",
+                    "left": "5%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-30px) scale(1.03)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-3"
+                  }
+                },
+                {
+                  "type": "Div",
+                  "id": "bubble-4",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "90px",
+                    "height": "90px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(168, 216, 234, 0.5), rgba(232, 180, 203, 0.5))",
+                    "top": "70%",
+                    "right": "15%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-80px) scale(1.08)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-4"
+                  }
+                },
+                {
+                  "type": "Div",
+                  "id": "bubble-5",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "50px",
+                    "height": "50px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(255, 217, 61, 0.7), rgba(168, 216, 234, 0.7))",
+                    "top": "40%",
+                    "left": "3%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-20px) scale(1.02)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-5"
+                  }
+                },
+                {
+                  "type": "Div",
+                  "id": "bubble-6",
+                  "children": [],
+                  "style": {
+                    "position": "absolute",
+                    "width": "70px",
+                    "height": "70px",
+                    "borderRadius": "50%",
+                    "background": "linear-gradient(135deg, rgba(232, 180, 203, 0.6), rgba(255, 217, 61, 0.6))",
+                    "top": "20%",
+                    "right": "25%",
+                    "zIndex": "5",
+                    "transform": "translateZ(-60px) scale(1.06)",
+                    "willChange": "transform"
+                  },
+                  "props": {
+                    "className": "bubble-float-6"
+                  }
+                },
+                {
+                  "type": "Div",
                   "id": "hero-container",
                   "children": [
                     {
@@ -273,7 +395,9 @@ const tempDSL : DSL = {
                           "mediaQueries": {
                             "mobile": "flex-direction: column; gap: 10px;"
                           },
-                          "props": { "className": "" }
+                          "props": { 
+                          "className": "" 
+                        }
                         }
                       ],
                       "style": {
@@ -334,7 +458,11 @@ const tempDSL : DSL = {
               ],
               "style": {
                 "background": "linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%)",
-                "paddingTop": "80px"
+                "paddingTop": "80px",
+                "position": "relative",
+                "overflow": "hidden",
+                "perspective": "1000px",
+                "perspectiveOrigin": "center center"
               },
               "props": { "className": "" }
             },
@@ -399,7 +527,7 @@ const tempDSL : DSL = {
                               },
                               "props": {
                                 "text": "Pastel Skincare Set",
-                                "className" : ""
+                                className : ""
                               }
                             },
                             {
@@ -413,7 +541,7 @@ const tempDSL : DSL = {
                               },
                               "props": {
                                 "text": "$89.99",
-                                className: ""
+                                className : ""
                               }
                             }
                           ],
@@ -422,7 +550,16 @@ const tempDSL : DSL = {
                             "padding": "20px",
                             "borderRadius": "20px",
                             "boxShadow": "0 5px 20px rgba(0,0,0,0.08)",
-                            "transition": "all 0.3s ease"
+                            "transition": "all 0.3s ease",
+                            // "transform": "translateZ(-20px) rotateX(-2deg)",
+                            // "transformStyle": "preserve-3d",
+                            // "willChange": "transform",
+                            "transform": "translateZ(-10px) rotateX(2deg)",
+                            "transformStyle": "preserve-3d",
+                            "willChange": "transform",
+                            // "transform": "translateZ(0) rotateX(0deg)",
+                            // "transformStyle": "preserve-3d",
+                            // "willChange": "transform"
                           },
                           "props": {
                             "className": "product-card-hover slide-up-on-scroll"
@@ -461,7 +598,7 @@ const tempDSL : DSL = {
                               },
                               "props": {
                                 "text": "Dreamy Home Decor",
-                                "className" : ""
+                                className : ""
                               }
                             },
                             {
@@ -475,7 +612,7 @@ const tempDSL : DSL = {
                               },
                               "props": {
                                 "text": "$124.99",
-                                "className" : ""
+                                className : ""
                               }
                             }
                           ],
@@ -573,7 +710,9 @@ const tempDSL : DSL = {
                 }
               ],
               "style": {
-                "backgroundColor": "var(--bg-light)"
+                "backgroundColor": "var(--bg-light)",
+                "perspective": "1000px",
+                "perspectiveOrigin": "center center"
               },
               "props": { "className": "" }
             },
@@ -658,6 +797,456 @@ const tempDSL : DSL = {
                 "padding": "80px 0"
               },
               "props": { "className": "" }
+            },
+            {
+              "type": "Section",
+              "id": "footer-section",
+              "children": [
+                {
+                  "type": "Div",
+                  "id": "footer-container",
+                  "children": [
+                    {
+                      "type": "Div",
+                      "id": "footer-content",
+                      "children": [
+                        {
+                          "type": "Div",
+                          "id": "footer-brand",
+                          "children": [
+                            {
+                              "type": "Heading",
+                              "id": "footer-logo",
+                              "children": [],
+                              "style": {
+                                "fontSize": "1.8rem",
+                                "fontWeight": "bold",
+                                "color": "var(--primary-color)",
+                                "marginBottom": "15px"
+                              },
+                              "props": {
+                                "text": "PastelShop",
+                                "className": ""
+                              }
+                            },
+                            {
+                              "type": "Text",
+                              "id": "footer-description",
+                              "children": [],
+                              "style": {
+                                "color": "var(--text-secondary)",
+                                "lineHeight": "1.6",
+                                "maxWidth": "300px"
+                              },
+                              "props": {
+                                "text": "Creating beautiful moments with our curated collection of pastel products that bring joy to your everyday life.",
+                                "className": ""
+                              }
+                            }
+                          ],
+                          "style": {
+                            "flex": "1"
+                          },
+                          "props": { "className": "" }
+                        },
+                        {
+                          "type": "Div",
+                          "id": "footer-links",
+                          "children": [
+                            {
+                              "type": "Div",
+                              "id": "footer-column-1",
+                              "children": [
+                                {
+                                  "type": "Heading",
+                                  "id": "footer-title-1",
+                                  "children": [],
+                                  "style": {
+                                    "fontSize": "1.1rem",
+                                    "fontWeight": "600",
+                                    "color": "var(--text-color)",
+                                    "marginBottom": "20px"
+                                  },
+                                  "props": {
+                                    "text": "Shop",
+                                    "className": ""
+                                  }
+                                },
+                                {
+                                  "type": "List",
+                                  "id": "footer-list-1",
+                                  "children": [
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-1",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-1",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "New Arrivals",
+                                            "href": "#new",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-2",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-2",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Best Sellers",
+                                            "href": "#bestsellers",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-3",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-3",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Sale Items",
+                                            "href": "#sale",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    }
+                                  ],
+                                  "style": {
+                                    "listStyle": "none",
+                                    "padding": "0",
+                                    "margin": "0"
+                                  },
+                                  "props": { "className": "" }
+                                }
+                              ],
+                              "style": {},
+                              "props": { "className": "" }
+                            },
+                            {
+                              "type": "Div",
+                              "id": "footer-column-2",
+                              "children": [
+                                {
+                                  "type": "Heading",
+                                  "id": "footer-title-2",
+                                  "children": [],
+                                  "style": {
+                                    "fontSize": "1.1rem",
+                                    "fontWeight": "600",
+                                    "color": "var(--text-color)",
+                                    "marginBottom": "20px"
+                                  },
+                                  "props": {
+                                    "text": "Support",
+                                    "className": ""
+                                  }
+                                },
+                                {
+                                  "type": "List",
+                                  "id": "footer-list-2",
+                                  "children": [
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-4",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-4",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Help Center",
+                                            "href": "#help",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-5",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-5",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Shipping Info",
+                                            "href": "#shipping",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-6",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-6",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Returns",
+                                            "href": "#returns",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    }
+                                  ],
+                                  "style": {
+                                    "listStyle": "none",
+                                    "padding": "0",
+                                    "margin": "0"
+                                  },
+                                  "props": { "className": "" }
+                                }
+                              ],
+                              "style": {},
+                              "props": { "className": "" }
+                            },
+                            {
+                              "type": "Div",
+                              "id": "footer-column-3",
+                              "children": [
+                                {
+                                  "type": "Heading",
+                                  "id": "footer-title-3",
+                                  "children": [],
+                                  "style": {
+                                    "fontSize": "1.1rem",
+                                    "fontWeight": "600",
+                                    "color": "var(--text-color)",
+                                    "marginBottom": "20px"
+                                  },
+                                  "props": {
+                                    "text": "Connect",
+                                    "className": ""
+                                  }
+                                },
+                                {
+                                  "type": "List",
+                                  "id": "footer-list-3",
+                                  "children": [
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-7",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-7",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Instagram",
+                                            "href": "#instagram",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-8",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-8",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Facebook",
+                                            "href": "#facebook",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    },
+                                    {
+                                      "type": "ListItems",
+                                      "id": "footer-item-9",
+                                      "children": [
+                                        {
+                                          "type": "Link",
+                                          "id": "footer-link-9",
+                                          "children": [],
+                                          "style": {
+                                            "color": "var(--text-secondary)",
+                                            "textDecoration": "none",
+                                            "transition": "color 0.3s ease"
+                                          },
+                                          "props": {
+                                            "text": "Newsletter",
+                                            "href": "#newsletter",
+                                            "className": "footer-link-hover"
+                                          }
+                                        }
+                                      ],
+                                      "style": {
+                                        "marginBottom": "10px"
+                                      },
+                                      "props": { "className": "" }
+                                    }
+                                  ],
+                                  "style": {
+                                    "listStyle": "none",
+                                    "padding": "0",
+                                    "margin": "0"
+                                  },
+                                  "props": { "className": "" }
+                                }
+                              ],
+                              "style": {},
+                              "props": { "className": "" }
+                            }
+                          ],
+                          "style": {
+                            "display": "flex",
+                            "gap": "60px",
+                            "flex": "2"
+                          },
+                          "mediaQueries": {
+                            "mobile": "flex-direction: column; gap: 30px;",
+                            "tablet": "gap: 40px;"
+                          },
+                          "props": { "className": "" }
+                        }
+                      ],
+                      "style": {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                        "alignItems": "flex-start",
+                        "paddingBottom": "40px",
+                        "borderBottom": "1px solid rgba(0,0,0,0.1)",
+                        "marginBottom": "30px"
+                      },
+                      "mediaQueries": {
+                        "mobile": "flex-direction: column; gap: 40px; align-items: center; text-align: center;"
+                      },
+                      "props": { "className": "" }
+                    },
+                    {
+                      "type": "Div",
+                      "id": "footer-bottom",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "id": "footer-copyright",
+                          "children": [],
+                          "style": {
+                            "color": "var(--text-secondary)",
+                            "fontSize": "0.9rem",
+                            "textAlign": "center"
+                          },
+                          "props": {
+                            "text": "© 2025 PastelShop. All rights reserved. Made with 💕 for pastel lovers.",
+                            "className": ""
+                          }
+                        }
+                      ],
+                      "style": {
+                        "textAlign": "center"
+                      },
+                      "props": { "className": "" }
+                    }
+                  ],
+                  "style": {
+                    "maxWidth": "1200px",
+                    "margin": "0 auto",
+                    "padding": "60px 20px 40px 20px"
+                  },
+                  "props": { "className": "" }
+                }
+              ],
+              "style": {
+                "backgroundColor": "var(--bg-light)",
+                "borderTop": "1px solid rgba(0,0,0,0.05)"
+              },
+              "props": { "className": "" }
             }
           ],
           "style": {
@@ -678,8 +1267,8 @@ const tempDSL : DSL = {
     }
   ],
   "functions": [],
-  "hover": ".logo-hover:hover { transform: scale(1.05); color: var(--accent-color) !important; } .nav-link-hover:hover { background-color: var(--primary-light); color: var(--primary-color) !important; transform: translateY(-2px); } .contact-btn-hover:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); } .primary-btn-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); background-color: var(--primary-dark); } .secondary-btn-hover:hover { background-color: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); } .product-card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); } .product-image-hover:hover { transform: scale(1.05); } .cta-btn-hover:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }",
-  "animations": "@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } } @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } @keyframes slideUpOnScroll { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } } .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; } .fade-in-up.delay-1 { animation-delay: 0.2s; } .fade-in-up.delay-2 { animation-delay: 0.4s; } .fade-in-up.delay-3 { animation-delay: 0.6s; } .slide-down { animation: slideDown 0.6s ease-out; } .float-animation { animation: float 3s ease-in-out infinite; } .slide-up-on-scroll { animation: slideUpOnScroll 0.8s ease-out forwards; opacity: 0; } .slide-up-on-scroll.delay-1 { animation-delay: 0.1s; } .slide-up-on-scroll.delay-2 { animation-delay: 0.2s; }",
+  "hover": ".logo-hover:hover { transform: scale(1.05); color: var(--accent-color) !important; } .nav-link-hover:hover { background-color: var(--primary-light); color: var(--primary-color) !important; transform: translateY(-2px); } .contact-btn-hover:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); } .primary-btn-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); background-color: var(--primary-dark); } .secondary-btn-hover:hover { background-color: var(--primary-color); color: white; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); } .product-card-hover:hover { transform: translateY(-10px) translateZ(20px) rotateX(-5deg); box-shadow: 0 20px 40px rgba(0,0,0,0.15); } .product-image-hover:hover { transform: scale(1.05); } .cta-btn-hover:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); } .footer-link-hover:hover { color: var(--primary-color) !important; }",
+  "animations": "@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } } @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } @keyframes bubbleFloat1 { 0%, 100% { transform: translateY(0px) translateX(0px); } 33% { transform: translateY(-20px) translateX(10px); } 66% { transform: translateY(-10px) translateX(-5px); } } @keyframes bubbleFloat2 { 0%, 100% { transform: translateY(0px) translateX(0px); } 25% { transform: translateY(-30px) translateX(-15px); } 50% { transform: translateY(-15px) translateX(20px); } 75% { transform: translateY(-25px) translateX(-10px); } } @keyframes bubbleFloat3 { 0%, 100% { transform: translateY(0px) translateX(0px); } 40% { transform: translateY(-25px) translateX(15px); } 80% { transform: translateY(-10px) translateX(-20px); } } @keyframes bubbleFloat4 { 0%, 100% { transform: translateY(0px) translateX(0px); } 30% { transform: translateY(-15px) translateX(-25px); } 60% { transform: translateY(-35px) translateX(10px); } } @keyframes bubbleFloat5 { 0%, 100% { transform: translateY(0px) translateX(0px); } 50% { transform: translateY(-40px) translateX(25px); } } @keyframes bubbleFloat6 { 0%, 100% { transform: translateY(0px) translateX(0px); } 35% { transform: translateY(-20px) translateX(-10px); } 70% { transform: translateY(-30px) translateX(15px); } } @keyframes bubbleFloat7 { 0%, 100% { transform: translateY(0px) translateX(0px); } 45% { transform: translateY(-25px) translateX(20px); } 90% { transform: translateY(-15px) translateX(-15px); } } @keyframes bubbleFloat8 { 0%, 100% { transform: translateY(0px) translateX(0px); } 20% { transform: translateY(-30px) translateX(30px); } 40% { transform: translateY(-10px) translateX(-20px); } 60% { transform: translateY(-35px) translateX(10px); } 80% { transform: translateY(-20px) translateX(-25px); } } .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; } .fade-in-up.delay-1 { animation-delay: 0.2s; } .fade-in-up.delay-2 { animation-delay: 0.4s; } .fade-in-up.delay-3 { animation-delay: 0.6s; } .slide-down { animation: slideDown 0.6s ease-out; } .float-animation { animation: float 3s ease-in-out infinite; } .slide-up-on-scroll { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; } .slide-up-on-scroll.animate-in { opacity: 1; transform: translateY(0); } .slide-up-on-scroll.delay-1.animate-in { transition-delay: 0.1s; } .slide-up-on-scroll.delay-2.animate-in { transition-delay: 0.2s; } .bubble-float-1 { animation: bubbleFloat1 8s ease-in-out infinite; } .bubble-float-2 { animation: bubbleFloat2 12s ease-in-out infinite; } .bubble-float-3 { animation: bubbleFloat3 6s ease-in-out infinite; } .bubble-float-4 { animation: bubbleFloat4 10s ease-in-out infinite; } .bubble-float-5 { animation: bubbleFloat5 4s ease-in-out infinite; } .bubble-float-6 { animation: bubbleFloat6 9s ease-in-out infinite; } .bubble-float-7 { animation: bubbleFloat7 7s ease-in-out infinite; } .bubble-float-8 { animation: bubbleFloat8 11s ease-in-out infinite; }",
   "theme": {
     "light": ":root, .light { --primary-color: #E8B4CB; --primary-light: #F5D7E3; --primary-dark: #D6A0BC; --accent-color: #A8D8EA; --secondary-color: #FFD93D; --text-color: #2D3748; --text-secondary: #718096; --bg-light: #FAF5FF; --bg-gradient-start: #FFF5F8; --bg-gradient-end: #F0F8FF; --success: #68D391; --warning: #F6E05E; --error: #FC8181; }",
     "dark": ".dark { --primary-color: #D6A0BC; --primary-light: #E8B4CB; --primary-dark: #C491A8; --accent-color: #89CDF1; --secondary-color: #F7DC6F; --text-color: #F7FAFC; --text-secondary: #CBD5E0; --bg-light: #1A202C; --bg-gradient-start: #2D3748; --bg-gradient-end: #4A5568; --success: #48BB78; --warning: #ED8936; --error: #E53E3E; }"
@@ -691,7 +1280,6 @@ const tempDSL : DSL = {
     "large": "@media (min-width: 1440px) { .large-container { max-width: 1400px !important; } }"
   }
 }
-  
 export function getDSL(prompt : string){
     // fetch DSL
     //@ts-ignore

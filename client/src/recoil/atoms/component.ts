@@ -31,14 +31,14 @@ export const parentFamily = atomFamily<ID[], ID>({
 export const activeComponents = atom<ID[]>({
   key : "activeComponents",
   default : [],
-  // effects: [
-  //   ({ onSet }) => {
-  //     onSet((newValue, oldValue) => {
-  //       console.log("activeComponents changed:", newValue)
-  //       console.log(oldValue)
-  //     })
-  //   }
-  // ]
+  effects: [
+    ({ onSet }) => {
+      onSet((newValue, oldValue) => {
+        console.log("activeComponents changed:", newValue)
+        console.log(oldValue)
+      })
+    }
+  ]
 })
 
 export const currentComponentID = atom<ID | null>({

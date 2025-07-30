@@ -91,7 +91,7 @@ const validComponentTypes = new Set([
 
 const functionIDs = new Set<string>([])
 
-const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set([
+const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set<keyof React.CSSProperties>([
   "fontSize",
   "margin",
   "padding",
@@ -148,7 +148,14 @@ const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set([
   "textTransform",
   "letterSpacing",
   "listStyleType",
-  "fontStyle"
+  "fontStyle",
+  "overflow",
+  "overflowY",
+  "perspective",
+  "perspectiveOrigin",
+  "transform",
+  "willChange",
+  "transformStyle"
 ])
 
 export interface validStyles {
@@ -375,7 +382,7 @@ export default function sanetizer(data: DSL) {
     console.log("Check Complete")
     // DEV_TEST_PRINT_MAP()
     if (res1.success /*&& res2*/) return data
-    // console.log(res1.report)
+    console.log(res1.report)
     
     return false
   } catch (err) {
