@@ -3,23 +3,23 @@ import { type DSLComponent, type Report } from "./sanetizer"
 // to check if the required parameters are present in component.props
 type PropKeys = keyof NonNullable<DSLComponent["props"]>
 const requirements: { [key in DSLComponent["type"]]: PropKeys[] } = {
-//   Button: ["className", "text", "onClick"],
-//   Link: ["className", "text", "href"],
-//   Image: ["className", "src", "alt"],
-//   Heading: ["className", "text"],
-//   Text: ["className", "text"],
-//   Show: ["className", "onClick"],
-//   Body: ["className"],
-//   Div: ["className"],
-//   Loop: ["className"],
-//   Dropdown: ["className"],
-//   Modal: ["className"],
-//   Section: ["className"],
-//   Main: ["className"],
-//   Nav: ["className"],
-//   Article: ["className"],
-//   List: ["className"],
-//   ListItems: ["className"],
+  //   Button: ["className", "text", "onClick"],
+  //   Link: ["className", "text", "href"],
+  //   Image: ["className", "src", "alt"],
+  //   Heading: ["className", "text"],
+  //   Text: ["className", "text"],
+  //   Show: ["className", "onClick"],
+  //   Body: ["className"],
+  //   Div: ["className"],
+  //   Loop: ["className"],
+  //   Dropdown: ["className"],
+  //   Modal: ["className"],
+  //   Section: ["className"],
+  //   Main: ["className"],
+  //   Nav: ["className"],
+  //   Article: ["className"],
+  //   List: ["className"],
+  //   ListItems: ["className"],
   Button: ["className", "text"],
   Link: ["className", "text"],
   Image: ["className", "src", "alt"],
@@ -88,5 +88,5 @@ export function checkRequirements(component: DSLComponent): {
 }
 
 export function checkPresence(type: DSLComponent["type"], propKey: PropKeys) {
-  return requirements[type].includes(propKey);
+  return requirements[type].includes(propKey)
 }

@@ -1,29 +1,39 @@
-import { useRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import type { DSLComponent } from "../utils/DSL/sanetizer"
 import { currentComponentID } from "../recoil/atoms/component"
 
 type ID = DSLComponent["id"]
 
-export default function useComponentClickHandler(parents: ID[]) {
-  const [activeComponent, setActiveComponent] =
-    useRecoilState(currentComponentID)
 
-  function handleComponentClick() {
+// ideal version, need to reduce rerenders, but for now ill go with a dumber version
+// export default function useComponentClickHandler(parents: ID[]) {
+//   const [activeComponent, setActiveComponent] =
+//     useRecoilState(currentComponentID)
+
+//   function handleComponentClick() {
+//     console.log(activeComponent)
     
-    if (activeComponent === null) {
-      setActiveComponent(parents[0])
-      return
-    }
+//     if (activeComponent === null) {
+//       setActiveComponent(parents[parents.length - 1])
+//       return
+//     }
 
-    let index = parents.indexOf(activeComponent)
+//     let index = parents.indexOf(activeComponent)
 
-    if (index === -1 && index + 1 === parents.length) {
-      setActiveComponent(null)
-      return
-    }
+//     if (index === -1 || index === 0) {
+//       setActiveComponent(null)
+//       return
+//     }
 
-    setActiveComponent(parents[index + 1])
-  }
+//     setActiveComponent(parents[index - 1])
+//   }
 
-  return handleComponentClick
+//   return {handleComponentClick}
+// }
+
+
+export default function useComponentClickHandler(parents : ID[]){
+    const setActiveComponent = useSetRecoilState(currentComponentID)
+    const handleComponentClick = () => setActiveComponent(parents[parents.length - 1])
+    return {handleComponentClick}
 }

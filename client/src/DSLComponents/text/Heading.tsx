@@ -22,7 +22,7 @@ export default function Heading({
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, [])
-  const componentClickHandler = useComponentClickHandler(component.parents)
+  const {handleComponentClick} = useComponentClickHandler([...component.parents, id])
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -62,7 +62,7 @@ export default function Heading({
         id={id}
         className={component.props.className }
         style={component.style}
-        onClick={componentClickHandler}
+        onClick={handleComponentClick}
       > 
         {props?.text}
       </h1>

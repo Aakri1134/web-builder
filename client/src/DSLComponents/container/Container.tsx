@@ -66,8 +66,8 @@ export default function Container({
       css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
     }
 
-    console.log(id)
-    console.log(css)
+    // console.log(id)
+    // console.log(css)
 
     return css
   }

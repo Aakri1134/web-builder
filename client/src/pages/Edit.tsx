@@ -4,6 +4,7 @@ import type { DSL } from "../utils/DSL/sanetizer"
 import Convertor from "../components/Convertor"
 import { getDSL } from "../utils/DSL/getDSL"
 import "../Custom.css"
+import SelectBox from "../components/Edit/SelectBox"
 
 export default function Edit() {
   //@ts-ignore
@@ -68,6 +69,7 @@ export default function Edit() {
         }}
         className="dark"
       >
+        <SelectBox/>
           <Convertor components={DSL.components} parents={[]} />
           <div className=" w-24 h-24 fixed z-40 bottom-0 right-0 bg-amber-700 "></div>
       </div>
