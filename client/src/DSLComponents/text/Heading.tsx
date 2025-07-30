@@ -3,6 +3,7 @@ import type { DSLComponent } from "../../utils/DSL/sanetizer"
 import { activeComponents } from "../../recoil/atoms/component"
 import { useEffect } from "react"
 import useComponent from "../../hooks/useComponent"
+import useComponentClickHandler from "../../hooks/useComponentClickHandler"
 
 export interface TextComponentInput {
   id: DSLComponent["id"]
@@ -21,13 +22,16 @@ export default function Heading({
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, [])
+  const componentClickHandler = useComponentClickHandler(component.parents)
+
   useEffect(() => {
     if (typeof id === "string") {
       setActive((x) => [...x, id])
     }
-
   }, [])
-  const formatResponsiveCSS = (mediaQueries: TextComponentInput["mediaQueries"]) => {
+  const formatResponsiveCSS = (
+    mediaQueries: TextComponentInput["mediaQueries"]
+  ) => {
     let css = ""
 
     if (mediaQueries?.mobile) {
@@ -53,13 +57,13 @@ export default function Heading({
   }
   return (
     <>
-    <style>
-      {formatResponsiveCSS(mediaQueries)}
-    </style>
-      <h1 
-      id={id}
-      className=
-      {component.props.className} style={component.style}>
+      <style>{formatResponsiveCSS(mediaQueries)}</style>
+      <h1
+        id={id}
+        className={component.props.className }
+        style={component.style}
+        onClick={componentClickHandler}
+      > 
         {props?.text}
       </h1>
     </>
