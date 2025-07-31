@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil"
 import { currentComponentID } from "../../recoil/atoms/component"
-import useComponentEdit from "../../hooks/getComponentEdit"
+import useComponentEdit from "../../hooks/useComponentEdit"
 import { useRef } from "react"
 import { checkPresence } from "../../utils/DSL/requirements"
 import { getType } from "../../utils/DSL/typeMap"
