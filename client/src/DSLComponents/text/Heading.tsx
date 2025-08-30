@@ -22,7 +22,9 @@ export default function Heading({
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, [])
-  const {handleComponentClick} = useComponentClickHandler([...component.parents, id])
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -60,10 +62,11 @@ export default function Heading({
       <style>{formatResponsiveCSS(mediaQueries)}</style>
       <h1
         id={id}
-        className={component.props.className }
-        style={component.style}
+        className={component.props.className}
+        style={{ ...component.style, userSelect: "none" }}
         onClick={handleComponentClick}
-      > 
+        onDoubleClick={handleParentSelect}
+      >
         {props?.text}
       </h1>
     </>
