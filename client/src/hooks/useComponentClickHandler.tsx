@@ -9,8 +9,9 @@ export default function useComponentClickHandler(parents: ID[]) {
   const [index, setIndex] = useState(0)
   const timeoutRef = useRef<number | null>(null)
   const setActiveComponent = useSetRecoilState(currentComponentID)
-  const handleComponentClick = () => {
+  const handleComponentClick = (e: React.MouseEvent<HTMLElement>) => {
     // called on single click
+    e.stopPropagation()
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
@@ -21,8 +22,9 @@ export default function useComponentClickHandler(parents: ID[]) {
     }, 250)
   }
 
-  const handleParentSelect = () => {
+  const handleParentSelect = (e: React.MouseEvent<HTMLElement>) => {
     // called on Double Click
+    e.stopPropagation()
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     if (parents.length - 1 - index <= 0) {
       setIndex(0)

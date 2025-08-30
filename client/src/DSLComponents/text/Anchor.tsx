@@ -3,6 +3,7 @@ import { activeComponents } from "../../recoil/atoms/component"
 import { useEffect } from "react"
 import useComponent from "../../hooks/useComponent"
 import type { TextComponentInput } from "./Heading"
+import useComponentClickHandler from "../../hooks/useComponentClickHandler"
 
 export default function Anchor({
   id,
@@ -13,6 +14,9 @@ export default function Anchor({
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, [])
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -54,7 +58,9 @@ export default function Anchor({
         id={id}
         className={component.props.className}
         href={component.props?.href}
-        style={component.style}
+        style={{ ...component.style, userSelect: "none" }}
+        onClick={handleComponentClick}
+        onDoubleClick={handleParentSelect}
       >
         {component.props?.text}
       </a>

@@ -3,6 +3,7 @@ import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../recoil/atoms/component"
 import type { DSLComponent } from "../utils/DSL/sanetizer"
 import useComponent from "../hooks/useComponent"
+import useComponentClickHandler from "../hooks/useComponentClickHandler"
 
 interface InputButton {
   id: DSLComponent["id"]
@@ -25,6 +26,9 @@ export default function Button({
   const setActive = useSetRecoilState(activeComponents)
 
   const component = useComponent(id, style, props, parent, [])
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -59,7 +63,12 @@ export default function Button({
   return (
     <>
       <style>{formatResponsiveCSS(mediaQueries)}</style>
-      <button id={id} style={component.style}>
+      <button
+        id={id}
+        style={component.style}
+        onClick={handleComponentClick}
+        onDoubleClick={handleParentSelect}
+      >
         {component.props?.text}
       </button>
     </>

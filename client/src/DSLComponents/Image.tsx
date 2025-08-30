@@ -3,6 +3,7 @@ import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../recoil/atoms/component"
 import type { DSLComponent } from "../utils/DSL/sanetizer"
 import useComponent from "../hooks/useComponent"
+import useComponentClickHandler from "../hooks/useComponentClickHandler"
 
 interface InputImage {
   id: DSLComponent["id"]
@@ -21,9 +22,10 @@ export default function Image({
 }: InputImage) {
   // logic for ???
   const setActive = useSetRecoilState(activeComponents)
-
   const component = useComponent(id, style, props, parent, [])
-
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
   useEffect(() => {
     if (typeof id === "string") {
       setActive((x) => [...x, id])
@@ -62,6 +64,8 @@ export default function Image({
         style={component.style}
         src={component.props?.src}
         alt={component.props?.alt || ""}
+        onClick={handleComponentClick}
+        onDoubleClick={handleParentSelect}
       ></img>
     </>
   )

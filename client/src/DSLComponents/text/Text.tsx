@@ -3,6 +3,7 @@ import { activeComponents } from "../../recoil/atoms/component"
 import { useEffect } from "react"
 import type { TextComponentInput } from "./Heading"
 import useComponent from "../../hooks/useComponent"
+import useComponentClickHandler from "../../hooks/useComponentClickHandler"
 
 export default function Text({
   id,
@@ -13,6 +14,10 @@ export default function Text({
 }: TextComponentInput) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, [])
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
+
   useEffect(() => {
     if (typeof id === "string") {
       setActive((x) => [...x, id])
@@ -47,7 +52,13 @@ export default function Text({
   return (
     <>
       <style>{formatResponsiveCSS(mediaQueries)}</style>
-      <p id={id} className={component.props.className} style={component.style}>
+      <p
+        id={id}
+        className={component.props.className}
+        style={{ ...component.style, userSelect: "none" }}
+        onClick={handleComponentClick}
+        onDoubleClick={handleParentSelect}
+      >
         {component.props?.text}
       </p>
     </>
