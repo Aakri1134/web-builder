@@ -67,19 +67,19 @@ export default function Edit() {
     let css = ""
 
     if (DSL.responsiveUtilities?.mobile) {
-      css += `@media (max-width: 768px) { ${DSL.responsiveUtilities.mobile} }`
+      css += `@container (max-width: 768px) { ${DSL.responsiveUtilities.mobile} }`
     }
 
     if (DSL.responsiveUtilities?.tablet) {
-      css += `@media (min-width: 769px) and (max-width: 1024px) { ${DSL.responsiveUtilities.tablet} }`
+      css += `@container (min-width: 769px) and (max-width: 1024px) { ${DSL.responsiveUtilities.tablet} }`
     }
 
     if (DSL.responsiveUtilities?.desktop) {
-      css += `@media (min-width: 1025px) { ${DSL.responsiveUtilities.desktop} }`
+      css += `@container (min-width: 1025px) { ${DSL.responsiveUtilities.desktop} }`
     }
 
     if (DSL.responsiveUtilities?.large) {
-      css += `@media (min-width: 1440px) { ${DSL.responsiveUtilities.large} }`
+      css += `@container (min-width: 1440px) { ${DSL.responsiveUtilities.large} }`
     }
 
     return css

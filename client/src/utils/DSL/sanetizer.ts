@@ -25,10 +25,10 @@ export interface DSLComponent {
   children: DSLComponent[]
   style: React.CSSProperties// inline React CSS for the current component
   mediaQueries?: {
-    mobile?: string // @media (max-width: 768px) {${mobile}} plain CSS for responsiveness
-    tablet?: string // @media (min-width: 769px) and (max-width: 1024px) {${tablet}}plain CSS for responsiveness
-    desktop?: string // @media (min-width: 1025px) {${desktop}} plain CSS for responsiveness
-    large?: string // @media (min-width: 1440px) {${large}} plain CSS for responsiveness
+    mobile?: string // @container (max-width: 768px) {${mobile}} plain CSS for responsiveness
+    tablet?: string // @container (min-width: 769px) and (max-width: 1024px) {${tablet}}plain CSS for responsiveness
+    desktop?: string // @container (min-width: 1025px) {${desktop}} plain CSS for responsiveness
+    large?: string // @container (min-width: 1440px) {${large}} plain CSS for responsiveness
   }
   props: {
     text?: string // text in Text / Link / Heading element
@@ -61,10 +61,10 @@ export interface DSL {
     dark: string // plain CSS stored in .dark, implementation handled in pre defined code
   }
   responsiveUtilities?: {
-    mobile?: string // "@media (max-width: 768px)" plain CSS for responsiveness
-    tablet?: string // "@media (min-width: 769px) and (max-width: 1024px)" plain CSS for responsiveness
-    desktop?: string // "@media (min-width: 1025px)" plain CSS for responsiveness
-    large?: string // "@media (min-width: 1440px)" plain CSS for responsiveness
+    mobile?: string // "@container (max-width: 768px)" plain CSS for responsiveness
+    tablet?: string // "@container (min-width: 769px) and (max-width: 1024px)" plain CSS for responsiveness
+    desktop?: string // "@container (min-width: 1025px)" plain CSS for responsiveness
+    large?: string // "@container (min-width: 1440px)" plain CSS for responsiveness
   }
 }
 

@@ -1274,10 +1274,10 @@ const tempDSL : DSL = {
     "dark": ".dark { --primary-color: #D6A0BC; --primary-light: #E8B4CB; --primary-dark: #C491A8; --accent-color: #89CDF1; --secondary-color: #F7DC6F; --text-color: #F7FAFC; --text-secondary: #CBD5E0; --bg-light: #1A202C; --bg-gradient-start: #2D3748; --bg-gradient-end: #4A5568; --success: #48BB78; --warning: #ED8936; --error: #E53E3E; }"
   },
   "responsiveUtilities": {
-    "mobile": "@media (max-width: 768px) { .mobile-hide { display: none !important; } .mobile-center { text-align: center !important; } .mobile-full-width { width: 100% !important; } }",
-    "tablet": "@media (min-width: 769px) and (max-width: 1024px) { .tablet-hide { display: none !important; } .tablet-center { text-align: center !important; } }",
-    "desktop": "@media (min-width: 1025px) { .desktop-show { display: block !important; } }",
-    "large": "@media (min-width: 1440px) { .large-container { max-width: 1400px !important; } }"
+    "mobile": "@container (max-width: 768px) { .mobile-hide { display: none !important; } .mobile-center { text-align: center !important; } .mobile-full-width { width: 100% !important; } }",
+    "tablet": "@container (min-width: 769px) and (max-width: 1024px) { .tablet-hide { display: none !important; } .tablet-center { text-align: center !important; } }",
+    "desktop": "@container (min-width: 1025px) { .desktop-show { display: block !important; } }",
+    "large": "@container (min-width: 1440px) { .large-container { max-width: 1400px !important; } }"
   }
 }
 export function getDSL(prompt : string){

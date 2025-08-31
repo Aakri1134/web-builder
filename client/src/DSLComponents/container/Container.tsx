@@ -4,6 +4,7 @@ import type { DSLComponent } from "../../utils/DSL/sanetizer"
 import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../../recoil/atoms/component"
 import useComponent from "../../hooks/useComponent"
+import useComponentClickHandler from "../../hooks/useComponentClickHandler"
 
 export interface InputContainer {
   id: DSLComponent["id"]
@@ -34,6 +35,9 @@ export default function Container({
 }: InputContainer) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, children)
+  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
+    [...component.parents, id]
+  )
 
   const updatedParents = useMemo(() => {
     return [...component.parents, id]
@@ -51,24 +55,24 @@ export default function Container({
     let css = ""
 
     if (mediaQueries?.mobile) {
-      css += `@media (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
+      css += `@container (max-width: 768px) { #${id} {${mediaQueries?.mobile}} } `
     }
 
     if (mediaQueries?.tablet) {
-      css += `@media (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
+      css += `@container (min-width: 769px) and (max-width: 1024px) { #${id} {${mediaQueries?.tablet}} } `
     }
 
     if (mediaQueries?.desktop) {
-      css += `@media (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
+      css += `@container (min-width: 1025px) { #${id} {${mediaQueries?.desktop}} } `
     }
 
     if (mediaQueries?.large) {
-      css += `@media (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
+      css += `@container (min-width: 1440px) { #${id} {${mediaQueries?.large}} } `
     }
 
     // console.log(id)
     // console.log(css)
-    
+
     return css
   }
 
@@ -81,6 +85,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </article>
@@ -90,8 +96,10 @@ export default function Container({
       content = (
         <div
           id={id}
-          style={{...component.style}}
+          style={{ ...component.style }}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
@@ -103,6 +111,8 @@ export default function Container({
           id={id}
           style={{ ...component.style }}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
@@ -114,6 +124,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </ul>
@@ -125,6 +137,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </li>
@@ -136,6 +150,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </main>
@@ -147,6 +163,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </nav>
@@ -158,6 +176,8 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
+          onClick={handleComponentClick}
+          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </section>
