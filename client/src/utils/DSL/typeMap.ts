@@ -33,7 +33,7 @@ export function getIDs(type : Type) : ID[]{
     return IDs
 }
 
-export function DEV_TEST_PRINT_MAP(){
-    console.log("Hello from Typemap")
-    console.log(IDMap)
-}
+// export function DEV_TEST_PRINT_MAP(){
+//     console.log("Hello from Typemap")
+//     console.log(IDMap)
+// }

@@ -4,6 +4,7 @@ import type { DSL } from "../utils/DSL/sanetizer"
 import Convertor from "../components/Convertor"
 import { getDSL } from "../utils/DSL/getDSL"
 import SelectBox from "../components/Edit/SelectBox"
+import AdjustableContainer from "../components/AdjustableContainer"
 
 export default function Edit() {
   //@ts-ignore
@@ -23,7 +24,6 @@ export default function Edit() {
         functions: [],
       })
     } else {
-
       setDSL(res)
     }
   }
@@ -39,18 +39,20 @@ export default function Edit() {
       const observerCallback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in')
+            entry.target.classList.add("animate-in")
           }
         })
       }
 
       const observer = new IntersectionObserver(observerCallback, {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: "0px 0px -100px 0px",
       })
 
       // Observe all elements with scroll animation classes
-      const elements = containerRef.current?.querySelectorAll('.slide-up-on-scroll')
+      const elements = containerRef.current?.querySelectorAll(
+        ".slide-up-on-scroll"
+      )
       if (elements) {
         elements.forEach((el) => observer.observe(el))
       }
@@ -63,23 +65,23 @@ export default function Edit() {
 
   const formatResponsiveCSS = (DSL: DSL) => {
     let css = ""
-    
+
     if (DSL.responsiveUtilities?.mobile) {
       css += `@media (max-width: 768px) { ${DSL.responsiveUtilities.mobile} }`
     }
-    
+
     if (DSL.responsiveUtilities?.tablet) {
       css += `@media (min-width: 769px) and (max-width: 1024px) { ${DSL.responsiveUtilities.tablet} }`
     }
-    
+
     if (DSL.responsiveUtilities?.desktop) {
       css += `@media (min-width: 1025px) { ${DSL.responsiveUtilities.desktop} }`
     }
-    
+
     if (DSL.responsiveUtilities?.large) {
       css += `@media (min-width: 1440px) { ${DSL.responsiveUtilities.large} }`
     }
-    
+
     return css
   }
 
@@ -99,8 +101,10 @@ export default function Edit() {
         }}
         className="light"
       >
-        <SelectBox/>
-        <Convertor components={DSL.components} parents={[]} />
+        <SelectBox />
+        <AdjustableContainer>
+          <Convertor components={DSL.components} parents={[]} />
+        </AdjustableContainer>
         <div className="w-24 h-24 fixed z-40 bottom-0 right-0 bg-amber-700"></div>
       </div>
     </>

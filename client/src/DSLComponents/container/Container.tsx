@@ -4,7 +4,6 @@ import type { DSLComponent } from "../../utils/DSL/sanetizer"
 import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../../recoil/atoms/component"
 import useComponent from "../../hooks/useComponent"
-import useComponentClickHandler from "../../hooks/useComponentClickHandler"
 
 export interface InputContainer {
   id: DSLComponent["id"]
@@ -35,9 +34,6 @@ export default function Container({
 }: InputContainer) {
   const setActive = useSetRecoilState(activeComponents)
   const component = useComponent(id, style, props, parents, children)
-  const { handleComponentClick, handleParentSelect } = useComponentClickHandler(
-    [...component.parents, id]
-  )
 
   const updatedParents = useMemo(() => {
     return [...component.parents, id]
@@ -72,7 +68,7 @@ export default function Container({
 
     // console.log(id)
     // console.log(css)
-
+    
     return css
   }
 
@@ -85,8 +81,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </article>
@@ -96,10 +90,8 @@ export default function Container({
       content = (
         <div
           id={id}
-          style={component.style}
+          style={{...component.style}}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
@@ -111,8 +103,6 @@ export default function Container({
           id={id}
           style={{ ...component.style }}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </div>
@@ -124,8 +114,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </ul>
@@ -137,8 +125,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </li>
@@ -150,8 +136,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </main>
@@ -163,8 +147,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </nav>
@@ -176,8 +158,6 @@ export default function Container({
           id={id}
           style={component.style}
           className={component.props.className}
-          onClick={handleComponentClick}
-          onDoubleClick={handleParentSelect}
         >
           <Convertor components={component.children} parents={updatedParents} />
         </section>

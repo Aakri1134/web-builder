@@ -25,7 +25,7 @@ const requirements: { [key in DSLComponent["type"]]: PropKeys[] } = {
   Image: ["className", "src", "alt"],
   Heading: ["className", "text"],
   Text: ["className", "text"],
-  Show: ["className", "onClick"],
+  Show: ["className"],
   Body: ["className"],
   Div: ["className"],
   Loop: ["className"],
