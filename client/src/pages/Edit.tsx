@@ -5,6 +5,7 @@ import Convertor from "../components/Convertor"
 import { getDSL } from "../utils/DSL/getDSL"
 import SelectBox from "../components/Edit/SelectBox"
 import AdjustableContainer from "../components/AdjustableContainer"
+import Canvas from "../components/Canvas"
 
 export default function Edit() {
   //@ts-ignore
@@ -99,13 +100,44 @@ export default function Edit() {
         style={{
           margin: 0,
         }}
-        className="light"
+        className="light flex justify-center items-center"
       >
-        <SelectBox />
-        <AdjustableContainer>
-          <Convertor components={DSL.components} parents={[]} />
-        </AdjustableContainer>
-        <div className="w-24 h-24 fixed z-40 bottom-0 right-0 bg-amber-700"></div>
+        {/* <SelectBox /> */}
+        <Canvas pages={[
+          {
+            id : "1",
+            height : 20,
+            width : 20,
+            name : "page 1",
+            center : {
+              x : 10,
+              y : 10
+            },
+            element : <Convertor components={DSL.components} parents={[]}/>
+          },
+          {
+            id : "2",
+            height : 40,
+            width : 40,
+            name : "page 2",
+            center : {
+              x : 50,
+              y : 10
+            },
+            element : <div className="bg-yellow-500 h-full">Yellow</div>
+          },
+          {
+            id : "3",
+            height : 40,
+            width : 40,
+            name : "page 2",
+            center : {
+              x : 0,
+              y : 50
+            },
+            element : <div className="bg-orange-500 h-full">Orange</div>
+          }
+        ]}/>
       </div>
     </>
   )
