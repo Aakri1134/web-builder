@@ -4,18 +4,17 @@ import type { DSL } from "../utils/DSL/sanetizer"
 import Convertor from "../components/Convertor"
 import { getDSL } from "../utils/DSL/getDSL"
 import SelectBox from "../components/Edit/SelectBox"
-import AdjustableContainer from "../components/AdjustableContainer"
 import Canvas from "../components/Canvas"
 
 export default function Edit() {
   //@ts-ignore
   const { id } = useParams()
+  const containerRef = useRef<HTMLDivElement>(null)
+  
   const [DSL, setDSL] = useState<DSL>({
     components: [],
     functions: [],
   })
-  const containerRef = useRef<HTMLDivElement>(null)
-
   const fetchDSL = () => {
     const res = getDSL("")
     if (!res) {
@@ -102,8 +101,8 @@ export default function Edit() {
         }}
         className="light flex justify-center items-center"
       >
-        {/* <SelectBox /> */}
-        <Canvas pages={[
+        <SelectBox />
+        <Canvas pagesInit={[
           {
             id : "1",
             height : 20,
@@ -136,7 +135,7 @@ export default function Edit() {
               y : 50
             },
             element : <div className="bg-orange-500 h-full">Orange</div>
-          }
+          },
         ]}/>
       </div>
     </>

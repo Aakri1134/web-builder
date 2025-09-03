@@ -3,7 +3,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 type InputAdjustableDiv = {
   children: React.ReactNode
   style?: React.CSSProperties
-  onResize?: (width: number, height: number) => void
+  onResize?: (width: number, height: number, direction : string) => void
 }
 
 export default function AdjustableContainer({
@@ -78,7 +78,7 @@ export default function AdjustableContainer({
     containerRef.current.style.top = `${newTop}px`
     
     if (onResize) {
-      onResize(newWidth, newHeight)
+      onResize(newWidth, newHeight, resizeDirection)
     }
   }, [isResizing, resizeDirection, onResize])
 
@@ -103,25 +103,25 @@ export default function AdjustableContainer({
     <div ref={containerRef} style={style} className="group">
       <div style={{ position: "relative", height: "100%", width: "100%" }}>
         <div 
-          className="absolute right-0 h-full bg-black z-[2000] w-1 cursor-col-resize opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-0 h-full bg-gray-100 z-[2000] w-[2px] cursor-col-resize opacity-0 hover:bg-blue-500  group-hover:opacity-100 transition-opacity duration-75"
           onMouseDown={(e) => handleMouseDown(e, 'right')}
         />
         <div 
-          className="absolute bottom-0 w-full bg-black z-[2000] h-1 cursor-row-resize opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute bottom-0 w-full bg-gray-100 z-[2000] h-[2px] cursor-row-resize opacity-0 hover:bg-blue-500  group-hover:opacity-100 transition-opacity duration-75"
           onMouseDown={(e) => handleMouseDown(e, 'bottom')}
         />
         <div 
-          className="absolute left-0 h-full bg-black z-[2000] w-1 cursor-col-resize opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute left-0 h-full bg-gray-100 z-[2000] w-[2px] cursor-col-resize hover:bg-blue-500  opacity-0 group-hover:opacity-100 transition-opacity duration-75"
           onMouseDown={(e) => handleMouseDown(e, 'left')}
         />
         <div 
-          className="absolute top-0 w-full bg-black z-[2000] h-1 cursor-row-resize opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-0 w-full bg-gray-100 z-[2000] h-[2px] hover:bg-blue-500 cursor-row-resize opacity-0 group-hover:opacity-100 transition-opacity duration-75"
           onMouseDown={(e) => handleMouseDown(e, 'top')}
         />
         <div
           id="AdjustableDiv"
           style={{ containerType: "inline-size", overflow: "scroll", height: "100%" }}
-          className="no-scrollbar"
+          className="no-scrollbar min-w-[400px]"
         >
           <div>{children}</div>
         </div>

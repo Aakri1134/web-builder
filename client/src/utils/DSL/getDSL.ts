@@ -24,7 +24,7 @@ const tempDSL : DSL = {
                     "color": "var(--primary-color)"
                   },
                   "props": {
-                    "text": "PastelShop",
+                    "text": "PassndsntelShop",
                     "className": "logo-hover"
                   }
                 },
