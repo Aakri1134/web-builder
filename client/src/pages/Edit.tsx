@@ -105,34 +105,34 @@ export default function Edit() {
         <Canvas pagesInit={[
           {
             id : "1",
-            height : 20,
-            width : 20,
+            height : 700,
+            width : 400,
             name : "page 1",
             center : {
-              x : 10,
-              y : 10
+              x : 0,
+              y : 100
             },
             element : <Convertor components={DSL.components} parents={[]}/>
           },
           {
             id : "2",
-            height : 40,
-            width : 40,
+            height : 400,
+            width : 400,
             name : "page 2",
             center : {
-              x : 50,
-              y : 10
+              x : 500,
+              y : 100
             },
             element : <div className="bg-yellow-500 h-full">Yellow</div>
           },
           {
             id : "3",
-            height : 40,
-            width : 40,
+            height : 400,
+            width : 400,
             name : "page 2",
             center : {
-              x : 0,
-              y : 50
+              x : 600,
+              y : 500
             },
             element : <div className="bg-orange-500 h-full">Orange</div>
           },

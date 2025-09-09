@@ -32,13 +32,13 @@ export default function Canvas({ pagesInit }: InputCanvas) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && (e.key === "=" || e.key === "+" || e.key === "-")) {
-        e.preventDefault() 
-        e.stopPropagation() 
+        e.preventDefault()
+        e.stopPropagation()
 
         if (e.key === "=" || e.key === "+") {
-          setRatio((x) => Math.max(x / 1.4, 0.01))
+          setRatio((x) => Math.max(x * 1.4, 0.01))
         } else if (e.key === "-") {
-          setRatio((x) => Math.min(x * 1.4, 1))
+          setRatio((x) => Math.min(x / 1.4, 1))
         }
       }
     }
@@ -62,7 +62,10 @@ export default function Canvas({ pagesInit }: InputCanvas) {
     const currentPages = pagesTemp.current || pages
     if (!currentPages) return
 
-    let top = 0, bottom = 0, right = 0, left = 0
+    let top = 0,
+      bottom = 0,
+      right = 0,
+      left = 0
 
     Object.keys(currentPages).forEach((pageID) => {
       const page = currentPages[pageID]
@@ -72,12 +75,14 @@ export default function Canvas({ pagesInit }: InputCanvas) {
       left = Math.min(left, page.center.x - page.width / 2)
     })
 
-    const x_Dis = right - left + 5
-    const y_Dis = top - bottom + 5
+    const x_Dis = right - left + 50
+    const y_Dis = top - bottom + 50
 
-    const newRatio = x_Dis / 4 > y_Dis / 3 
-      ? x_Dis / ((window.innerWidth * 7) / 10)
-      : y_Dis / window.innerHeight
+    const newRatio =
+      x_Dis / 4 > y_Dis / 3
+        ? (window.innerWidth * 7) / 10 / x_Dis
+        : window.innerHeight / y_Dis
+
 
     setRatio(newRatio)
     setOrigin({
@@ -86,30 +91,20 @@ export default function Canvas({ pagesInit }: InputCanvas) {
     })
   }
 
-  // Recalculate origin when pages change (but not during resize)
   useEffect(() => {
     if (!pageResizingTimeout.current) {
       calculateOrigin()
     }
   }, [pages])
 
-  // Recenter function
   function recenter() {
-    // Clear any pending resize timeout
-    if (pageResizingTimeout.current) {
-      clearTimeout(pageResizingTimeout.current)
-      pageResizingTimeout.current = undefined
-    }
-    
+
     if (pagesTemp.current) {
       setPages(pagesTemp.current)
     }
-    
-    // Recalculate origin with current state
     setTimeout(() => {
       calculateOrigin()
-      
-      // Then scroll to center
+
       setTimeout(() => {
         const canvas = document.getElementById("canvas")
         if (canvas) {
@@ -119,10 +114,9 @@ export default function Canvas({ pagesInit }: InputCanvas) {
           })
         }
       }, 100)
-    }, 0)
+    }, 20)
   }
 
-  // Auto-center on origin change
   useEffect(() => {
     const canvas = document.getElementById("canvas")
     if (canvas) {
@@ -133,7 +127,6 @@ export default function Canvas({ pagesInit }: InputCanvas) {
     }
   }, [origin])
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (pageResizingTimeout.current) {
@@ -160,7 +153,8 @@ export default function Canvas({ pagesInit }: InputCanvas) {
     >
       <div
         style={{
-          transform: "translate(250vw, 250vh)",
+          transform: `translate(250vw, 250vh) scale(${ratio})`,
+          transformOrigin: "0 0",
           backgroundColor: "rgba(0, 0, 0, 0)",
           width: "500vw",
           height: "500vh",
@@ -173,88 +167,155 @@ export default function Canvas({ pagesInit }: InputCanvas) {
               key={page.id}
               style={{
                 position: "absolute",
-                width: `${page.width / ratio}px`,
-                height: `${page.height / ratio}px`,
-                left: `${(page.center.x - origin.x - page.width / 2) / ratio}px`,
-                top: `${(page.center.y - origin.y - page.height / 2) / ratio}px`,
+                width: `${page.width}px`,
+                height: `${page.height}px`,
+                left: `${page.center.x - origin.x - page.width / 2}px`,
+                top: `${page.center.y - origin.y - page.height / 2}px`,
               }}
               onResize={(w, h, d) => {
                 if (!pages) return
-                
-                // Clear any existing timeout
+
                 if (pageResizingTimeout.current) {
                   clearTimeout(pageResizingTimeout.current)
                 }
-                
+
                 const currentPage = pages[page.id]
-                
+                const worldW = w 
+                const worldH = h 
+
                 switch (d) {
                   case "right":
                     pagesTemp.current = {
                       ...pages,
                       [page.id]: {
                         ...currentPage,
-                        width: w * ratio,
-                        height: h * ratio,
+                        width: worldW,
+                        height: worldH,
                         center: {
-                          x: currentPage.center.x + (w * ratio - currentPage.width) / 2,
+                          x:
+                            currentPage.center.x +
+                            (worldW - currentPage.width) / 2,
                           y: currentPage.center.y,
                         },
                       },
                     }
                     break
-                    
+
                   case "left":
                     pagesTemp.current = {
                       ...pages,
                       [page.id]: {
                         ...currentPage,
-                        width: w * ratio,
-                        height: h * ratio,
+                        width: worldW,
+                        height: worldH,
                         center: {
-                          x: currentPage.center.x - (w * ratio - currentPage.width) / 2,
+                          x:
+                            currentPage.center.x -
+                            (worldW - currentPage.width) / 2,
                           y: currentPage.center.y,
                         },
                       },
                     }
                     break
-                    
+
                   case "bottom":
                     pagesTemp.current = {
                       ...pages,
                       [page.id]: {
                         ...currentPage,
-                        width: w * ratio,
-                        height: h * ratio,
+                        width: worldW,
+                        height: worldH,
                         center: {
                           x: currentPage.center.x,
-                          y: currentPage.center.y + (h * ratio - currentPage.height) / 2,
+                          y:
+                            currentPage.center.y +
+                            (worldH - currentPage.height) / 2,
                         },
                       },
                     }
                     break
-                    
+
                   case "top":
                     pagesTemp.current = {
                       ...pages,
                       [page.id]: {
                         ...currentPage,
-                        width: w * ratio,
-                        height: h * ratio,
+                        width: worldW,
+                        height: worldH,
                         center: {
                           x: currentPage.center.x,
-                          y: currentPage.center.y - (h * ratio - currentPage.height) / 2,
+                          y:
+                            currentPage.center.y -
+                            (worldH - currentPage.height) / 2,
+                        },
+                      },
+                    }
+                    break
+                  
+                  // Add corner cases for completeness
+                  case "top-left":
+                    pagesTemp.current = {
+                      ...pages,
+                      [page.id]: {
+                        ...currentPage,
+                        width: worldW,
+                        height: worldH,
+                        center: {
+                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
+                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
+                        },
+                      },
+                    }
+                    break
+
+                  case "top-right":
+                    pagesTemp.current = {
+                      ...pages,
+                      [page.id]: {
+                        ...currentPage,
+                        width: worldW,
+                        height: worldH,
+                        center: {
+                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
+                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
+                        },
+                      },
+                    }
+                    break
+
+                  case "bottom-left":
+                    pagesTemp.current = {
+                      ...pages,
+                      [page.id]: {
+                        ...currentPage,
+                        width: worldW,
+                        height: worldH,
+                        center: {
+                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
+                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
+                        },
+                      },
+                    }
+                    break
+
+                  case "bottom-right":
+                    pagesTemp.current = {
+                      ...pages,
+                      [page.id]: {
+                        ...currentPage,
+                        width: worldW,
+                        height: worldH,
+                        center: {
+                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
+                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
                         },
                       },
                     }
                     break
                 }
-                
-                // Debounce the page update for smooth preview during resize
-                pageResizingTimeout.current = window.setTimeout(() => {
-                  setPages(pagesTemp.current || pages)
-                }, 50)
               }}
+ 
+              ratio={ratio}
             >
               {page.element}
             </AdjustableContainer>
