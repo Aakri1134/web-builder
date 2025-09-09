@@ -83,7 +83,6 @@ export default function Canvas({ pagesInit }: InputCanvas) {
         ? (window.innerWidth * 7) / 10 / x_Dis
         : window.innerHeight / y_Dis
 
-
     setRatio(newRatio)
     setOrigin({
       x: (right + left) / 2,
@@ -98,7 +97,6 @@ export default function Canvas({ pagesInit }: InputCanvas) {
   }, [pages])
 
   function recenter() {
-
     if (pagesTemp.current) {
       setPages(pagesTemp.current)
     }
@@ -180,8 +178,8 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                 }
 
                 const currentPage = pages[page.id]
-                const worldW = w 
-                const worldH = h 
+                const worldW = w
+                const worldH = h
 
                 switch (d) {
                   case "right":
@@ -251,7 +249,7 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                       },
                     }
                     break
-                  
+
                   // Add corner cases for completeness
                   case "top-left":
                     pagesTemp.current = {
@@ -261,8 +259,12 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                         width: worldW,
                         height: worldH,
                         center: {
-                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
+                          x:
+                            currentPage.center.x -
+                            (worldW - currentPage.width) / 2,
+                          y:
+                            currentPage.center.y -
+                            (worldH - currentPage.height) / 2,
                         },
                       },
                     }
@@ -276,8 +278,12 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                         width: worldW,
                         height: worldH,
                         center: {
-                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
+                          x:
+                            currentPage.center.x +
+                            (worldW - currentPage.width) / 2,
+                          y:
+                            currentPage.center.y -
+                            (worldH - currentPage.height) / 2,
                         },
                       },
                     }
@@ -291,8 +297,12 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                         width: worldW,
                         height: worldH,
                         center: {
-                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
+                          x:
+                            currentPage.center.x -
+                            (worldW - currentPage.width) / 2,
+                          y:
+                            currentPage.center.y +
+                            (worldH - currentPage.height) / 2,
                         },
                       },
                     }
@@ -306,15 +316,18 @@ export default function Canvas({ pagesInit }: InputCanvas) {
                         width: worldW,
                         height: worldH,
                         center: {
-                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
+                          x:
+                            currentPage.center.x +
+                            (worldW - currentPage.width) / 2,
+                          y:
+                            currentPage.center.y +
+                            (worldH - currentPage.height) / 2,
                         },
                       },
                     }
                     break
                 }
               }}
- 
               ratio={ratio}
             >
               {page.element}

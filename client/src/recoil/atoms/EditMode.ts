@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from "recoil"
 
 export const EditMode = atom<boolean>({
-    key : "editMode",
-    default : false
+  key: "editMode",
+  default: false,
 })

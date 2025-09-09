@@ -20,27 +20,30 @@ export default function AdjustableContainer({
   const startSize = useRef({ width: 0, height: 0 })
   const startOffset = useRef({ left: 0, top: 0 })
 
-  const handleMouseDown = useCallback((e: React.MouseEvent, direction: string) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent, direction: string) => {
+      e.preventDefault()
+      e.stopPropagation()
 
-    if (!containerRef.current) return
+      if (!containerRef.current) return
 
-    // ✅ Use style.width/height (world units), not getBoundingClientRect()
-    const cs = window.getComputedStyle(containerRef.current)
-    startSize.current = {
-      width: parseFloat(cs.width),
-      height: parseFloat(cs.height),
-    }
-    startOffset.current = {
-      left: parseFloat(cs.left) || 0,
-      top: parseFloat(cs.top) || 0,
-    }
-    startPos.current = { x: e.clientX, y: e.clientY }
+      // ✅ Use style.width/height (world units), not getBoundingClientRect()
+      const cs = window.getComputedStyle(containerRef.current)
+      startSize.current = {
+        width: parseFloat(cs.width),
+        height: parseFloat(cs.height),
+      }
+      startOffset.current = {
+        left: parseFloat(cs.left) || 0,
+        top: parseFloat(cs.top) || 0,
+      }
+      startPos.current = { x: e.clientX, y: e.clientY }
 
-    setIsResizing(true)
-    setResizeDirection(direction)
-  }, [])
+      setIsResizing(true)
+      setResizeDirection(direction)
+    },
+    []
+  )
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -162,7 +165,11 @@ export default function AdjustableContainer({
         <div
           id="AdjustableDiv"
           className="relative z-10 no-scrollbar min-w-[400px]"
-          style={{ containerType: "inline-size", overflow: "scroll", height: "100%" }}
+          style={{
+            containerType: "inline-size",
+            overflow: "scroll",
+            height: "100%",
+          }}
         >
           <div>{children}</div>
         </div>
