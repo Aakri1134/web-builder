@@ -1,3 +1,4 @@
+import { useDraggable } from "@dnd-kit/core"
 import { useState, useRef, useCallback, useEffect } from "react"
 
 type InputAdjustableDiv = {
@@ -5,6 +6,8 @@ type InputAdjustableDiv = {
   style?: React.CSSProperties
   onResize?: (width: number, height: number, direction: string) => void
   ratio?: number // <--- NEW: pass zoom ratio
+  pageID : string
+  pageName  : string
 }
 
 export default function AdjustableContainer({
@@ -12,10 +15,12 @@ export default function AdjustableContainer({
   style = {},
   onResize,
   ratio = 1,
+  pageID,
+  pageName
 }: InputAdjustableDiv) {
   const [isResizing, setIsResizing] = useState(false)
   const [resizeDirection, setResizeDirection] = useState<string>("")
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const startPos = useRef({ x: 0, y: 0 })
   const startSize = useRef({ width: 0, height: 0 })
   const startOffset = useRef({ left: 0, top: 0 })
@@ -121,8 +126,22 @@ export default function AdjustableContainer({
     }
   }, [isResizing, handleMouseMove, handleMouseUp])
 
+  const {setNodeRef, listeners, attributes, transform} = useDraggable({
+    id : pageID
+  })
+
+  const dragstyle : React.CSSProperties= transform ? {
+    transform : `translate(${transform.x}px, ${transform.y}px)`
+  } : {}
+
+  const combinedRef = useCallback((node: HTMLDivElement | null) => {
+  containerRef.current = node;
+  setNodeRef(node);
+}, [setNodeRef]);
+
   return (
-    <div ref={containerRef} style={style} className="group absolute">
+    <div ref={combinedRef} style={{...style, ...dragstyle}} className="group absolute">
+      <h1 {...listeners} {...attributes} className=" text-white cursor-grab">{pageName}</h1>
       <div style={{ position: "relative", height: "100%", width: "100%" }}>
         {/* Resize handles */}
         <div

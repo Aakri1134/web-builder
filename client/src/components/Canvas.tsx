@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import AdjustableContainer from "./AdjustableContainer"
+import { DndContext, type DragEndEvent } from "@dnd-kit/core"
 
 type InputCanvas = {
   pagesInit: Page[]
@@ -25,7 +26,7 @@ export default function Canvas({ pagesInit }: InputCanvas) {
   const [ratio, setRatio] = useState<number>(1)
   const [origin, setOrigin] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
   const [pages, setPages] = useState<PageState>()
-  const pageResizingTimeout = useRef<number>()
+  const isRepositioning = useRef<boolean>(false)
   const pagesTemp = useRef<PageState>()
 
   // Keyboard zoom controls
@@ -59,7 +60,7 @@ export default function Canvas({ pagesInit }: InputCanvas) {
   }, [pagesInit])
 
   function calculateOrigin() {
-    const currentPages = pagesTemp.current || pages
+    const currentPages = pages
     if (!currentPages) return
 
     let top = 0,
@@ -83,7 +84,6 @@ export default function Canvas({ pagesInit }: InputCanvas) {
         ? (window.innerWidth * 7) / 10 / x_Dis
         : window.innerHeight / y_Dis
 
-
     setRatio(newRatio)
     setOrigin({
       x: (right + left) / 2,
@@ -92,20 +92,16 @@ export default function Canvas({ pagesInit }: InputCanvas) {
   }
 
   useEffect(() => {
-    if (!pageResizingTimeout.current) {
-      calculateOrigin()
-    }
+    if(!isRepositioning.current)
+    calculateOrigin()
   }, [pages])
 
   function recenter() {
-
     if (pagesTemp.current) {
       setPages(pagesTemp.current)
+      pagesTemp.current = undefined
     }
-    setTimeout(() => {
       calculateOrigin()
-
-      setTimeout(() => {
         const canvas = document.getElementById("canvas")
         if (canvas) {
           canvas.scrollTo({
@@ -113,8 +109,6 @@ export default function Canvas({ pagesInit }: InputCanvas) {
             top: window.innerHeight * 2.5 - window.innerHeight / 2,
           })
         }
-      }, 100)
-    }, 20)
   }
 
   useEffect(() => {
@@ -127,207 +121,244 @@ export default function Canvas({ pagesInit }: InputCanvas) {
     }
   }, [origin])
 
-  useEffect(() => {
-    return () => {
-      if (pageResizingTimeout.current) {
-        clearTimeout(pageResizingTimeout.current)
-      }
-    }
-  }, [])
-
   if (!pages) {
     return null
   }
 
+  const handleDragEnd = (e : DragEndEvent) => {
+    const {active, delta} = e
+    const {id} = active
+
+    const pageID = id
+    setPages((curr) => {
+      if(!curr) return curr
+      return ({
+      ...curr, 
+      [pageID] : {
+        ...curr[pageID],
+        center : {
+          x : curr[pageID].center.x + delta.x,
+          y : curr[pageID].center.y + delta.y
+        }
+      }
+    })})
+setTimeout(() => {
+isRepositioning.current = false
+}, 100)
+    
+  }
+
   return (
-    <div
-      id="canvas"
-      style={{
-        width: (window.innerWidth * 7) / 10,
-        height: window.innerHeight,
-        position: "relative",
-        overflow: "scroll",
-        boxSizing: "content-box",
-      }}
-      className="bg-slate-900"
-    >
+    <DndContext onDragStart={() => {isRepositioning.current = true}} onDragEnd={handleDragEnd}>
       <div
+        id="canvas"
         style={{
-          transform: `translate(250vw, 250vh) scale(${ratio})`,
-          transformOrigin: "0 0",
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          width: "500vw",
-          height: "500vh",
+          width: (window.innerWidth * 7) / 10,
+          height: window.innerHeight,
+          position: "relative",
+          overflow: "scroll",
+          boxSizing: "content-box",
         }}
+        className="no-scrollbar bg-slate-900"
       >
-        {Object.keys(pages).map((pageID: string) => {
-          const page = pages[pageID]
-          return (
-            <AdjustableContainer
-              key={page.id}
-              style={{
-                position: "absolute",
-                width: `${page.width}px`,
-                height: `${page.height}px`,
-                left: `${page.center.x - origin.x - page.width / 2}px`,
-                top: `${page.center.y - origin.y - page.height / 2}px`,
-              }}
-              onResize={(w, h, d) => {
-                if (!pages) return
+        <div
+          style={{
+            transform: `translate(250vw, 250vh) scale(${ratio})`,
+            transformOrigin: "0 0",
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            width: "500vw",
+            height: "500vh",
+          }}
+        >
+          {Object.keys(pages).map((pageID: string) => {
+            
+            const page = pages[pageID]
+            return (
+              <AdjustableContainer
+                key={page.id}
+                pageID={pageID}
+                pageName={page.name}
+                style={{
+                  position: "absolute",
+                  width: `${page.width}px`,
+                  height: `${page.height}px`,
+                  left: `${page.center.x - origin.x - page.width / 2}px`,
+                  top: `${page.center.y - origin.y - page.height / 2}px`,
+                }}
+                onResize={(w, h, d) => {
 
-                if (pageResizingTimeout.current) {
-                  clearTimeout(pageResizingTimeout.current)
-                }
+                  let tempPage;
 
-                const currentPage = pages[page.id]
-                const worldW = w 
-                const worldH = h 
+                  if(pagesTemp.current) tempPage = pagesTemp.current
+                  else tempPage = pages
 
-                switch (d) {
-                  case "right":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x:
-                            currentPage.center.x +
-                            (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y,
+                  if(!tempPage) return
+
+                  const currentPage = tempPage[page.id]
+                  const worldW = w
+                  const worldH = h
+
+                  switch (d) {
+                    case "right":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x +
+                              (worldW - currentPage.width) / 2,
+                            y: currentPage.center.y,
+                          },
                         },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "left":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x:
-                            currentPage.center.x -
-                            (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y,
+                    case "left":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x -
+                              (worldW - currentPage.width) / 2,
+                            y: currentPage.center.y,
+                          },
                         },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "bottom":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x,
-                          y:
-                            currentPage.center.y +
-                            (worldH - currentPage.height) / 2,
+                    case "bottom":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x: currentPage.center.x,
+                            y:
+                              currentPage.center.y +
+                              (worldH - currentPage.height) / 2,
+                          },
                         },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "top":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x,
-                          y:
-                            currentPage.center.y -
-                            (worldH - currentPage.height) / 2,
+                    case "top":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x: currentPage.center.x,
+                            y:
+                              currentPage.center.y -
+                              (worldH - currentPage.height) / 2,
+                          },
                         },
-                      },
-                    }
-                    break
-                  
-                  // Add corner cases for completeness
-                  case "top-left":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
-                        },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "top-right":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y - (worldH - currentPage.height) / 2,
+                    // Add corner cases for completeness
+                    case "top-left":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x -
+                              (worldW - currentPage.width) / 2,
+                            y:
+                              currentPage.center.y -
+                              (worldH - currentPage.height) / 2,
+                          },
                         },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "bottom-left":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x - (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
+                    case "top-right":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x +
+                              (worldW - currentPage.width) / 2,
+                            y:
+                              currentPage.center.y -
+                              (worldH - currentPage.height) / 2,
+                          },
                         },
-                      },
-                    }
-                    break
+                      }
+                      break
 
-                  case "bottom-right":
-                    pagesTemp.current = {
-                      ...pages,
-                      [page.id]: {
-                        ...currentPage,
-                        width: worldW,
-                        height: worldH,
-                        center: {
-                          x: currentPage.center.x + (worldW - currentPage.width) / 2,
-                          y: currentPage.center.y + (worldH - currentPage.height) / 2,
+                    case "bottom-left":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x -
+                              (worldW - currentPage.width) / 2,
+                            y:
+                              currentPage.center.y +
+                              (worldH - currentPage.height) / 2,
+                          },
                         },
-                      },
-                    }
-                    break
-                }
-              }}
- 
-              ratio={ratio}
-            >
-              {page.element}
-            </AdjustableContainer>
-          )
-        })}
+                      }
+                      break
+
+                    case "bottom-right":
+                      pagesTemp.current = {
+                        ...tempPage,
+                        [page.id]: {
+                          ...currentPage,
+                          width: worldW,
+                          height: worldH,
+                          center: {
+                            x:
+                              currentPage.center.x +
+                              (worldW - currentPage.width) / 2,
+                            y:
+                              currentPage.center.y +
+                              (worldH - currentPage.height) / 2,
+                          },
+                        },
+                      }
+                      break
+                  }
+                }}
+                ratio={ratio}
+              >
+                {page.element}
+              </AdjustableContainer>
+            )
+          })}
+        </div>
+        <button
+          className="fixed w-20 h-20 right-1/2 transform translate-x-20 bottom-0 bg-amber-500 hover:bg-amber-600 rounded-lg font-semibold text-white shadow-lg transition-colors duration-200"
+          onClick={recenter}
+        >
+          Recenter
+        </button>
       </div>
-      <button
-        className="fixed w-20 h-20 right-1/2 transform translate-x-20 bottom-0 bg-amber-500 hover:bg-amber-600 rounded-lg font-semibold text-white shadow-lg transition-colors duration-200"
-        onClick={recenter}
-      >
-        Recenter
-      </button>
-    </div>
+    </DndContext>
   )
 }
