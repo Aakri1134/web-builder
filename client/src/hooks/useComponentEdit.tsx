@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil"
-import type { DSLComponent } from "../utils/DSL/sanetizer"
+import type { DSLComponent } from "../types/DSL"
 import {
   childrenFamily,
   parentFamily,

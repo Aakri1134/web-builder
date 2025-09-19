@@ -1,5 +1,5 @@
 import { captureException } from "@sentry/react"
-import type { DSLComponent } from "./sanetizer"
+import type { DSLComponent } from "../../types/DSL"
 
 type Type = DSLComponent["type"]
 type ID = DSLComponent["id"]

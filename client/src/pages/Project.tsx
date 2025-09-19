@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
-import type { DSL } from "../utils/DSL/sanetizer"
-import Convertor from "../components/Convertor"
+import type { DSL } from "../types/DSL"
 import { getDSL } from "../utils/DSL/getDSL"
 import SelectBox from "../components/Edit/SelectBox"
-import Canvas from "../components/Canvas"
 
-export default function Edit() {
+export default function Project() {
   //@ts-ignore
   const { id } = useParams()
+
+  useEffect(() => {
+        document.title = id ?? "web-builder"
+    }, [])
   const containerRef = useRef<HTMLDivElement>(null)
   
   const [DSL, setDSL] = useState<DSL>({
@@ -102,41 +104,7 @@ export default function Edit() {
         className="light flex justify-center items-center"
       >
         <SelectBox />
-        <Canvas pagesInit={[
-          {
-            id : "1",
-            height : 700,
-            width : 400,
-            name : "page 1",
-            center : {
-              x : 0,
-              y : 100
-            },
-            element : <Convertor components={DSL.components} parents={[]}/>
-          },
-          {
-            id : "2",
-            height : 400,
-            width : 400,
-            name : "page 2",
-            center : {
-              x : 500,
-              y : 100
-            },
-            element : <div className="bg-yellow-500 h-full">Yellow</div>
-          },
-          {
-            id : "3",
-            height : 400,
-            width : 400,
-            name : "page 2",
-            center : {
-              x : 600,
-              y : 500
-            },
-            element : <div className="bg-orange-500 h-full">Orange</div>
-          },
-        ]}/>
+        
       </div>
     </>
   )

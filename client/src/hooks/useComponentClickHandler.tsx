@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil"
-import type { DSLComponent } from "../utils/DSL/sanetizer"
+import type { DSLComponent } from "../types/DSL"
 import { currentComponentID } from "../recoil/atoms/component"
 import { useRef, useState } from "react"
 

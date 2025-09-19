@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react"
 import Convertor from "../../components/Convertor"
-import type { DSLComponent } from "../../utils/DSL/sanetizer"
+import type { DSLComponent } from "../../types/DSL"
 import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../../recoil/atoms/component"
 import useComponent from "../../hooks/useComponent"

@@ -1,4 +1,5 @@
-import sanetizer, { type DSL } from "./sanetizer";
+import { type DSL } from "../../types/DSL";
+import sanetizer from "./sanetizer";
 
 const tempDSL : DSL = {
   "components": [

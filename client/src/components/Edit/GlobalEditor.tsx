@@ -4,7 +4,7 @@ import useComponentEdit from "../../hooks/useComponentEdit"
 import { useRef } from "react"
 import { checkPresence } from "../../utils/DSL/requirements"
 import { getType } from "../../utils/DSL/typeMap"
-import type { DSLComponent } from "../../utils/DSL/sanetizer"
+import type { DSLComponent } from "../../types/DSL"
 
 export default function GlobalEditor() {
   const activeComponentID = useRecoilValue(currentComponentID)

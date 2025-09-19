@@ -6,7 +6,7 @@ import * as Sentry from "@sentry/react"
 import { RecoilRoot } from "recoil"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import Home from "./pages/Home.tsx"
-import Edit from "./pages/Edit.tsx"
+import Project from "./pages/Project.tsx"
 
 const root = createRoot(document.getElementById("root")!)
 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/edit/:id",
-    element: <Edit />,
+    element: <Project />,
   },
 ])
 

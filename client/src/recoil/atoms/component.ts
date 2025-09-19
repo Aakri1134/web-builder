@@ -1,5 +1,5 @@
 import {  atom, atomFamily } from "recoil"
-import type { DSLComponent } from "../../utils/DSL/sanetizer"
+import type { DSLComponent } from "../../types/DSL"
 
 type Style = DSLComponent["style"]
 type ID = DSLComponent["id"]

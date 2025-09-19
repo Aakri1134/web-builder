@@ -1,7 +1,7 @@
 import Button from "../DSLComponents/Button"
 import Heading from "../DSLComponents/text/Heading"
 import Text from "../DSLComponents/text/Text"
-import type { DSLComponent } from "../utils/DSL/sanetizer"
+import type { DSLComponent } from "../types/DSL"
 import ImageCustom from "../DSLComponents/Image"
 import Anchor from "../DSLComponents/text/Anchor"
 import Container from "../DSLComponents/container/Container"

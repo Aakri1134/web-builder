@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useSetRecoilState } from "recoil"
 import { activeComponents } from "../recoil/atoms/component"
-import type { DSLComponent } from "../utils/DSL/sanetizer"
+import type { DSLComponent } from "../types/DSL"
 import useComponent from "../hooks/useComponent"
 import useComponentClickHandler from "../hooks/useComponentClickHandler"
 

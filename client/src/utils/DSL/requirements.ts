@@ -1,4 +1,5 @@
-import { type DSLComponent, type Report } from "./sanetizer"
+import { type Report } from "./sanetizer"
+import type { DSLComponent } from "../../types/DSL"
 
 // to check if the required parameters are present in component.props
 type PropKeys = keyof NonNullable<DSLComponent["props"]>
