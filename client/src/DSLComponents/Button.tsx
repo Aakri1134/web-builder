@@ -63,14 +63,14 @@ export default function Button({
   return (
     <>
       <style>{formatResponsiveCSS(mediaQueries)}</style>
-      <button
+      <div
         id={id}
         style={component.style}
         onClick={handleComponentClick}
         onDoubleClick={handleParentSelect}
       >
         {component.props?.text}
-      </button>
+      </div>
     </>
   )
 }

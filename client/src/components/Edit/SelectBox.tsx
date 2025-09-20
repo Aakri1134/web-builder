@@ -1,33 +1,55 @@
 import { useRecoilValue } from "recoil"
-import { createPortal } from "react-dom"
-import { currentComponentID, parentFamily } from "../../recoil/atoms/component"
+import { currentComponentID } from "../../recoil/atoms/component"
 import { useEffect, useRef, useState } from "react"
 
-export default function SelectBox() {
+export default function Selector() {
   const curr = useRecoilValue(currentComponentID)
-  const parent = useRecoilValue(parentFamily(curr ?? "empty"))
+  const lastPosition = useRef<{
+    [key: string]: { top: number; left: number; right: number; bottom: number }
+  }>({})
+
   const [, forceUpdate] = useState({})
-  const lastPosition = useRef<{ top: number; left: number } | null>(null)
 
   useEffect(() => {
-    if (!curr) return
+    console.log("Selected Elements : " + curr)
+    if (!curr || curr.length === 0) {
+      lastPosition.current = {}
+      console.log("No elements")
+      return
+    }
 
     let animationId: number
 
     const checkPosition = () => {
-      const element = document.getElementById(curr)
-      if (element) {
-        const rect = element.getBoundingClientRect()
-        const currentPos = { top: rect.top, left: rect.left }
+      lastPosition.current = {}
+      let hasChanged = false
 
-        if (
-          !lastPosition.current ||
-          lastPosition.current.top !== currentPos.top ||
-          lastPosition.current.left !== currentPos.left
-        ) {
-          lastPosition.current = currentPos
-          forceUpdate({})
+      curr.forEach((id) => {
+        const element = document.getElementById(id)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          const currentPos = {
+            top: rect.top,
+            left: rect.left,
+            right: rect.right,
+            bottom: rect.bottom,
+          }
+
+          if (
+            !lastPosition.current[id] ||
+            lastPosition.current[id].top !== currentPos.top ||
+            lastPosition.current[id].left !== currentPos.left ||
+            lastPosition.current[id].right !== currentPos.right ||
+            lastPosition.current[id].bottom !== currentPos.bottom
+          ) {
+            lastPosition.current[id] = currentPos
+            hasChanged = true
+          }
         }
+      })
+
+      if (hasChanged) {
+        forceUpdate({})
       }
       animationId = requestAnimationFrame(checkPosition)
     }
@@ -37,45 +59,54 @@ export default function SelectBox() {
     return () => cancelAnimationFrame(animationId)
   }, [curr])
 
-  if (curr === null) return null
-
-  let position: "absolute" | "fixed" = "absolute"
-  let i = parent.length - 1
   if (
-    document.getElementById(curr)?.style.position &&
-    document.getElementById(curr)?.style.position === "fixed"
-  )
-    position = "fixed"
-  while (i >= 0 && position !== "fixed") {
-    if (
-      document.getElementById(parent[i])?.style.position &&
-      document.getElementById(parent[i])?.style.position === "fixed"
-    )
-      position = "fixed"
-    i--
+    !curr ||
+    curr.length === 0 ||
+    Object.keys(lastPosition.current).length === 0
+  ) {
+    return null
   }
-  const boundaries = document.getElementById(curr)?.getBoundingClientRect()
+  let right: number = -Infinity
+  let left: number = Infinity
+  let bottom: number = -Infinity
+  let top: number = Infinity
 
-  if (boundaries === null || boundaries === undefined) return null
-  else {
-    return createPortal(
-      <div
-        className={` bg-transparent border-2 border-blue-400 rounded-lg z-[1000] absolute pointer-events-none`}
-        style={{
-          width: boundaries?.width,
-          height: boundaries?.height,
-          top:
-            position === "absolute"
-              ? window.scrollY + (boundaries?.top ?? 0)
-              : boundaries?.top ?? 0,
-          left:
-            position === "absolute"
-              ? window.scrollX + (boundaries?.left ?? 0)
-              : boundaries?.left ?? 0,
-          position: position,
-        }}
-      />,
-      document.body
-    )
-  }
+  Object.keys(lastPosition.current).forEach((id) => {
+    const pos = lastPosition.current[id]
+    right = Math.max(right, pos.right)
+    left = Math.min(left, pos.left)
+    bottom = Math.max(bottom, pos.bottom)
+    top = Math.min(top, pos.top)
+  })
+  const width = right - left
+  const height = bottom - top
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: top - 2,
+        left: left - 2,
+        width: width + 4,
+        height: height + 4,
+        pointerEvents: "none",
+        overflow: "hidden",
+      }}
+      className="border-[1px] border-blue-600 z-30 rounded-sm"
+    >
+      {Object.keys(lastPosition.current).length > 1 && Object.keys(lastPosition.current).map((id) => {
+        const { right, left, bottom, top } = lastPosition.current[id]
+        const width = right - left
+        const height = bottom - top
+        return  (<div style={{
+        position: "fixed",
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+        pointerEvents: "none",
+      }} className="border-[1px] border-blue-300 z-30 rounded-xs"/>)
+      })}
+    </div>
+  )
 }

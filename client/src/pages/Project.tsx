@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { getDSL } from "../utils/DSL/getDSL"
-import SelectBox from "../components/Edit/SelectBox"
 import type { Project } from "../types/Project"
 import PageHandler from "../components/PageHandler"
 export default function Edit() {
@@ -45,7 +44,6 @@ export default function Edit() {
         }}
         className="light flex justify-center items-center"
       >
-        <SelectBox />
         <PageHandler pages={project?.pages} />
       </div>
     </>

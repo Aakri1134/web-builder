@@ -54,16 +54,16 @@ export default function Anchor({
   return (
     <>
       <style>{formatResponsiveCSS(mediaQueries)}</style>
-      <a
+      <p
         id={id}
         className={component.props.className}
-        href={component.props?.href}
+        // href={component.props?.href}
         style={{ ...component.style, userSelect: "none" }}
         onClick={handleComponentClick}
         onDoubleClick={handleParentSelect}
       >
         {component.props?.text}
-      </a>
+      </p>
     </>
   )
 }

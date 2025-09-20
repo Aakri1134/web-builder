@@ -41,7 +41,7 @@ export const activeComponents = atom<ID[]>({
   ]
 })
 
-export const currentComponentID = atom<ID | null>({
+export const currentComponentID = atom<ID[] | null>({
   key : "currentComponentID",
   default : null
 })
