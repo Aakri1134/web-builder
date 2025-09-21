@@ -28,7 +28,11 @@ export default function useComponentClickHandler(parents: ID[]) {
       timeoutRef.current = setTimeout(() => {
         const newIndex = 0
         setIndex(newIndex)
-        setActiveComponent([parents[parents.length - 1 - newIndex]])
+        setActiveComponent(x => {
+          if(x && x.length === 1 && x[0] === parents[parents.length - 1 - newIndex]){
+            return null
+          }
+          return [parents[parents.length - 1 - newIndex]]})
       }, 250)
     }
   }

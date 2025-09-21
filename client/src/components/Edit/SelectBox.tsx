@@ -105,7 +105,7 @@ export default function Selector() {
         width: width,
         height: height,
         pointerEvents: "none",
-      }} className="border-[1px] border-blue-300 z-30 rounded-xs"/>)
+      }} className="border-[1px] border-blue-300 z-[1000] rounded-xs"/>)
       })}
     </div>
   )

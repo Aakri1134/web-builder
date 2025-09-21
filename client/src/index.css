@@ -8,3 +8,19 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;             /* Chrome, Safari, Opera */
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide Firefox spinners */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Alternative method using appearance property */
+input[type="number"] {
+  appearance: none;
+}

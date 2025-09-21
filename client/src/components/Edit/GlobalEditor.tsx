@@ -58,8 +58,27 @@ export default function GlobalEditor() {
   const [styleFields, setStyleFields] = useState<StyleEditProperty[]>([])
   const [styleChange, setStyleChamge] = useState<StyleChange | null>()
   const [propsChange, setPropsChamge] = useState<PropsChange | null>()
+  const fontSizeInput = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        if (fontSizeInput.current?.focus) {
+          console.log()
+          setStyleChamge({
+            key: "fontSize",
+            value: `${fontSizeInput.current.value}px`,
+          })
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeydown, { capture: true })
+  }, [])
+
+  useEffect(() => {
+    setStyleChamge(null)
+    setPropsChamge(null)
     if (!activeComponentID) return
     let componentTypes: Set<DSLComponent["type"]> = new Set([])
     for (let i = 0; i < (activeComponentID?.length ?? 0); i++) {
@@ -70,13 +89,28 @@ export default function GlobalEditor() {
     setStyleFields(getStyleRequirementsIntersection([...componentTypes]))
   }, [activeComponentID])
 
-
   return (
-    <div className=" bg-gray-800 w-96 h-screen">
+    <div className=" bg-gray-900 w-96 h-screen">
       {activeComponentID?.map((id) => {
-        return <Manager id={id} propsChange={propsChange} styleChange={styleChange}/>
+        return (
+          <Manager
+            id={id}
+            propsChange={propsChange}
+            styleChange={styleChange}
+          />
+        )
       })}
-      <h2>{activeComponentID}</h2>
+      {styleFields.includes("font-size") && (
+        <div className=" w-full bg-gray-800">
+          <h1 className=" text-white text-xl font-bold">Font Size</h1>
+          <input
+            ref={fontSizeInput}
+            type="number"
+            placeholder="Enter Number"
+            className=" text-white appearance-none"
+          />
+        </div>
+      )}
     </div>
   )
 }
