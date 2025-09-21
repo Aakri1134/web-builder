@@ -3,6 +3,7 @@ import { useParams } from "react-router"
 import { getDSL } from "../utils/DSL/getDSL"
 import type { Project } from "../types/Project"
 import PageHandler from "../components/PageHandler"
+import GlobalEditor from "../components/Edit/GlobalEditor"
 export default function Edit() {
   //@ts-ignore
   const { id } = useParams()
@@ -45,6 +46,7 @@ export default function Edit() {
         className="light flex justify-center items-center"
       >
         <PageHandler pages={project?.pages} />
+        <GlobalEditor/>
       </div>
     </>
   )

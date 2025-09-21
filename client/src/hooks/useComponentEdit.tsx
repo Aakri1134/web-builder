@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import type { DSLComponent } from "../types/DSL"
 import {
   childrenFamily,
@@ -8,17 +8,13 @@ import {
 } from "../recoil/atoms/component"
 
 export default function useComponentEdit(id: DSLComponent["id"] | null) {
-  const [style, setStyle] = useRecoilState(styleFamily(id || "empty"))
-  const [props, setProps] = useRecoilState(propsFamily(id || "empty"))
-  const [children, setChildren] = useRecoilState(childrenFamily(id || "empty"))
-  const [parents, setParents] = useRecoilState(parentFamily(id || "empty"))
+  const setStyle = useSetRecoilState(styleFamily(id || "empty"))
+  const setProps = useSetRecoilState(propsFamily(id || "empty"))
+  const setChildren = useSetRecoilState(childrenFamily(id || "empty"))
+  const setParents = useSetRecoilState(parentFamily(id || "empty"))
 
   return {
     id : id || "empty",
-    style,
-    props,
-    parents,
-    children,
     setStyle,
     setParents,
     setProps,
