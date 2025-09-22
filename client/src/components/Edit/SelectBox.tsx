@@ -11,7 +11,6 @@ export default function Selector() {
   const [, forceUpdate] = useState({})
 
   useEffect(() => {
-    console.log("Selected Elements : " + curr)
     if (!curr || curr.length === 0) {
       lastPosition.current = {}
       console.log("No elements")
@@ -105,7 +104,7 @@ export default function Selector() {
         width: width,
         height: height,
         pointerEvents: "none",
-      }} className="border-[1px] border-blue-300 z-[1000] rounded-xs"/>)
+      }} className="border-[1px] border-blue-300 z-[999] rounded-xs"/>)
       })}
     </div>
   )

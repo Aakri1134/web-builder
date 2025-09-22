@@ -1,8 +1,6 @@
-import { useRecoilValue, type SetterOrUpdater } from "recoil"
+import { useRecoilValue } from "recoil"
 import { currentComponentID } from "../../recoil/atoms/component"
-import useComponentEdit from "../../hooks/useComponentEdit"
 import { useEffect, useRef, useState } from "react"
-import { checkPresence } from "../../utils/DSL/requirements"
 import { getType } from "../../utils/DSL/typeMap"
 import type { DSLComponent } from "../../types/DSL"
 import {
@@ -10,45 +8,15 @@ import {
   type StyleEditProperty,
 } from "../../utils/Editor/requirements"
 import Manager from "./GlobalEditor/Manager"
-
-// export default function GlobalEditor() {
-//   const activeComponentID = useRecoilValue(currentComponentID)
-//   const textInput = useRef(null)
-//     //@ts-ignore
-//     const { style, setStyle, props, setProps } =
-//       useComponentEdit(activeComponentID)
-
-//     if(activeComponentID === null) return null
-
-//     return (
-//       <div className=" min-w-[500px] bg-fuchsia-500 ">
-//         {props.text &&
-//           checkPresence(
-//             getType(activeComponentID) as DSLComponent["type"],
-//             "text"
-//           ) && (
-//             <div>
-//               <h1>Text</h1>
-//               <input
-//                 ref={textInput}
-//                 placeholder={props.text}
-//                 type="text"
-//                 value={props.text}
-//                 onChange={(x) => {
-//                   setProps({ ...props, text: x.target.value })
-//                 }}
-//               />
-//             </div>
-//           )}
-//       </div>
-//     )
-//   }
+import InputNumber from "./GlobalEditor/InputNumber"
 
 export type PropsChange = {
+  id: string[]
   key: keyof DSLComponent["props"]
   value: string
 }
 export type StyleChange = {
+  id: string[]
   key: keyof Partial<React.CSSProperties>
   value: string
 }
@@ -56,24 +24,27 @@ export type StyleChange = {
 export default function GlobalEditor() {
   const activeComponentID = useRecoilValue(currentComponentID)
   const [styleFields, setStyleFields] = useState<StyleEditProperty[]>([])
-  const [styleChange, setStyleChamge] = useState<StyleChange | null>()
-  const [propsChange, setPropsChamge] = useState<PropsChange | null>()
+  const [styleChange, setStyleChamge] = useState<StyleChange | null>(null)
+  const [propsChange, setPropsChamge] = useState<PropsChange | null>(null)
+  const mapKey = useRef<number>(0)
   const fontSizeInput = useRef<HTMLInputElement | null>(null)
+  const widthInput = useRef<HTMLInputElement | null>(null)
+  const heightInput = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
+    function handleKeydown(e: KeyboardEvent) {
       if (e.key === "Enter") {
-        if (fontSizeInput.current?.focus) {
-          console.log()
-          setStyleChamge({
-            key: "fontSize",
-            value: `${fontSizeInput.current.value}px`,
-          })
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur()
         }
+				e.stopPropagation()
       }
     }
 
     document.addEventListener("keydown", handleKeydown, { capture: true })
+    return () => {
+      document.removeEventListener("keydown", handleKeydown, { capture: true })
+    }
   }, [])
 
   useEffect(() => {
@@ -94,22 +65,57 @@ export default function GlobalEditor() {
       {activeComponentID?.map((id) => {
         return (
           <Manager
+            key={++mapKey.current}
             id={id}
             propsChange={propsChange}
             styleChange={styleChange}
           />
         )
       })}
-      {styleFields.includes("font-size") && (
-        <div className=" w-full bg-gray-800">
-          <h1 className=" text-white text-xl font-bold">Font Size</h1>
-          <input
-            ref={fontSizeInput}
-            type="number"
-            placeholder="Enter Number"
-            className=" text-white appearance-none"
-          />
-        </div>
+      {activeComponentID && styleFields.includes("font-size") && (
+        <InputNumber
+          inputRef={fontSizeInput}
+          label="Font Size"
+          handleChange={(value) => {
+            setStyleChamge({
+              id: activeComponentID,
+              key: "fontSize",
+              value,
+            })
+          }}
+          type="style"
+          keyString="fontSize"
+        />
+      )}
+      {activeComponentID && styleFields.includes("dimension") && (
+        <InputNumber
+          inputRef={widthInput}
+          label="Width"
+          handleChange={(value) => {
+            setStyleChamge({
+              id: activeComponentID,
+              key: "width",
+              value,
+            })
+          }}
+          type="style"
+          keyString="width"
+        />
+      )}
+      {activeComponentID && styleFields.includes("dimension") && (
+        <InputNumber
+          inputRef={heightInput}
+          label="height"
+          handleChange={(value) => {
+            setStyleChamge({
+              id: activeComponentID,
+              key: "height",
+              value,
+            })
+          }}
+          type="style"
+          keyString="height"
+        />
       )}
     </div>
   )
