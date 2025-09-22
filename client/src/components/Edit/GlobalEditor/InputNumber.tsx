@@ -3,25 +3,28 @@ import { useRecoilValue } from "recoil"
 import { currentComponentID } from "../../../recoil/atoms/component"
 import type { DSLComponent } from "../../../types/DSL"
 
-type InputStyleNumber = {
+type CommonInput = {
   placeholder?: string
   handleChange: (input: string) => void
   label: string
+  inputRef: React.MutableRefObject<HTMLInputElement | null>
+  inputClassname?: string
+  labelClassname?: string
+  divClassname?: string
+}
+
+type InputStyleNumber = {
   type: "style"
   keyString: keyof React.CSSProperties
-  inputRef: React.MutableRefObject<HTMLInputElement | null>
 }
 
 type InputPropsNumber = {
-  placeholder?: string
-  handleChange: (input: string) => void
-  label: string
   type: "props"
   keyString: keyof DSLComponent["props"]
-  inputRef: React.MutableRefObject<HTMLInputElement | null>
 }
 
-type Input = InputStyleNumber | InputPropsNumber
+type Input = CommonInput & (InputStyleNumber | InputPropsNumber)
+
 export default function InputNumber({
   placeholder,
   handleChange,
@@ -29,6 +32,9 @@ export default function InputNumber({
   type,
   keyString,
   inputRef,
+  inputClassname = "",
+  divClassname = "",
+  labelClassname = "",
 }: Input) {
   const activeComponentID = useRecoilValue(currentComponentID)
   const [initialValue, setInitialValue] = useState<string>("")
@@ -107,13 +113,15 @@ export default function InputNumber({
   }, [activeComponentID, type, keyString])
 
   return (
-    <div>
-      <h1 className=" text-white text-xl font-bold">{label}</h1>
+    <div className={`${divClassname}`}>
+      <h1 className={` text-white text-xl font-bold ${labelClassname}`}>
+        {label}
+      </h1>
       <input
         ref={inputRef}
         type="number"
         placeholder={placeholder}
-        className="  text-white appearance-none"
+        className={` text-white appearance-none ${inputClassname}`}
         value={initialValue}
         onChange={(e) => {
           setInitialValue(e.target.value)
