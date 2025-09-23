@@ -23,6 +23,7 @@ export type StyleEditProperty =
   | "font-weight"
   | "line-height"
   | "letter-spacing"
+  | "font-style"
 
 const styleRequirements: Record<DSLComponent["type"], StyleEditProperty[]> = {
   Body: [
@@ -170,6 +171,7 @@ const styleRequirements: Record<DSLComponent["type"], StyleEditProperty[]> = {
     "font-weight",
     "line-height",
     "letter-spacing",
+    "font-style"
   ],
   Text: [
     "dimension",
@@ -188,6 +190,7 @@ const styleRequirements: Record<DSLComponent["type"], StyleEditProperty[]> = {
     "font-weight",
     "line-height",
     "letter-spacing",
+    "font-style"
   ],
   Link: [
     "dimension",
@@ -206,6 +209,7 @@ const styleRequirements: Record<DSLComponent["type"], StyleEditProperty[]> = {
     "font-weight",
     "line-height",
     "letter-spacing",
+    "font-style"
   ],
   Image: [
     "dimension",
@@ -243,6 +247,7 @@ const styleRequirements: Record<DSLComponent["type"], StyleEditProperty[]> = {
     "font-weight",
     "line-height",
     "letter-spacing",
+    "font-style"
   ],
   Loop: [],
   Show: [],

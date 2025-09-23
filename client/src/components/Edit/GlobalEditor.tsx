@@ -9,6 +9,7 @@ import {
 } from "../../utils/Editor/requirements"
 import Manager from "./GlobalEditor/Manager"
 import InputNumber from "./GlobalEditor/InputNumber"
+import DropOptions from "./GlobalEditor/DropOptions"
 
 export type PropsChange = {
   id: string[]
@@ -72,7 +73,7 @@ export default function GlobalEditor() {
           />
         )
       })}
-      {activeComponentID && styleFields.includes("font-size") && (
+      {/* {activeComponentID && styleFields.includes("font-size") && (
         <InputNumber
           inputRef={fontSizeInput}
           label="Font Size"
@@ -115,6 +116,14 @@ export default function GlobalEditor() {
           }}
           type="style"
           keyString="height"
+        />
+      )} */}
+      {activeComponentID && styleFields.includes("font-style") && (
+        <DropOptions options={[{
+          text : "style 1",
+          callback : () => {alert("style 1 selected")}
+        }]}
+        label="Font Style"
         />
       )}
     </div>
