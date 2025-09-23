@@ -20,20 +20,19 @@ export default function DropOptions({
   const selected = useRef<boolean>(false)
   const [value, setValue] = useState<string>("")
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
-  const pos = useRef<{left : number, top : number, height : number}>({
-    left : 0,
-    top : 0,
-    height: 0
+  const pos = useRef<{ left: number; top: number; height: number }>({
+    left: 0,
+    top: 0,
+    height: 0,
   })
 
   useEffect(() => {
-    if(!inputRef.current)
-        return
+    if (!inputRef.current) return
     const rect = inputRef.current.getBoundingClientRect()
     pos.current = {
-        left : rect.left,
-        top : rect.top,
-        height : rect.height
+      left: rect.left,
+      top: rect.top,
+      height: rect.height,
     }
   }, [options, inputRef.current])
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function DropOptions({
       setDropdownVisible(false)
     }
   }, [value])
- 
+
   return (
     <div className={` relative ${className}`}>
       <h1 className=" text-white">{label}</h1>
@@ -61,20 +60,21 @@ export default function DropOptions({
           setValue(e.target.value)
         }}
       />
-      {dropdownVisible && <ModalPortal
-        hideModal={() => {
-          setDropdownVisible(false)
-        }}
-      >
-        <div 
-        style={{
-            position : "absolute",
-            top : pos.current.top + pos.current.height,
-            left : pos.current.left
-        }}
-        className=" h-max-72 w-96 bg-red-300 z-[999]">
-          {
-            options.map(({ text, callback }) => {
+      {dropdownVisible && (
+        <ModalPortal
+          hideModal={() => {
+            setDropdownVisible(false)
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: pos.current.top + pos.current.height,
+              left: pos.current.left,
+            }}
+            className=" h-max-72 w-96 bg-red-300 z-[999]"
+          >
+            {options.map(({ text, callback }) => {
               if (text.includes(value))
                 return (
                   <div
@@ -90,8 +90,9 @@ export default function DropOptions({
                 )
               else return null
             })}
-        </div>
-      </ModalPortal>}
+          </div>
+        </ModalPortal>
+      )}
     </div>
   )
 }
