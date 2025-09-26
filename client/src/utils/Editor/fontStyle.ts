@@ -28,68 +28,70 @@ export const fonts = {
   "Caveat Brush": ``,
   "Iceberg": ``,
   "Press Start 2P": ``,
+} as const;
+
+export type FontName = keyof typeof fonts;
+
+const loaded = new Set<FontName>();
+const loading = new Map<FontName, Promise<boolean>>();
+const failed = new Set<FontName>();
+
+function loadFontFromUrl(url: string): Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) => {
+    const existingLink = document.querySelector(`link[href="${url}"]`);
+    if (existingLink) {
+      resolve(true);
+      return;
+    }
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = url;
+
+    link.onload = () => resolve(true);
+    link.onerror = () => reject(new Error(`Failed to load CSS from ${url}`));
+
+    document.head.appendChild(link);
+
+    // Timeout after 10 seconds
+    setTimeout(() => {
+      reject(new Error(`Font loading timed out: ${url}`));
+    }, 10000);
+  });
 }
 
-type FontName = keyof typeof fonts
-
-  const loaded = new Set<FontName>();
-  const loading = new Map<FontName, Promise<boolean> | boolean>();
-  const failed = new Set<FontName>();
-
-
-    (Object.keys(fonts) as FontName[]).forEach((key: FontName) => {
-      loading.set(key, false);
-    });
-
-  function loadFontFromUrl(url: string) {
-    return new Promise<boolean>((resolve, reject) => {
-      const existingLink = document.querySelector(`link[href="${url}"]`);
-      if (existingLink) {
-        resolve(true);
-        return;
-      }
-
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = url;
-
-      link.onload = () => resolve(true);
-      link.onerror = () => reject(new Error(`Failed to load CSS from ${url}`));
-
-      // Add to document head
-      document.head.appendChild(link);
-
-      // Timeout after 10 seconds
-      setTimeout(() => {
-        reject(new Error(`Font loading timed out: ${url}`));
-      }, 10000);
-    });
+export async function loadFont(key: FontName): Promise<boolean> {
+  if (!(key in fonts)) {
+    throw new Error("Invalid Font Style");
+  }
+  if (loaded.has(key)) {
+    return true;
+  }
+  if (loading.has(key)) {
+    return await loading.get(key)!;
+  }
+  if (failed.has(key)) {
+    throw new Error("Unable to fetch Required Font");
   }
 
-  export async function loadFont(key: FontName) {
-    if (!(key in fonts)) {
-      throw new Error("Invalid Font Style");
-    }
-    if (loaded.has(key)) {
-      return true;
-    }
-    if (loading.get(key)) {
-      return await loading.get(key);
-    }
-    if (!failed.has(key)) {
-      throw new Error("Unable to fetch Required Logo");
-    }
-
-    try {
-      loading.set(key, loadFontFromUrl(fonts[key]));
-      await loading.get(key);
-      loaded.add(key);
-      loading.set(key, false);
-      return true;
-    } catch (e) {
-      failed.add(key);
-      throw e;
-    }
+  const url = fonts[key];
+  if (!url || url.trim() === '') {
+    throw new Error(`No URL configured for font: ${key}`);
   }
 
+  try {
+    const loadPromise = loadFontFromUrl(url);
+    loading.set(key, loadPromise);
 
+    const result = await loadPromise;
+
+    loaded.add(key);
+    loading.delete(key);
+
+    return result;
+  } catch (error) {
+    failed.add(key);
+    loading.delete(key);
+    throw error;
+  }
+}
