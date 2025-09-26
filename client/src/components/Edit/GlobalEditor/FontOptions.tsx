@@ -1,21 +1,49 @@
 import { useEffect, useRef, useState } from "react"
 import ModalPortal from "../../modals/ModalPortal"
-import { fonts, type FontName } from "../../../utils/Editor/fontStyle"
+import {
+  fonts,
+  hasFontLoadFailed,
+  loadFont,
+  type FontName,
+} from "../../../utils/Editor/fontStyle"
 
 type Input = {
-    handleSelect : (value : FontName) => void
+  handleSelect: (value: FontName) => void
 }
 
-export default function FontOptions({handleSelect} : Input) {
+export default function FontOptions({ handleSelect }: Input) {
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
   const [value, setValue] = useState<string>("")
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
+  const indexLoaded = useRef<number>(0)
   const pos = useRef<{ left: number; top: number; height: number }>({
     left: 0,
     top: 0,
     height: 0,
   })
+
+  useEffect(() => {
+    async function loadInitialFonts() {
+      try {
+        await Promise.all([
+          loadFont(Object.keys(fonts)[0] as FontName),
+          loadFont(Object.keys(fonts)[1] as FontName),
+          loadFont(Object.keys(fonts)[2] as FontName),
+          loadFont(Object.keys(fonts)[3] as FontName),
+          loadFont(Object.keys(fonts)[4] as FontName),
+        ])
+      } catch (e) {
+        // TODO add sentry logs
+      }
+    }
+
+    loadInitialFonts()
+    indexLoaded.current = 4
+  }, [])
+
+
 
   useEffect(() => {
     if (!inputRef.current) return
@@ -43,9 +71,13 @@ export default function FontOptions({handleSelect} : Input) {
   return (
     <div className={` relative`}>
       <h1
-      style={{
-        fontStyle : ""
-      }} className=" text-white">Font Style</h1>
+        style={{
+          fontStyle: "",
+        }}
+        className=" text-white"
+      >
+        Font Style
+      </h1>
       <input
         ref={inputRef}
         value={value}
@@ -62,6 +94,7 @@ export default function FontOptions({handleSelect} : Input) {
           }}
         >
           <div
+          ref={dropdownRef}
             style={{
               position: "absolute",
               top: pos.current.top + pos.current.height,
@@ -70,7 +103,7 @@ export default function FontOptions({handleSelect} : Input) {
             className=" h-max-72 w-96 bg-red-300 z-[999]"
           >
             {(Object.keys(fonts) as FontName[]).map((text) => {
-              if (text.includes(value))
+              if (!hasFontLoadFailed(text))
                 return (
                   <div
                     key={text}
@@ -78,6 +111,9 @@ export default function FontOptions({handleSelect} : Input) {
                       handleSelect(text)
                       selected.current = true
                       setValue(text)
+                    }}
+                    style={{
+                      fontFamily: text,
                     }}
                   >
                     {text}
