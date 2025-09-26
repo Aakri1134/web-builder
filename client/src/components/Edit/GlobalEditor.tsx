@@ -73,7 +73,7 @@ export default function GlobalEditor() {
           />
         )
       })}
-      {/* {activeComponentID && styleFields.includes("font-size") && (
+      {activeComponentID && styleFields.includes("font-size") && (
         <InputNumber
           inputRef={fontSizeInput}
           label="Font Size"
@@ -117,10 +117,31 @@ export default function GlobalEditor() {
           type="style"
           keyString="height"
         />
-      )} */}
+      )}
       {activeComponentID && styleFields.includes("font-style") && (
         <DropOptions options={[{
           text : "style 1",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "istyle 1",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "ustyle 1",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "ustayle 2",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "ustyle 3",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "istyle 2",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "istyle 3",
+          callback : () => {alert("style 1 selected")}
+        },{
+          text : "style 2",
           callback : () => {alert("style 1 selected")}
         }]}
         label="Font Style"

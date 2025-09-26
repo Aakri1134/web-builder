@@ -50,7 +50,10 @@ export default function DropOptions({
 
   return (
     <div className={` relative ${className}`}>
-      <h1 className=" text-white">{label}</h1>
+      <h1
+      style={{
+        fontStyle : ""
+      }} className=" text-white">{label}</h1>
       <input
         ref={inputRef}
         value={value}
