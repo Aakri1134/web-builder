@@ -6,7 +6,7 @@ type InputDropOptions = {
   label: string
   options: {
     text: string
-    style?: string
+    style?: React.CSSProperties
     callback: () => void
   }[]
 }

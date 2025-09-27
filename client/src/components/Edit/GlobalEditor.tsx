@@ -9,7 +9,6 @@ import {
 } from "../../utils/Editor/requirements"
 import Manager from "./GlobalEditor/Manager"
 import InputNumber from "./GlobalEditor/InputNumber"
-import DropOptions from "./GlobalEditor/DropOptions"
 import FontOptions from "./GlobalEditor/FontOptions"
 
 export type PropsChange = {

@@ -1,14 +1,22 @@
 import { useEffect, useRef, useState } from "react"
 import ModalPortal from "../../modals/ModalPortal"
 import {
+  fontFamily,
   fontImports,
+  fontStyle,
+  fontWeight,
   hasFontLoadFailed,
   loadFont,
   type FontName,
 } from "../../../utils/Editor/fontManager"
+import DropOptions from "./DropOptions"
 
 type Input = {
-  handleSelect: (value: FontName) => void
+  handleSelect: (value: {
+    family?: FontName
+    style?: "normal" | "italic"
+    weight?: number
+  }) => void
 }
 
 export default function FontOptions({ handleSelect }: Input) {
@@ -16,23 +24,33 @@ export default function FontOptions({ handleSelect }: Input) {
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
   const [value, setValue] = useState<string>("")
-  const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
+  const [familyDropdownVisible, setFamilyDropdownVisible] =
+    useState<boolean>(false)
   const indexLoaded = useRef<number>(0)
+  const [_, forceUpdate] = useState<number>(0)
   const pos = useRef<{ left: number; top: number; height: number }>({
     left: 0,
     top: 0,
     height: 0,
   })
+  const [currentFamily, setCurrentFamily] =
+    useState<FontName>("Times New Roman")
+  const [currentStyle, setCurrentStyle] = useState<"normal" | "italic">(
+    "normal"
+  )
+  const [currentWeight, setCurrentWeight] = useState<number>(400)
 
   useEffect(() => {
     async function loadInitialFonts() {
       try {
+        const keys = Object.keys(fontImports)
         await Promise.all([
-          loadFont(Object.keys(fontImports)[0] as FontName),
-          loadFont(Object.keys(fontImports)[1] as FontName),
-          loadFont(Object.keys(fontImports)[2] as FontName),
-          loadFont(Object.keys(fontImports)[3] as FontName),
-          loadFont(Object.keys(fontImports)[4] as FontName),
+          loadFont(keys[0] as FontName),
+          loadFont(keys[1] as FontName),
+          loadFont(keys[2] as FontName),
+          loadFont(keys[3] as FontName),
+          loadFont(keys[4] as FontName),
+          loadFont(keys[5] as FontName),
         ])
       } catch (e) {
         // TODO add sentry logs
@@ -40,22 +58,38 @@ export default function FontOptions({ handleSelect }: Input) {
     }
 
     loadInitialFonts()
-    indexLoaded.current = 4
+    indexLoaded.current = 5
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          console.log(entry.target.textContent)
-        }
-      })
-    })
-    if (dropdownRef.current) observer.observe(dropdownRef.current)
+    if (!dropdownRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let promises: Promise<boolean>[] = []
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            promises.push(loadFont(entry.target.textContent as FontName))
+          }
+        })
+        Promise.all(promises).then(() => {
+          forceUpdate(0)
+        })
+      },
+      {
+        root: dropdownRef.current,
+        threshold: 0.1,
+        rootMargin: "0px 0px 100px 0px",
+      }
+    )
+
+    const children = dropdownRef.current.querySelectorAll("[data-font-option]")
+    children.forEach((el) => observer.observe(el))
+
     return () => {
       observer.disconnect()
     }
-  }, [dropdownRef.current])
+  }, [familyDropdownVisible])
 
   useEffect(() => {
     if (!inputRef.current) return
@@ -69,14 +103,14 @@ export default function FontOptions({ handleSelect }: Input) {
 
   useEffect(() => {
     if (selected.current) {
-      setDropdownVisible(false)
+      setFamilyDropdownVisible(false)
       selected.current = false
       return
     }
     if (value !== "") {
-      setDropdownVisible(true)
+      setFamilyDropdownVisible(true)
     } else {
-      setDropdownVisible(false)
+      setFamilyDropdownVisible(false)
     }
   }, [value])
 
@@ -88,7 +122,7 @@ export default function FontOptions({ handleSelect }: Input) {
         }}
         className=" text-white"
       >
-        Font Style
+        Font Family
       </h1>
       <input
         ref={inputRef}
@@ -102,13 +136,13 @@ export default function FontOptions({ handleSelect }: Input) {
       <button
         className=" h-4 w-4 bg-red-500"
         onClick={() => {
-          setDropdownVisible((x) => !x)
+          setFamilyDropdownVisible((x) => !x)
         }}
       />
-      {dropdownVisible && (
+      {familyDropdownVisible && (
         <ModalPortal
           hideModal={() => {
-            setDropdownVisible(false)
+            setFamilyDropdownVisible(false)
           }}
         >
           <div
@@ -132,13 +166,19 @@ export default function FontOptions({ handleSelect }: Input) {
                 return (
                   <div
                     key={text}
+                    data-font-option
                     onClick={() => {
-                      handleSelect(text)
+                      handleSelect({
+                        family: currentFamily,
+                      })
                       selected.current = true
+                      setCurrentFamily(text)
                       setValue(text)
                     }}
                     style={{
-                      fontFamily: text,
+                      fontFamily: fontFamily[text],
+                      fontStyle: "normal",
+                      fontWeight: 400,
                     }}
                   >
                     {text}
@@ -148,6 +188,23 @@ export default function FontOptions({ handleSelect }: Input) {
             })}
           </div>
         </ModalPortal>
+      )}
+      {fontStyle[currentFamily].includes("italic") && (
+        <div>
+          <div
+            style={{
+              borderWidth: currentStyle === "italic" ? 1 : 0,
+            }}
+            className=" h-6 w-6 bg-slate-600 italic text-center rounded-sm text-white"
+            onClick={() => {
+              setCurrentStyle((x) => {
+                return x === "italic" ? "normal" : "italic"
+              })
+            }}
+          >
+            I
+          </div>
+        </div>
       )}
     </div>
   )

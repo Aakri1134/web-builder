@@ -1,4 +1,38 @@
-export const fontImports = {
+export const fonts = [
+  "Google Sans Code",
+  "Sansation",
+  "Roboto Flex",
+  "Merriweather",
+  "Noto Serif",
+  "Shizuru",
+  "Chewy",
+  "Chicle",
+  "Lakki Reddy",
+  "Imperial Script",
+  "Luxurious Script",
+  "Puppies Play",
+  "Bonheur Royale",
+  "Pacifico",
+  "Sour Gummy",
+  "Nanum Pen Script",
+  "Grenze Gotisch",
+  "Texturina",
+  "Sancreek",
+  "Rye",
+  "UnifrakturMaguntia",
+  "Audiowide",
+  "Unica One",
+  "Atomic Age",
+  "Tulpen One",
+  "Metal Mania",
+  "Caveat Brush",
+  "Iceberg",
+  "Press Start 2P",
+  "Times New Roman"
+]as const
+export type FontName = typeof fonts[number]
+
+export const fontImports : Record<FontName, string> = {
   "Google Sans Code": `https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap`,
   "Sansation": `https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap`,
   "Roboto Flex": `https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap`,
@@ -30,7 +64,6 @@ export const fontImports = {
   "Press Start 2P": `https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap`,
   "Times New Roman" : ``
 }
-export type FontName = keyof typeof fontImports
 
 export const fontFamily : Record<FontName, string>  = {
   "Google Sans Code": `"Google Sans Code", monospace`,
@@ -98,38 +131,38 @@ export const fontStyle : Record<FontName, string[]> = {
   "Times New Roman" : [`normal`]
 }
 
-export const fontWeight : Record<FontName, string[]> = { 
+export const fontWeight : Record<FontName, number[]> = { 
 
-  "Google Sans Code": [`300`, `400`, `500`, `600`, `700`, `800`],
-  "Sansation": [`300`, `400`, `700`],
-  "Roboto Flex": [`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`, `1000`],
-  "Merriweather": [`300`, `400`, `600`, `700`, `800`, `900`],
-  "Noto Serif": [`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`],
-  "Shizuru": [`400`],
-  "Chewy": [`400`],
-  "Chicle": [`400`],
-  "Lakki Reddy": [`400`],
-  "Imperial Script": [`400`],
-  "Luxurious Script": [`400`],
-  "Puppies Play": [`400`],
-  "Bonheur Royale": [`400`],
-  "Pacifico": [`400`],
-  "Sour Gummy": [`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`],
-  "Nanum Pen Script": [`400`],
-  "Grenze Gotisch": [`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`],
-  "Texturina": [`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`],
-  "Sancreek": [`400`],
-  "Rye": [`400`],
-  "UnifrakturMaguntia": [`400`],
-  "Audiowide": [`400`],
-  "Unica One": [`400`],
-  "Atomic Age": [`400`],
-  "Tulpen One": [`400`],
-  "Metal Mania": [`400`],
-  "Caveat Brush": [`400`],
-  "Iceberg": [`400`],
-  "Press Start 2P": [`400`],
-  "Times New Roman" : [`400`, `700`, `900`]
+  "Google Sans Code": [300, 400, 500, 600, 700, 800],
+  "Sansation": [300, 400, 700],
+  "Roboto Flex": [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+  "Merriweather": [300, 400, 600, 700, 800, 900],
+  "Noto Serif": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  "Shizuru": [400],
+  "Chewy": [400],
+  "Chicle": [400],
+  "Lakki Reddy": [400],
+  "Imperial Script": [400],
+  "Luxurious Script": [400],
+  "Puppies Play": [400],
+  "Bonheur Royale": [400],
+  "Pacifico": [400],
+  "Sour Gummy": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  "Nanum Pen Script": [400],
+  "Grenze Gotisch": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  "Texturina": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  "Sancreek": [400],
+  "Rye": [400],
+  "UnifrakturMaguntia": [400],
+  "Audiowide": [400],
+  "Unica One": [400],
+  "Atomic Age": [400],
+  "Tulpen One": [400],
+  "Metal Mania": [400],
+  "Caveat Brush": [400],
+  "Iceberg": [400],
+  "Press Start 2P": [400],
+  "Times New Roman" : [400, 700, 900]
 }
 
 const loaded = new Set<FontName>()
