@@ -66,7 +66,6 @@ export function checkRequirements(component: DSLComponent): {
       !component.props[x]
     ) {
       if (x === "className") {
-        component.props.className = ""
       } else {
         report.push({
           id: component.id,
@@ -79,6 +78,7 @@ export function checkRequirements(component: DSLComponent): {
       return true
     }
   })
+  // console.log("Requirements")
   //   console.log(report)
 
   const res = report.length == 0

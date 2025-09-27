@@ -10,6 +10,7 @@ import {
 import Manager from "./GlobalEditor/Manager"
 import InputNumber from "./GlobalEditor/InputNumber"
 import DropOptions from "./GlobalEditor/DropOptions"
+import FontOptions from "./GlobalEditor/FontOptions"
 
 export type PropsChange = {
   id: string[]
@@ -119,33 +120,7 @@ export default function GlobalEditor() {
         />
       )}
       {activeComponentID && styleFields.includes("font-style") && (
-        <DropOptions options={[{
-          text : "style 1",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "istyle 1",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "ustyle 1",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "ustayle 2",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "ustyle 3",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "istyle 2",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "istyle 3",
-          callback : () => {alert("style 1 selected")}
-        },{
-          text : "style 2",
-          callback : () => {alert("style 1 selected")}
-        }]}
-        label="Font Style"
-        />
+        <FontOptions handleSelect={(value) => {alert(value)}}/>
       )}
     </div>
   )

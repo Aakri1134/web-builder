@@ -304,7 +304,10 @@ export default function sanetizer(data: DSL) {
     functions.map((func: DSLFunctions) => {
       functionIDs.add(func.id)
     })
+    console.log("recursiveCheckComponents called")
     const res1 = recursiveCheckComponents(components)
+    console.log("recursiveCheckComponents completed")
+
     // const res2 = typeCheckFunction(functions)
     if (res1.report.length > 0) {
       // can add logic to remove components in reports, might add level, to check components to be removed
@@ -324,14 +327,14 @@ export default function sanetizer(data: DSL) {
     return false
   } catch (err) {
     console.log(err)
-    captureEvent({
-      level: "error",
-      message: "Error while DSL sanetization",
-      extra: {
-        prompt: "", //TODO add logging logic later,
-        response: data,
-      },
-    })
+    // captureEvent({
+    //   level: "error",
+    //   message: "Error while DSL sanetization",
+    //   extra: {
+    //     prompt: "", //TODO add logging logic later,
+    //     response: data,
+    //   },
+    // })
     return false
   }
 }

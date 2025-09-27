@@ -33,7 +33,7 @@ export default function Edit() {
       }
     }
     fetchProject()
-  })
+  }, [])
 
   if (!project) return null
 

@@ -86,7 +86,6 @@ export default function InputNumber({
 
   useEffect(() => {
     if (keyString === "width") {
-      console.log("width")
     }
     let val: number | null = null
     if (type === "style") {
@@ -103,9 +102,7 @@ export default function InputNumber({
           }
         }
       }
-      console.log(val)
       if (val) {
-        console.log("Inside If")
         val = Math.round(Number(val))
         setInitialValue(val == -1 ? "--" : val.toString())
       }
