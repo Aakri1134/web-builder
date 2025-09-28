@@ -8,29 +8,26 @@ import {
   loadFont,
   type FontName,
 } from "../../../utils/Editor/fontManager"
-import { useRecoilValue } from "recoil"
-import { currentComponentID } from "../../../recoil/atoms/component"
 import FontEditButtons from "./FontEditButtons"
 import WeightOptions from "./WeightOptions"
+import useStyleInitialValue from "../../../hooks/useStyleInitialValue"
 
 type Input = {
   handleSelect: (value: {
     family?: FontName
-    style?: "normal" | "italic"
+    style?: {
+      italic : boolean
+    }
     weight?: number
   }) => void
 }
 
 export default function FontOptions({ handleSelect }: Input) {
-  const activeComponentID = useRecoilValue(currentComponentID)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
-  const [value, setValue] = useState<string>("")
-  const [familyDropdownVisible, setFamilyDropdownVisible] =
-    useState<boolean>(false)
-
-  const indexLoaded = useRef<number>(0)
+  const [value, setValue] = useStyleInitialValue("fontFamily")
+  const [familyDropdownVisible, setFamilyDropdownVisible] = useState<boolean>(false)
   const [_, forceUpdate] = useState<number>(0)
   const familyDropdownPos = useRef<{
     left: number
@@ -62,25 +59,7 @@ export default function FontOptions({ handleSelect }: Input) {
     }
 
     loadInitialFonts()
-    indexLoaded.current = 5
   }, [])
-
-  useEffect(() => {
-    if (!activeComponentID) return
-    let val: any = null
-    for (const id of activeComponentID ?? []) {
-      const ele = document.getElementById(id)
-      if (ele) {
-        if (val === null) {
-          val = getComputedStyle(ele)["fontFamily"]
-        } else if (val !== getComputedStyle(ele)["fontFamily"]) {
-          val = -1
-          break
-        }
-      }
-    }
-    setValue(val === -1 ? "--" : val)
-  }, [activeComponentID])
 
   useEffect(() => {
     if (!dropdownRef.current) return
@@ -214,6 +193,7 @@ export default function FontOptions({ handleSelect }: Input) {
         </ModalPortal>
       )}
       <FontEditButtons
+
         family={currentFamily}
         handleSelect={() => {
           // alert("") working
@@ -222,7 +202,7 @@ export default function FontOptions({ handleSelect }: Input) {
       <WeightOptions
         family={currentFamily}
         handleSelect={() => {
-          alert()
+          // alert() working
         }}
       />
     </div>

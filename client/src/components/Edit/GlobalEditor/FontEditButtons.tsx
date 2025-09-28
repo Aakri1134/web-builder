@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { fontStyle, type FontName } from "../../../utils/Editor/fontManager"
+import { fonts, fontStyle, type FontName } from "../../../utils/Editor/fontManager"
+import useStyleInitialValue from "../../../hooks/useStyleInitialValue"
 
 type Input = {
   family: FontName
@@ -7,9 +8,11 @@ type Input = {
 }
 
 export default function FontEditButtons({ family, handleSelect }: Input) {
-  const [isItalic, setIsItalic] = useState<boolean>(
-    false
-  )
+  const [init, _] = useStyleInitialValue("fontWeight")
+  const [isItalic, setIsItalic] = useState<boolean>(false)
+  useEffect(() => {
+    setIsItalic(init === "italic")
+  }, [init])
   useEffect(() => {
     if (fontStyle[family].includes("normal")) {
       setIsItalic(false)
@@ -24,7 +27,7 @@ export default function FontEditButtons({ family, handleSelect }: Input) {
   }, [isItalic])
   return (
     <>
-      {fontStyle[family] && fontStyle[family].includes("italic") && (
+      {fonts.includes(family) && fontStyle[family] && fontStyle[family].includes("italic") && (
         <div>
           <div
             style={{
@@ -32,7 +35,7 @@ export default function FontEditButtons({ family, handleSelect }: Input) {
             }}
             className=" h-6 w-6 bg-slate-600 italic text-center rounded-sm text-white"
             onClick={() => {
-              setIsItalic(x => !x)
+              setIsItalic((x) => !x)
             }}
           >
             I
