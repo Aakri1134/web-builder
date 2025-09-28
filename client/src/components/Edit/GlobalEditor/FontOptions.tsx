@@ -67,7 +67,7 @@ export default function FontOptions({ handleSelect }: Input) {
 
   useEffect(() => {
     if (!activeComponentID) return
-    let val: any
+    let val: any = null
     for (const id of activeComponentID ?? []) {
       const ele = document.getElementById(id)
       if (ele) {
@@ -148,8 +148,6 @@ export default function FontOptions({ handleSelect }: Input) {
       document.removeEventListener("focusin", handleFocus)
     }
   }, [])
-
-  console.log(currentFamily)
 
   return (
     <div className={` relative`}>
