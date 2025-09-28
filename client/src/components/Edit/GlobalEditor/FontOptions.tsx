@@ -4,7 +4,6 @@ import {
   fontFamily,
   fontImports,
   fontStyle,
-  fontWeight,
   hasFontLoadFailed,
   loadFont,
   type FontName,
@@ -58,7 +57,7 @@ export default function FontOptions({ handleSelect }: Input) {
           loadFont(keys[5] as FontName),
         ])
       } catch (e) {
-        // TODO add sentry logs
+        // TODO add sentry logs for handling dead fonts
       }
     }
 
