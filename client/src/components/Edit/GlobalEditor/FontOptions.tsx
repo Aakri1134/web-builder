@@ -9,7 +9,6 @@ import {
   loadFont,
   type FontName,
 } from "../../../utils/Editor/fontManager"
-import DropOptions from "./DropOptions"
 
 type Input = {
   handleSelect: (value: {
@@ -21,10 +20,13 @@ type Input = {
 
 export default function FontOptions({ handleSelect }: Input) {
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const weightInputRef = useRef<HTMLInputElement | null>(null)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
   const [value, setValue] = useState<string>("")
   const [familyDropdownVisible, setFamilyDropdownVisible] =
+    useState<boolean>(false)
+  const [weightDropdownVisible, setWeightDropdownVisible] =
     useState<boolean>(false)
   const indexLoaded = useRef<number>(0)
   const [_, forceUpdate] = useState<number>(0)
@@ -114,16 +116,25 @@ export default function FontOptions({ handleSelect }: Input) {
     }
   }, [value])
 
+  useEffect(() => {
+    function handleFocus() {
+      if (document.activeElement === inputRef.current) {
+        setFamilyDropdownVisible(true)
+      } else if (document.activeElement === weightInputRef.current) {
+        setWeightDropdownVisible(true)
+      }
+    }
+
+    document.addEventListener("focusin", handleFocus)
+
+    return () => {
+      document.removeEventListener("focusin", handleFocus)
+    }
+  }, [])
+
   return (
     <div className={` relative`}>
-      <h1
-        style={{
-          fontStyle: "",
-        }}
-        className=" text-white"
-      >
-        Font Family
-      </h1>
+      <h1 className=" text-white">Font Family</h1>
       <input
         ref={inputRef}
         value={value}
@@ -177,7 +188,7 @@ export default function FontOptions({ handleSelect }: Input) {
                     }}
                     style={{
                       fontFamily: fontFamily[text],
-                      fontStyle: "normal",
+                      fontStyle: fontStyle[text][0],
                       fontWeight: 400,
                     }}
                   >
@@ -206,6 +217,14 @@ export default function FontOptions({ handleSelect }: Input) {
           </div>
         </div>
       )}
+      <div>
+        <h1 className=" text-white">Font Weight</h1>
+        <input
+          ref={weightInputRef}
+          value={currentWeight}
+          className=" text-white"
+        />
+      </div>
     </div>
   )
 }
