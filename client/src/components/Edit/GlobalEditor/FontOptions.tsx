@@ -12,6 +12,7 @@ import {
 import { useRecoilValue } from "recoil"
 import { currentComponentID } from "../../../recoil/atoms/component"
 import FontEditButtons from "./FontEditButtons"
+import WeightOptions from "./WeightOptions"
 
 type Input = {
   handleSelect: (value: {
@@ -24,14 +25,12 @@ type Input = {
 export default function FontOptions({ handleSelect }: Input) {
   const activeComponentID = useRecoilValue(currentComponentID)
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const weightInputRef = useRef<HTMLInputElement | null>(null)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
   const [value, setValue] = useState<string>("")
   const [familyDropdownVisible, setFamilyDropdownVisible] =
     useState<boolean>(false)
-  const [weightDropdownVisible, setWeightDropdownVisible] =
-    useState<boolean>(false)
+
   const indexLoaded = useRef<number>(0)
   const [_, forceUpdate] = useState<number>(0)
   const familyDropdownPos = useRef<{
@@ -43,19 +42,8 @@ export default function FontOptions({ handleSelect }: Input) {
     top: 0,
     height: 0,
   })
-  const weightDropdownPos = useRef<{
-    left: number
-    top: number
-    height: number
-  }>({
-    left: 0,
-    top: 0,
-    height: 0,
-  })
   const [currentFamily, setCurrentFamily] =
     useState<FontName>("Times New Roman")
-  
-  const [currentWeight, setCurrentWeight] = useState<number>(400)
 
   useEffect(() => {
     async function loadInitialFonts() {
@@ -136,16 +124,6 @@ export default function FontOptions({ handleSelect }: Input) {
   }, [inputRef.current, familyDropdownVisible])
 
   useEffect(() => {
-    if (!weightInputRef.current) return
-    const rect = weightInputRef.current.getBoundingClientRect()
-    weightDropdownPos.current = {
-      left: rect.left,
-      top: rect.top,
-      height: rect.height,
-    }
-  }, [weightInputRef.current, weightDropdownVisible])
-
-  useEffect(() => {
     if (selected.current) {
       setFamilyDropdownVisible(false)
       selected.current = false
@@ -162,8 +140,6 @@ export default function FontOptions({ handleSelect }: Input) {
     function handleFocus() {
       if (document.activeElement === inputRef.current) {
         setFamilyDropdownVisible(true)
-      } else if (document.activeElement === weightInputRef.current) {
-        setWeightDropdownVisible(true)
       }
     }
 
@@ -174,7 +150,6 @@ export default function FontOptions({ handleSelect }: Input) {
     }
   }, [])
 
-  
   console.log(currentFamily)
 
   return (
@@ -225,11 +200,6 @@ export default function FontOptions({ handleSelect }: Input) {
                       })
                       selected.current = true
                       setCurrentFamily(text)
-                      setCurrentWeight(
-                        fontWeight[text].includes(400)
-                          ? 400
-                          : fontWeight[text][0]
-                      )
                       setValue(text)
                     }}
                     style={{
@@ -246,54 +216,18 @@ export default function FontOptions({ handleSelect }: Input) {
           </div>
         </ModalPortal>
       )}
-      <FontEditButtons family={currentFamily} handleSelect={() => {
-        // alert("") working
-      }}/>
-      
-      {fontWeight[currentFamily] && (
-        <div>
-          <h1 className=" text-white">Font Weight</h1>
-          <input
-            ref={weightInputRef}
-            value={currentWeight}
-            className=" text-white"
-          />
-          {weightDropdownVisible && (
-            <ModalPortal
-              hideModal={() => {
-                setWeightDropdownVisible(false)
-              }}
-            >
-              <div
-              
-                style={{
-                  position: "absolute",
-                  top:
-                    weightDropdownPos.current.top +
-                    weightDropdownPos.current.height,
-                  left: weightDropdownPos.current.left,
-                  maxHeight: 180,
-                  overflowY: "scroll",
-                }}
-                className=" no-scrollbar w-96 bg-red-300 z-[999] "
-              >
-                {fontWeight[currentFamily].map((weight) => {
-                  return (
-                    <div
-                    key={currentFamily+weight}
-                      onClick={() => {
-                        setCurrentWeight(weight)
-                      }}
-                    >
-                      {weight}
-                    </div>
-                  )
-                })}
-              </div>
-            </ModalPortal>
-          )}
-        </div>
-      )}
+      <FontEditButtons
+        family={currentFamily}
+        handleSelect={() => {
+          // alert("") working
+        }}
+      />
+      <WeightOptions
+        family={currentFamily}
+        handleSelect={() => {
+          alert()
+        }}
+      />
     </div>
   )
 }

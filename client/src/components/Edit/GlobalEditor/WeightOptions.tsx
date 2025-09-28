@@ -1,0 +1,94 @@
+import { useEffect, useRef, useState } from "react"
+import { fontWeight, type FontName } from "../../../utils/Editor/fontManager"
+import ModalPortal from "../../modals/ModalPortal"
+
+type Input = {
+  family: FontName
+  handleSelect: (value: number) => void
+}
+
+export default function WeightOptions({ family, handleSelect }: Input) {
+  const weightInputRef = useRef<HTMLInputElement | null>(null)
+  const [weightDropdownVisible, setWeightDropdownVisible] =
+    useState<boolean>(false)
+  const weightDropdownPos = useRef<{
+    left: number
+    top: number
+    height: number
+  }>({
+    left: 0,
+    top: 0,
+    height: 0,
+  })
+  const [currentWeight, setCurrentWeight] = useState<number>(400)
+
+  useEffect(() => {
+    setCurrentWeight(
+      fontWeight[family].includes(400) ? 400 : fontWeight[family][0]
+    )
+  }, [family])
+
+  useEffect(() => {
+    handleSelect(currentWeight)
+  }, [currentWeight])
+
+  useEffect(() => {
+    if (!weightInputRef.current) return
+    const rect = weightInputRef.current.getBoundingClientRect()
+    weightDropdownPos.current = {
+      left: rect.left,
+      top: rect.top,
+      height: rect.height,
+    }
+  }, [weightInputRef.current, weightDropdownVisible])
+  return (
+    <div>
+      <h1 className=" text-white">Font Weight</h1>
+      <h1
+        ref={weightInputRef}
+        style={{
+          borderColor: weightDropdownVisible ? "white" : "rgba(0, 0, 0, 0)",
+        }}
+        className=" border-[1px] border-transparent text-white"
+        onClick={() => {
+          setWeightDropdownVisible((x) => !x)
+        }}
+      >
+        {currentWeight}
+      </h1>
+      {weightDropdownVisible && (
+        <ModalPortal
+          hideModal={() => {
+            setWeightDropdownVisible(false)
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top:
+                weightDropdownPos.current.top +
+                weightDropdownPos.current.height,
+              left: weightDropdownPos.current.left,
+              maxHeight: 180,
+              overflowY: "scroll",
+            }}
+            className=" no-scrollbar w-96 bg-red-300 z-[999] "
+          >
+            {fontWeight[family].map((weight) => {
+              return (
+                <div
+                  key={family + weight}
+                  onClick={() => {
+                    setCurrentWeight(weight)
+                  }}
+                >
+                  {weight}
+                </div>
+              )
+            })}
+          </div>
+        </ModalPortal>
+      )}
+    </div>
+  )
+}
