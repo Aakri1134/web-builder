@@ -161,6 +161,7 @@ export default function FontOptions({ handleSelect }: Input) {
           >
             {(Object.keys(fontImports) as FontName[]).map((text) => {
               if (
+                value &&
                 value !== "" &&
                 !text.toLowerCase().includes(value.toLowerCase())
               )

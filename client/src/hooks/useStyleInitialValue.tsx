@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { currentComponentID } from "../recoil/atoms/component"
 
-type Input = keyof React.CSSProperties
 
-export default function useStyleInitialValue( property : Input) {
+export default function useStyleInitialValue<INPUT_TYPE = any>( property : keyof React.CSSProperties) {
   const activeComponentID = useRecoilValue(currentComponentID)
-  const [value, setValue] = useState<any>()
+  const [value, setValue] = useState<INPUT_TYPE | undefined>()
 
   useEffect(() => {
     if (!activeComponentID) return
@@ -23,7 +22,7 @@ export default function useStyleInitialValue( property : Input) {
       }
     }
     setValue(val === -1 ? "--" : val)
-  }, [activeComponentID])
+  }, [activeComponentID, property])
 
-  return [ value, setValue ]
+  return [ value, setValue ] as const
 }

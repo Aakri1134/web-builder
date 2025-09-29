@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { fontWeight, type FontName } from "../../../utils/Editor/fontManager"
 import ModalPortal from "../../modals/ModalPortal"
+import useStyleInitialValue from "../../../hooks/useStyleInitialValue"
 
 type Input = {
   family: FontName
@@ -20,16 +21,11 @@ export default function WeightOptions({ family, handleSelect }: Input) {
     top: 0,
     height: 0,
   })
-  const [currentWeight, setCurrentWeight] = useState<number>(400)
+  const [currentWeight, setCurrentWeight] =
+    useStyleInitialValue<number>("fontWeight")
 
   useEffect(() => {
-    setCurrentWeight(
-      fontWeight[family].includes(400) ? 400 : fontWeight[family][0]
-    )
-  }, [family])
-
-  useEffect(() => {
-    handleSelect(currentWeight)
+    if (currentWeight) handleSelect(currentWeight)
   }, [currentWeight])
 
   useEffect(() => {
