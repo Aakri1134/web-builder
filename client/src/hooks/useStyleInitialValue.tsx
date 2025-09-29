@@ -21,6 +21,7 @@ export default function useStyleInitialValue<INPUT_TYPE = any>( property : keyof
         }
       }
     }
+    console.log(val)
     setValue(val === -1 ? "--" : val)
   }, [activeComponentID, property])
 

@@ -8,7 +8,7 @@ import {
   type StyleEditProperty,
 } from "../../utils/Editor/requirements"
 import Manager from "./GlobalEditor/Manager"
-import InputNumber from "./GlobalEditor/InputNumber"
+import StyleInputNumber from "./GlobalEditor/StyleInputNumber"
 import FontOptions from "./GlobalEditor/FontOptions"
 
 export type PropsChange = {
@@ -38,7 +38,7 @@ export default function GlobalEditor() {
         if (document.activeElement instanceof HTMLElement) {
           document.activeElement.blur()
         }
-				e.stopPropagation()
+        e.stopPropagation()
       }
     }
 
@@ -74,7 +74,7 @@ export default function GlobalEditor() {
         )
       })}
       {activeComponentID && styleFields.includes("font-size") && (
-        <InputNumber
+        <StyleInputNumber
           inputRef={fontSizeInput}
           label="Font Size"
           handleChange={(value) => {
@@ -89,7 +89,7 @@ export default function GlobalEditor() {
         />
       )}
       {activeComponentID && styleFields.includes("dimension") && (
-        <InputNumber
+        <StyleInputNumber
           inputRef={widthInput}
           label="Width"
           handleChange={(value) => {
@@ -104,7 +104,7 @@ export default function GlobalEditor() {
         />
       )}
       {activeComponentID && styleFields.includes("dimension") && (
-        <InputNumber
+        <StyleInputNumber
           inputRef={heightInput}
           label="height"
           handleChange={(value) => {
@@ -119,7 +119,11 @@ export default function GlobalEditor() {
         />
       )}
       {activeComponentID && styleFields.includes("font-style") && (
-        <FontOptions handleSelect={(value) => {alert(value)}}/>
+        <FontOptions
+          handleSelect={(value) => {
+            alert(value)
+          }}
+        />
       )}
     </div>
   )
