@@ -10,7 +10,6 @@ import {
 import Manager from "./GlobalEditor/Manager"
 import StyleInputNumber from "./GlobalEditor/StyleInputNumber"
 import FontOptions from "./GlobalEditor/FontOptions"
-import { fontWeight } from "../../utils/Editor/fontManager"
 
 export type PropsChange = {
   id: string[]
