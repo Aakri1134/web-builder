@@ -84,7 +84,7 @@ export default function Container({
         <article
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -97,7 +97,7 @@ export default function Container({
         <div
           id={id}
           style={{ ...component.style }}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -110,7 +110,7 @@ export default function Container({
         <div
           id={id}
           style={{ ...component.style }}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -123,7 +123,7 @@ export default function Container({
         <ul
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -136,7 +136,7 @@ export default function Container({
         <li
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -149,7 +149,7 @@ export default function Container({
         <main
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -162,7 +162,7 @@ export default function Container({
         <nav
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >
@@ -175,7 +175,7 @@ export default function Container({
         <section
           id={id}
           style={component.style}
-          className={component.props.className}
+          className={component.props.className + " no-select"}
           onClick={handleComponentClick}
           onDoubleClick={handleParentSelect}
         >

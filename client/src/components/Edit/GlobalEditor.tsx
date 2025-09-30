@@ -62,7 +62,7 @@ export default function GlobalEditor() {
   }, [activeComponentID])
 
   return (
-    <div className=" bg-gray-900 w-96 h-screen">
+    <div className=" bg-gray-900 w-96 h-screen no-select">
       {activeComponentID?.map((id) => {
         return (
           <Manager

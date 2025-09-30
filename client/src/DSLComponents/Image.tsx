@@ -61,6 +61,7 @@ export default function Image({
       <style>{formatResponsiveCSS(mediaQueries)}</style>
       <img
         id={id}
+        className={` no-select`}
         style={component.style}
         src={component.props?.src}
         alt={component.props?.alt || ""}

@@ -64,6 +64,7 @@ export default function Button({
     <>
       <style>{formatResponsiveCSS(mediaQueries)}</style>
       <div
+        className={` no-select`}
         id={id}
         style={component.style}
         onClick={handleComponentClick}

@@ -56,7 +56,7 @@ export default function Anchor({
       <style>{formatResponsiveCSS(mediaQueries)}</style>
       <p
         id={id}
-        className={component.props.className}
+        className={component.props.className + " no-select"}
         // href={component.props?.href}
         style={{ ...component.style, userSelect: "none" }}
         onClick={handleComponentClick}

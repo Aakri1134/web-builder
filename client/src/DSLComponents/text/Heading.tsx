@@ -62,7 +62,7 @@ export default function Heading({
       <style>{formatResponsiveCSS(mediaQueries)}</style>
       <h1
         id={id}
-        className={component.props.className}
+        className={component.props.className + " no-select"}
         style={{ ...component.style, userSelect: "none" }}
         onClick={handleComponentClick}
         onDoubleClick={handleParentSelect}
