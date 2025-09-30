@@ -10,6 +10,7 @@ import {
 import Manager from "./GlobalEditor/Manager"
 import StyleInputNumber from "./GlobalEditor/StyleInputNumber"
 import FontOptions from "./GlobalEditor/FontOptions"
+import { fontWeight } from "../../utils/Editor/fontManager"
 
 export type PropsChange = {
   id: string[]
@@ -121,11 +122,31 @@ export default function GlobalEditor() {
       {activeComponentID && styleFields.includes("font-style") && (
         <FontOptions
           handleSelect={(value) => {
-            if(value.family){
+            if (value.family) {
               setStyleChamge({
-                id : activeComponentID,
-                key : "fontFamily",
-                value : value.family
+                id: activeComponentID,
+                key: "fontFamily",
+                value: value.family,
+              })
+            } else if (value.style) {
+              if (value.style.italic) {
+                setStyleChamge({
+                  id: activeComponentID,
+                  key: "fontStyle",
+                  value: "italic",
+                })
+              } else {
+                setStyleChamge({
+                  id: activeComponentID,
+                  key: "fontStyle",
+                  value: "normal",
+                })
+              }
+            } else if (value.weight) {
+              setStyleChamge({
+                id: activeComponentID,
+                key: "fontWeight",
+                value: value.weight.toString(),
               })
             }
           }}

@@ -8,7 +8,7 @@ type Input = {
 }
 
 export default function FontEditButtons({ family, handleSelect }: Input) {
-  const [init, _] = useStyleInitialValue("fontWeight")
+  const [init, _] = useStyleInitialValue("fontStyle")
   const [isItalic, setIsItalic] = useState<boolean>(false)
   useEffect(() => {
     setIsItalic(init === "italic")
@@ -25,6 +25,7 @@ export default function FontEditButtons({ family, handleSelect }: Input) {
       italic: isItalic,
     })
   }, [isItalic])
+
   return (
     <>
       {fonts.includes(family) && fontStyle[family] && fontStyle[family].includes("italic") && (
