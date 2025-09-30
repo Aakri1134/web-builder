@@ -121,7 +121,13 @@ export default function GlobalEditor() {
       {activeComponentID && styleFields.includes("font-style") && (
         <FontOptions
           handleSelect={(value) => {
-            alert(value)
+            if(value.family){
+              setStyleChamge({
+                id : activeComponentID,
+                key : "fontFamily",
+                value : value.family
+              })
+            }
           }}
         />
       )}

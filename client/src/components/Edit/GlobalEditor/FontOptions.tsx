@@ -173,7 +173,7 @@ export default function FontOptions({ handleSelect }: Input) {
                     data-font-option
                     onClick={() => {
                       handleSelect({
-                        family: currentFamily,
+                        family: text,
                       })
                       selected.current = true
                       setCurrentFamily(text)
