@@ -32,21 +32,20 @@ export default function GlobalEditor() {
   const widthInput = useRef<HTMLInputElement | null>(null)
   const heightInput = useRef<HTMLInputElement | null>(null)
 
-  useEffect(() => {
-    function handleKeydown(e: KeyboardEvent) {
-      if (e.key === "Enter") {
-        if (document.activeElement instanceof HTMLElement) {
-          document.activeElement.blur()
-        }
-        e.stopPropagation()
-      }
-    }
+  // useEffect(() => {
+  //   function handleKeydown(e: KeyboardEvent) {
+  //     if (e.key === "Enter") {
+  //       if (document.activeElement instanceof HTMLElement) {
+  //         document.activeElement.blur()
+  //       }
+  //     }
+  //   }
 
-    document.addEventListener("keydown", handleKeydown, { capture: true })
-    return () => {
-      document.removeEventListener("keydown", handleKeydown, { capture: true })
-    }
-  }, [])
+  //   document.addEventListener("keydown", handleKeydown, { capture: true })
+  //   return () => {
+  //     document.removeEventListener("keydown", handleKeydown, { capture: true })
+  //   }
+  // }, [])
 
   useEffect(() => {
     setStyleChamge(null)

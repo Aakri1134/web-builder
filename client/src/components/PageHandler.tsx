@@ -3,8 +3,6 @@ import type { Project } from "../types/Project"
 import type { DSL } from "../types/DSL"
 import Convertor from "./Convertor"
 import SelectBox from "./Edit/SelectBox"
-import { useRecoilValue } from "recoil"
-import { logs } from "../recoil/atoms/logs"
 
 type InputProjectHandler = {
   pages: Project["pages"]
@@ -13,7 +11,6 @@ type InputProjectHandler = {
 export default function PageHandler({ pages }: InputProjectHandler) {
   const [activePage, _] = useState<DSL>(pages[0].page)
   const containerRef = useRef<HTMLDivElement>(null)
-  const undoLogs = useRecoilValue(logs)
 
   if (pages.length === 0) {
     alert("No pages found :: PageHandler.tsx")
