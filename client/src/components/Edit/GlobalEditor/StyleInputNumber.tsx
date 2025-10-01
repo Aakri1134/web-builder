@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react"
 import useStyleInitialValue from "../../../hooks/useStyleInitialValue"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { logs } from "../../../recoil/atoms/logs"
+import { currentComponentID } from "../../../recoil/atoms/component"
+import type { validStyles } from "../../../utils/DSL/sanetizer"
 
 type Input = {
   placeholder?: string
@@ -26,9 +30,12 @@ export default function StyleInputNumber({
     useStyleInitialValue<number>(keyString)
   const pushDuration = useRef<number>(1)
   const pushDurationResetTimeout = useRef<number>(0)
+  const previousValue = useRef<{ id: string[] | null; value: number }>()
+  const setLogs = useSetRecoilState(logs)
+  const activeComponentID = useRecoilValue(currentComponentID)
 
   useEffect(() => {
-    if(typeof initialValue === "string"){
+    if (typeof initialValue === "string") {
       setInitialValue(Math.round(parseFloat(initialValue)))
     }
   }, [initialValue])
@@ -77,7 +84,49 @@ export default function StyleInputNumber({
   }, [])
 
   useEffect(() => {
+
+    function isEqual(arr1 : any, arr2 : any) : boolean{
+      if(typeof arr1 !== typeof arr2){
+        return false
+      }
+      if(arr1.length !== arr2.length){
+        return false
+      }
+      for(let i = 0; i < arr1.length; i++){
+        if(arr1[i] !== arr2[i]){
+          return false
+        }
+      }
+      return true
+    }
+
     handleChange(`${initialValue}px`)
+    console.log(previousValue.current )
+    console.log(initialValue )
+    console.log(previousValue.current )
+    console.log(previousValue.current )
+    if (
+      initialValue &&
+      previousValue.current?.value !== initialValue &&
+      isEqual(activeComponentID, previousValue.current?.id)
+    ) {
+      alert(
+        `pushing logs \ninitial :: ${previousValue.current}\nfinal :: ${initialValue}`
+      )
+      setLogs((x) =>
+        x.push({
+          type: "style",
+          component: activeComponentID || [],
+          key: keyString as validStyles["style"],
+          inital: (previousValue.current ?? 0).toString(),
+          final: (initialValue ?? 0).toString(),
+        })
+      )
+      previousValue.current = {
+        id: activeComponentID,
+        value: initialValue,
+      }
+    }
   }, [initialValue])
 
   return (
