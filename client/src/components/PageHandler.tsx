@@ -18,20 +18,6 @@ export default function PageHandler({ pages }: InputProjectHandler) {
     return null
   }
 
-  useEffect(() => {
-    const handleKeydown = (e : KeyboardEvent) => {
-      if(e.ctrlKey && e.key === "z"){
-        alert("Undo Triggereed")
-      }
-    }
-    document.addEventListener("keydown", handleKeydown, {capture : true})
-
-    return () => {
-    document.removeEventListener("keydown", handleKeydown, {capture : true})
-
-    }
-  }, [])
-
   const formatResponsiveCSS = (DSL: DSL) => {
     let css = ""
 

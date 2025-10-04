@@ -43,26 +43,18 @@ export default function StyleInputNumber({
       }
       return true
     }
-
-    console.log(initialValue)
-    console.log(previousValue.current)
-    console.log(activeComponentID)
-    console.log(isEqual(activeComponentID, previousValue.current?.id))
     
     if (
       initialValue !== undefined &&
       previousValue.current?.value !== initialValue &&
       isEqual(activeComponentID, previousValue.current?.id)
     ) {
-      alert(
-        `pushing logs \ninitial :: ${previousValue.current?.value}\nfinal :: ${initialValue}`
-      )
       pushUndoLogs({
           type: "style",
           component: activeComponentID || [],
           key: keyString as validStyles["style"],
-          inital: (previousValue.current?.value ?? 0).toString(),
-          final: (initialValue ?? 0).toString(),
+          inital: (previousValue.current?.value ?? 0).toString() + "px",
+          final: (initialValue ?? 0).toString() + "px",
         }
       )
       previousValue.current = {
@@ -77,6 +69,7 @@ export default function StyleInputNumber({
       if (e.key === "Enter") {
         if (document.activeElement === inputRef.current) {
           handleLog()
+          inputRef.current?.blur()
         }
       }
     }

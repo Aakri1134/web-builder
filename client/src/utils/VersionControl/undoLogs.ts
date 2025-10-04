@@ -29,27 +29,46 @@ export interface PropsLogs {
   final: string
 }
 
-type T = PropsLogs | StyleLogs | ChildrenLogs
+export type UndoLog = PropsLogs | StyleLogs | ChildrenLogs
 
-let items: T[] = []
+let items: UndoLog[] = []
 let index = 0
+let currentMaxIndex = 0
 
-export function pushUndoLogs(item: T) {
-  alert(`Pushing Logs :: ${JSON.stringify(item)}`)
-  if (index > items.length) {
+export function pushUndoLogs(item: UndoLog) {
+  if (index >= items.length) {
     items.push(item)
   } else {
     items[index] = item
   }
+  index++
+  currentMaxIndex = Math.max(currentMaxIndex, index)
 }
 
 export function popUndoLogs() {
   if (index === 0) {
-    alert(`Popping Logs :: Empty Stack`)
     return null
   }
-  alert(`Popping Logs :: ${JSON.stringify(items[index - 1])}`)
   const value = items[index - 1]
   index--
   return value
+}
+
+export function redoUndoLogs() {
+  if (index === items.length) {
+    return null
+  }
+  const value = items[index]
+  index++
+  return value
+}
+
+export function isUndoLogEmpty() {
+  return index === 0
+}
+
+export function clearUndoLogs() {
+  items = []
+  index = 0
+  currentMaxIndex = 0
 }
