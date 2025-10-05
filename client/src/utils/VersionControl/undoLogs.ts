@@ -48,7 +48,7 @@ export function pushUndoLogs(item: UndoLog) {
     items[index] = item
   }
   index++
-  currentMaxIndex = Math.max(currentMaxIndex, index)
+  currentMaxIndex = index
 }
 
 export function popUndoLogs() {
@@ -61,7 +61,7 @@ export function popUndoLogs() {
 }
 
 export function redoUndoLogs() {
-  if (index === items.length) {
+  if (index === items.length || index >= currentMaxIndex) {
     return null
   }
   const value = items[index]

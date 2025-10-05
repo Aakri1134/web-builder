@@ -10,7 +10,11 @@ import {
 import Manager from "./GlobalEditor/Manager"
 import StyleInputNumber from "./GlobalEditor/StyleInputNumber"
 import FontOptions from "./GlobalEditor/FontOptions"
-import { popUndoLogs, type UndoLog } from "../../utils/VersionControl/undoLogs"
+import {
+  popUndoLogs,
+  redoUndoLogs,
+  type UndoLog,
+} from "../../utils/VersionControl/undoLogs"
 import type { validStyles } from "../../utils/DSL/sanetizer"
 
 export type PropsChange = {
@@ -32,6 +36,8 @@ export default function GlobalEditor() {
   const [propsChange, setPropsChamge] = useState<PropsChange | null>(null)
   const undoTrigerred = useRef<boolean>()
   const undoInfo = useRef<UndoLog | undefined>()
+  const redoTrigerred = useRef<boolean>()
+  const redoInfo = useRef<UndoLog | undefined>()
   const mapKey = useRef<number>(0)
   const fontSizeInput = useRef<HTMLInputElement | null>(null)
   const widthInput = useRef<HTMLInputElement | null>(null)
@@ -54,6 +60,25 @@ export default function GlobalEditor() {
         const previousComponents: string[] = []
 
         for (const events of lastUndo.operations) {
+          previousComponents.push(events.component)
+        }
+        setActiveComponentID(previousComponents)
+        forceUpdate((x) => -1 * x)
+      } else if (e.ctrlKey && e.key == "y") {
+        e.preventDefault()
+        const redo = redoUndoLogs()
+        if (!redo) {
+          alert("Redo Enpty")
+          return
+        }
+        redoTrigerred.current = true
+        redoInfo.current = redo
+
+        console.log("Current Redo")
+        console.log(redo)
+        const previousComponents: string[] = []
+
+        for (const events of redo.operations) {
           previousComponents.push(events.component)
         }
         setActiveComponentID(previousComponents)
@@ -85,6 +110,31 @@ export default function GlobalEditor() {
             id: event.component,
             key: event.key,
             value: event.inital,
+          })
+        }
+        console.log(newStyle)
+        setStyleChamge(newStyle)
+        console.log("Style change set")
+      }
+      undoInfo.current = undefined
+      undoTrigerred.current = false
+      return
+    } else if (redoTrigerred.current) {
+      console.log("redo action trigerred")
+      if (!redoInfo.current || !activeComponentID) {
+        redoInfo.current = undefined
+        redoTrigerred.current = false
+        alert("redo info not found")
+        return
+      }
+      if (redoInfo.current.type === "style") {
+        console.log("redo action type is style")
+        const newStyle: StyleChange = []
+        for (const event of redoInfo.current.operations) {
+          newStyle.push({
+            id: event.component,
+            key: event.key,
+            value: event.final,
           })
         }
         console.log(newStyle)
