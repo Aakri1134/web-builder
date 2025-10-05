@@ -23,8 +23,8 @@ export default function Manager({
 
   useEffect(() => {
     if (styleChange) {
-      console.log("SetStyleCHange Successful for ", id)
-      console.log(styleChange)
+      // console.log("SetStyleCHange Successful for ", id)
+      // console.log(styleChange)
       setStyle((x) => {
         return { ...x, [styleChange.key]: styleChange.value }
       })
@@ -32,7 +32,7 @@ export default function Manager({
       forceUpdate()
     }
     else {
-      console.log("SetStyleChange Unsuccessful")
+      // console.log("SetStyleChange Unsuccessful")
     }
   }, [styleChange?.key, styleChange?.value, styleChange?.id, setStyle])
 

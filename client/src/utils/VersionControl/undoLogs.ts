@@ -7,26 +7,32 @@ type Props = DSLComponent["props"]
 
 export interface StyleLogs {
   type: "style"
-  component: ID[]
-  key: Style
-  inital: string
-  final: string
+  operations: {
+    component: ID
+    key: Style
+    inital: string
+    final: string
+  }[]
 }
 
 // for position changes
 export interface ChildrenLogs {
   type: "children"
-  component: ID[]
-  inital: ID
-  final: ID
+  operations: {
+    component: ID
+    inital: string
+    final: string
+  }[]
 }
 
 export interface PropsLogs {
   type: "props"
-  component: ID[]
-  key: Props
-  inital: string
-  final: string
+  operations: {
+    component: ID
+    key: Props
+    inital: string
+    final: string
+  }[]
 }
 
 export type UndoLog = PropsLogs | StyleLogs | ChildrenLogs

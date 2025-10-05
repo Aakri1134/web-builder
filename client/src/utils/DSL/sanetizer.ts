@@ -97,6 +97,7 @@ const allowedComponentStyles: Set<keyof React.CSSProperties> = new Set<keyof Rea
 
 export interface validStyles {
   style:
+    | "fontStyle"
     | "fontSize"
     | "margin"
     | "padding"

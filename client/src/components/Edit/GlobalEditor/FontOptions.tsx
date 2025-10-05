@@ -26,7 +26,7 @@ export default function FontOptions({ handleSelect }: Input) {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const selected = useRef<boolean>(false)
-  const [value, setValue] = useStyleInitialValue("fontFamily")
+  const [value, setValue] = useStyleInitialValue("fontFamily", "string")
   const [familyDropdownVisible, setFamilyDropdownVisible] =
     useState<boolean>(false)
   const [_, forceUpdate] = useState<number>(0)

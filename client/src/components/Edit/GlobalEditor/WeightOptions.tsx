@@ -22,7 +22,7 @@ export default function WeightOptions({ family, handleSelect }: Input) {
     height: 0,
   })
   const [currentWeight, setCurrentWeight] =
-    useStyleInitialValue<number>("fontWeight")
+    useStyleInitialValue<number>("fontWeight", "string")
 
   useEffect(() => {
     if (currentWeight) handleSelect(currentWeight)
