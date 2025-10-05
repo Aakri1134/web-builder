@@ -29,9 +29,10 @@ export default function Manager({
       const newStyle: { [key: string]: any } = {}
 
       for (const change of styleChange) {
-        newStyle[change.key] = change.value
+        console.log(change)
+        if(id === change.id) newStyle[change.key] = change.value
       }
-
+      if(Object.keys(newStyle).length > 0)
       setStyle((x) => {
         return { ...x, ...newStyle }
       })
@@ -44,6 +45,7 @@ export default function Manager({
 
   useEffect(() => {
     if (propsChange) {
+
       const newProps: { [key: string]: any } = {}
 
       for (const change of propsChange) {

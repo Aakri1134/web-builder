@@ -37,9 +37,8 @@ export default function useStyleInitialValue<T = any>(
     if (value && previousValue.current) {
       let operations: StyleLogs["operations"] = []
 
-      for (const id of Object.keys(previousValue.current ?? {})) {
+      for (const id of Object.keys(previousValue.current)) {
         if (
-          
           previousValue.current[id] != value &&
           activeComponentID?.includes(id)
         )
@@ -51,6 +50,7 @@ export default function useStyleInitialValue<T = any>(
           })
       }
       if (operations.length > 0) {
+        console.log(operations)
         pushUndoLogs({
           type: "style",
           operations: operations,

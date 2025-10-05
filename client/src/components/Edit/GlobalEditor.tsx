@@ -68,32 +68,34 @@ export default function GlobalEditor() {
   }, [])
 
   useEffect(() => {
-    // console.log("activeComponentID changes")
-    // if (undoTrigerred.current) {
-    //   console.log("undo action trigerred")
-    //   if (!undoInfo.current || !activeComponentID) {
-    //     undoInfo.current = undefined
-    //     undoTrigerred.current = false
-    //     alert("undo info not found")
-    //     return
-    //   }
-    //   // alert(JSON.stringify(undoInfo.current))
-    //   if (undoInfo.current.type === "style") {
-    //     console.log("undo action type is style")
-    //     const nig : any = {
-    //       id: activeComponentID,
-    //       key: undoInfo.current.key,
-    //       value: undoInfo.current.inital,
-    //     }
-    //     console.log(nig)
-    //     setStyleChamge(nig)
-    //     console.log("Style change set")
-    //   }
-    //   undoInfo.current = undefined
-    //   undoTrigerred.current = false
-    //   return
-    // }
-    // console.log("NO undo action trigerred")
+    console.log("activeComponentID changes")
+    if (undoTrigerred.current) {
+      console.log("undo action trigerred")
+      if (!undoInfo.current || !activeComponentID) {
+        undoInfo.current = undefined
+        undoTrigerred.current = false
+        alert("undo info not found")
+        return
+      }
+      if (undoInfo.current.type === "style") {
+        console.log("undo action type is style")
+        const newStyle: StyleChange = []
+        for (const event of undoInfo.current.operations) {
+          newStyle.push({
+            id: event.component,
+            key: event.key,
+            value: event.inital,
+          })
+        }
+        console.log(newStyle)
+        setStyleChamge(newStyle)
+        console.log("Style change set")
+      }
+      undoInfo.current = undefined
+      undoTrigerred.current = false
+      return
+    }
+    console.log("NO undo action trigerred")
 
     setStyleChamge(null)
     setPropsChamge(null)
@@ -108,8 +110,9 @@ export default function GlobalEditor() {
   }, [activeComponentID, updater])
 
   function handleChange(key: validStyles["style"], value: string) {
+    if (!activeComponentID) return
     const style: StyleChange = []
-    for (const id in activeComponentID) {
+    for (const id of activeComponentID) {
       style.push({
         id,
         key,
