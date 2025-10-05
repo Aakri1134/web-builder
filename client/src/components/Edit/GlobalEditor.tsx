@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import { currentComponentID } from "../../recoil/atoms/component"
 import { useEffect, useRef, useState } from "react"
 import { getType } from "../../utils/DSL/typeMap"
@@ -10,53 +10,62 @@ import {
 import Manager from "./GlobalEditor/Manager"
 import StyleInputNumber from "./GlobalEditor/StyleInputNumber"
 import FontOptions from "./GlobalEditor/FontOptions"
+import { popUndoLogs, type UndoLog } from "../../utils/VersionControl/undoLogs"
 import type { validStyles } from "../../utils/DSL/sanetizer"
 
 export type PropsChange = {
-  id: string[]
+  id: string
   key: keyof DSLComponent["props"]
   value: string
-}
+}[]
 export type StyleChange = {
-  id: string[]
+  id: string
   key: validStyles["style"]
   value: string
-}
+}[]
 
 export default function GlobalEditor() {
-  const activeComponentID = useRecoilValue(currentComponentID)
+  const [activeComponentID, setActiveComponentID] =
+    useRecoilState(currentComponentID)
   const [styleFields, setStyleFields] = useState<StyleEditProperty[]>([])
   const [styleChange, setStyleChamge] = useState<StyleChange | null>(null)
   const [propsChange, setPropsChamge] = useState<PropsChange | null>(null)
+  const undoTrigerred = useRef<boolean>()
+  const undoInfo = useRef<UndoLog | undefined>()
   const mapKey = useRef<number>(0)
   const fontSizeInput = useRef<HTMLInputElement | null>(null)
   const widthInput = useRef<HTMLInputElement | null>(null)
   const heightInput = useRef<HTMLInputElement | null>(null)
   const [updater, forceUpdate] = useState<number>(1)
 
-  // useEffect(() => {
-  //   const handleKeydown = async (e: KeyboardEvent) => {
-  //     if (e.ctrlKey && e.key === "z") {
-  //       e.preventDefault()
-  //       const lastUndo = popUndoLogs()
-  //       if (!lastUndo) {
-  //         alert("Undo Stack empty")
-  //         return
-  //       }
-  //       undoTrigerred.current = true
-  //       undoInfo.current = lastUndo
-  //       console.log("Current Undo")
-  //       console.log(lastUndo)
-  //       setActiveComponentID(lastUndo.component)
-  //       forceUpdate((x) => -1 * x)
-  //     }
-  //   }
-  //   document.addEventListener("keydown", handleKeydown, { capture: true })
+  useEffect(() => {
+    const handleKeydown = async (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "z") {
+        e.preventDefault()
+        const lastUndo = popUndoLogs()
+        if (!lastUndo) {
+          alert("Undo Stack empty")
+          return
+        }
+        undoTrigerred.current = true
+        undoInfo.current = lastUndo
+        console.log("Current Undo")
+        console.log(lastUndo)
+        const previousComponents: string[] = []
 
-  //   return () => {
-  //     document.removeEventListener("keydown", handleKeydown, { capture: true })
-  //   }
-  // }, [])
+        for (const events of lastUndo.operations) {
+          previousComponents.push(events.component)
+        }
+        setActiveComponentID(previousComponents)
+        forceUpdate((x) => -1 * x)
+      }
+    }
+    document.addEventListener("keydown", handleKeydown, { capture: true })
+
+    return () => {
+      document.removeEventListener("keydown", handleKeydown, { capture: true })
+    }
+  }, [])
 
   useEffect(() => {
     // console.log("activeComponentID changes")
@@ -98,6 +107,18 @@ export default function GlobalEditor() {
     setStyleFields(getStyleRequirementsIntersection([...componentTypes]))
   }, [activeComponentID, updater])
 
+  function handleChange(key: validStyles["style"], value: string) {
+    const style: StyleChange = []
+    for (const id in activeComponentID) {
+      style.push({
+        id,
+        key,
+        value,
+      })
+    }
+    setStyleChamge(style)
+  }
+
   return (
     <div className=" bg-gray-900 w-96 h-screen no-select">
       {activeComponentID?.map((id) => {
@@ -124,11 +145,7 @@ export default function GlobalEditor() {
           inputRef={fontSizeInput}
           label="Font Size"
           handleChange={(value) => {
-            setStyleChamge({
-              id: activeComponentID,
-              key: "fontSize",
-              value,
-            })
+            handleChange("fontSize", value)
           }}
           type="style"
           keyString="fontSize"
@@ -139,11 +156,7 @@ export default function GlobalEditor() {
           inputRef={widthInput}
           label="Width"
           handleChange={(value) => {
-            setStyleChamge({
-              id: activeComponentID,
-              key: "width",
-              value,
-            })
+            handleChange("width", value)
           }}
           type="style"
           keyString="width"
@@ -154,11 +167,7 @@ export default function GlobalEditor() {
           inputRef={heightInput}
           label="height"
           handleChange={(value) => {
-            setStyleChamge({
-              id: activeComponentID,
-              key: "height",
-              value,
-            })
+            handleChange("height", value)
           }}
           type="style"
           keyString="height"
@@ -168,31 +177,15 @@ export default function GlobalEditor() {
         <FontOptions
           handleSelect={(value) => {
             if (value.family) {
-              setStyleChamge({
-                id: activeComponentID,
-                key: "fontFamily",
-                value: value.family,
-              })
+              handleChange("fontFamily", value.family)
             } else if (value.style) {
               if (value.style.italic) {
-                setStyleChamge({
-                  id: activeComponentID,
-                  key: "fontStyle",
-                  value: "italic",
-                })
+                handleChange("fontStyle", "italic")
               } else {
-                setStyleChamge({
-                  id: activeComponentID,
-                  key: "fontStyle",
-                  value: "normal",
-                })
+                handleChange("fontStyle", "normal")
               }
             } else if (value.weight) {
-              setStyleChamge({
-                id: activeComponentID,
-                key: "fontWeight",
-                value: value.weight.toString(),
-              })
+              handleChange("fontWeight", value.weight.toString())
             }
           }}
         />

@@ -8,7 +8,7 @@ type InputManager = {
   propsChange: PropsChange | null
   handleStyleChangeComplete: () => void
   handlePropsChangeComplete: () => void
-  forceUpdate : () => void
+  forceUpdate: () => void
 }
 
 export default function Manager({
@@ -17,7 +17,7 @@ export default function Manager({
   propsChange,
   handlePropsChangeComplete,
   handleStyleChangeComplete,
-  forceUpdate
+  forceUpdate,
 }: InputManager) {
   const { setStyle, setProps } = useComponentEdit(id)
 
@@ -25,26 +25,38 @@ export default function Manager({
     if (styleChange) {
       // console.log("SetStyleCHange Successful for ", id)
       // console.log(styleChange)
+
+      const newStyle: { [key: string]: any } = {}
+
+      for (const change of styleChange) {
+        newStyle[change.key] = change.value
+      }
+
       setStyle((x) => {
-        return { ...x, [styleChange.key]: styleChange.value }
+        return { ...x, ...newStyle }
       })
       handleStyleChangeComplete()
       forceUpdate()
-    }
-    else {
+    } else {
       // console.log("SetStyleChange Unsuccessful")
     }
-  }, [styleChange?.key, styleChange?.value, styleChange?.id, setStyle])
+  }, [styleChange, setStyle])
 
   useEffect(() => {
     if (propsChange) {
+      const newProps: { [key: string]: any } = {}
+
+      for (const change of propsChange) {
+        newProps[change.key] = change.value
+      }
+
       setProps((x) => {
-        return { ...x, [propsChange.key]: propsChange.value }
+        return { ...x, ...newProps }
       })
       handlePropsChangeComplete()
       forceUpdate()
     }
-  }, [propsChange?.key, propsChange?.value, propsChange?.id, setStyle])
+  }, [propsChange, setStyle])
 
   return <></>
 }
