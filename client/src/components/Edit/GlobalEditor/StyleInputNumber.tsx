@@ -107,7 +107,7 @@ export default function StyleInputNumber({
       <input
         ref={inputRef}
         type="number"
-        placeholder={"--"}
+        placeholder={placeholder ?? "--"}
         className={` text-white appearance-none ${inputClassname}`}
         value={initialValue ?? ""} /* ✅ Always controlled */
         onChange={(e) => {
