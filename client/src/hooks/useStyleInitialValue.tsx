@@ -16,9 +16,43 @@ export default function useStyleInitialValue<T = any>(
   const previousValue = useRef<Record<string, T> | null>({})
   const logTimeout = useRef<number | undefined>()
 
-  function handleLog() {
-    // function isEqual(
+  function handleLogManual (previous : Record<string, T> | null) { 
+    if(autoLog) return
+    function topx(str: string) {
+      if (type === "integer" || type === "float") {
+        str = str + "px"
+      }
+      return str
+    }
 
+    if (value && previous) {
+      let operations: StyleLogs["operations"] = []
+
+      for (const id of Object.keys(previous)) {
+        if (
+          previous[id] != value &&
+          activeComponentID?.includes(id)
+        )
+          operations.push({
+            key: property as validStyles["style"],
+            component: id,
+            inital: topx((previous[id] ?? 0).toString()),
+            final: topx((value ?? 0).toString()),
+          })
+      }
+      if (operations.length > 0) {
+        console.log(operations)
+        pushUndoLogs({
+          type: "style",
+          operations: operations,
+        })
+        console.log("Logging complete")
+        console.log(operations)
+      }
+    }
+  }
+
+  function handleLog() {
     function topx(str: string) {
       if (type === "integer" || type === "float") {
         str = str + "px"
@@ -107,5 +141,5 @@ export default function useStyleInitialValue<T = any>(
     setValue(val === -1 ? "--" : val)
   }, [activeComponentID, property])
 
-  return [value, setValue] as const
+  return [value, setValue, handleLogManual] as const
 }

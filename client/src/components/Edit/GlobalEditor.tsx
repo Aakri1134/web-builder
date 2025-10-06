@@ -29,20 +29,34 @@ export type StyleChange = {
 }[]
 
 export default function GlobalEditor() {
+  // recoil state for selected components
   const [activeComponentID, setActiveComponentID] =
     useRecoilState(currentComponentID)
+
+  // State used to store the vaious editable properties that will be rendered in the editor
   const [styleFields, setStyleFields] = useState<StyleEditProperty[]>([])
-  const [styleChange, setStyleChamge] = useState<StyleChange | null>(null)
-  const [propsChange, setPropsChamge] = useState<PropsChange | null>(null)
+
+  // states to handle style / prop changes by handleCHange functions
+  const [styleChange, setStyleChange] = useState<StyleChange | null>(null)
+  const [propsChange, setPropsChange] = useState<PropsChange | null>(null)
+
+  // used to pass as key in managers
+  const mapKey = useRef<number>(0)
+
+  // forcing rerenders by forceUpdate(x => -1 * x)
+  const [updater, forceUpdate] = useState<number>(1)
+
+  // Refs for rendered input values (not all present)
+  const fontSizeInput = useRef<HTMLInputElement | null>(null)
+  const widthInput = useRef<HTMLInputElement | null>(null)
+  const heightInput = useRef<HTMLInputElement | null>(null)
+  
+  // Refs used in undo / redo logic
   const undoTrigerred = useRef<boolean>()
   const undoInfo = useRef<UndoLog | undefined>()
   const redoTrigerred = useRef<boolean>()
   const redoInfo = useRef<UndoLog | undefined>()
-  const mapKey = useRef<number>(0)
-  const fontSizeInput = useRef<HTMLInputElement | null>(null)
-  const widthInput = useRef<HTMLInputElement | null>(null)
-  const heightInput = useRef<HTMLInputElement | null>(null)
-  const [updater, forceUpdate] = useState<number>(1)
+
 
   useEffect(() => {
     const handleKeydown = async (e: KeyboardEvent) => {
@@ -113,7 +127,7 @@ export default function GlobalEditor() {
           })
         }
         console.log(newStyle)
-        setStyleChamge(newStyle)
+        setStyleChange(newStyle)
         console.log("Style change set")
       }
       undoInfo.current = undefined
@@ -138,7 +152,7 @@ export default function GlobalEditor() {
           })
         }
         console.log(newStyle)
-        setStyleChamge(newStyle)
+        setStyleChange(newStyle)
         console.log("Style change set")
       }
       undoInfo.current = undefined
@@ -147,8 +161,8 @@ export default function GlobalEditor() {
     }
     console.log("NO undo action trigerred")
 
-    setStyleChamge(null)
-    setPropsChamge(null)
+    setStyleChange(null)
+    setPropsChange(null)
     if (!activeComponentID) return
     let componentTypes: Set<DSLComponent["type"]> = new Set([])
     for (let i = 0; i < (activeComponentID?.length ?? 0); i++) {
@@ -169,7 +183,7 @@ export default function GlobalEditor() {
         value,
       })
     }
-    setStyleChamge(style)
+    setStyleChange(style)
   }
 
   return (
@@ -182,10 +196,10 @@ export default function GlobalEditor() {
             propsChange={propsChange}
             styleChange={styleChange}
             handlePropsChangeComplete={() => {
-              setPropsChamge(null)
+              setPropsChange(null)
             }}
             handleStyleChangeComplete={() => {
-              setStyleChamge(null)
+              setStyleChange(null)
             }}
             forceUpdate={() => {
               forceUpdate((x) => -1 * x)

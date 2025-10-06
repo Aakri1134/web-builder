@@ -8,7 +8,7 @@ type Input = {
 }
 
 export default function FontEditButtons({ family, handleSelect }: Input) {
-  const [init, _] = useStyleInitialValue("fontStyle", "string")
+  const [init, setInit] = useStyleInitialValue<string>("fontStyle", "string")
   const [isItalic, setIsItalic] = useState<boolean>(false)
   useEffect(() => {
     setIsItalic(init === "italic")
@@ -36,7 +36,15 @@ export default function FontEditButtons({ family, handleSelect }: Input) {
             }}
             className=" h-6 w-6 bg-slate-600 italic text-center rounded-sm text-white"
             onClick={() => {
-              setIsItalic((x) => !x)
+              setInit((x) => {
+                if(!x) { 
+                  return "italic"
+                }else if(x === "normal"){
+                  return "italic"
+                }else {
+                  return "normal"
+                }
+              })
             }}
           >
             I
