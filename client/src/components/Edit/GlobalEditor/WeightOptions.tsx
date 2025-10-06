@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { fontWeight, type FontName } from "../../../utils/Editor/fontManager"
+import { fontFamily, type FontName } from "../../../utils/Editor/fontManager"
 import ModalPortal from "../../modals/ModalPortal"
 import useStyleInitialValue from "../../../hooks/useStyleInitialValue"
 
@@ -21,8 +21,12 @@ export default function WeightOptions({ family, handleSelect }: Input) {
     top: 0,
     height: 0,
   })
-  const [currentWeight, setCurrentWeight] =
-    useStyleInitialValue<number>("fontWeight", "string")
+  const validWeights = useRef<number[]>([100, 300, 500, 700, 900])
+
+  const [currentWeight, setCurrentWeight] = useStyleInitialValue<number>(
+    "fontWeight",
+    "string"
+  )
 
   useEffect(() => {
     if (currentWeight) handleSelect(currentWeight)
@@ -44,13 +48,15 @@ export default function WeightOptions({ family, handleSelect }: Input) {
         ref={weightInputRef}
         style={{
           borderColor: weightDropdownVisible ? "white" : "rgba(0, 0, 0, 0)",
+          fontFamily: fontFamily[family],
+          fontWeight: currentWeight,
         }}
         className=" border-[1px] border-transparent text-white"
         onClick={() => {
           setWeightDropdownVisible((x) => !x)
         }}
       >
-        {currentWeight}
+        Aa
       </h1>
       {weightDropdownVisible && (
         <ModalPortal
@@ -70,15 +76,16 @@ export default function WeightOptions({ family, handleSelect }: Input) {
             }}
             className=" no-scrollbar w-96 bg-red-300 z-[999] "
           >
-            {fontWeight[family].map((weight) => {
+            {validWeights.current.map((weight) => {
               return (
                 <div
+                  style={{ fontFamily: fontFamily[family], fontWeight: weight }}
                   key={family + weight}
                   onClick={() => {
                     setCurrentWeight(weight)
                   }}
                 >
-                  {weight}
+                  Aa ({weight})
                 </div>
               )
             })}
