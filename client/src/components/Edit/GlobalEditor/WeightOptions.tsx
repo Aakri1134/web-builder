@@ -43,7 +43,7 @@ export default function WeightOptions({ family, handleSelect }: Input) {
   }, [weightInputRef.current, weightDropdownVisible])
   return (
     <div>
-      <h1 className=" text-white">Font Weight</h1>
+      <h1 className=" text-white text-xl font-bold">Font Weight</h1>
       <h1
         ref={weightInputRef}
         style={{

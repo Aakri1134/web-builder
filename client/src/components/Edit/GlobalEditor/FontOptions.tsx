@@ -131,7 +131,7 @@ export default function FontOptions({ handleSelect }: Input) {
 
   return (
     <div className={` relative`}>
-      <h1 className=" text-white">Font Family</h1>
+      <h1 className=" text-white text-xl font-bold">Font Family</h1>
       <input
         ref={inputRef}
         value={value}

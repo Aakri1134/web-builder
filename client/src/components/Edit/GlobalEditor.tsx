@@ -257,6 +257,9 @@ export default function GlobalEditor() {
           }}
         />
       )}
+      {activeComponentID && styleFields.includes("bg-color") && (
+        <h1 className=" text-white text-xl font-bold">Background Color picker</h1>
+      )}
     </div>
   )
 }
